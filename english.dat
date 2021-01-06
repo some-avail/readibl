@@ -1,0 +1,610 @@
+Formatting-strings for parsing with Flashread.
+Language: english
+version: 1.25
+
+
+PUNCTUATION OF SENTENCES TO HANDLE
+.
+?
+!
+>----------------------------------<
+
+
+PUNCTUATION OF SENTENCE-PARTS TO HANDLE
+, 
+: 
+)
+>----------------------------------<
+
+
+PRONOUNS TO HANDLE
+ that 
+before
+ after 
+because
+in order to
+in that
+so as to
+which 
+where
+what
+who
+when
+why
+whether
+ how 
+ but 
+ once 
+ since 
+ while 
+ till 
+ until
+ though 
+ unless
+ during
+ if 
+ so 
+therefor
+despite
+(
+>----------------------------------<
+
+
+
+VERBS TO HANDLE
+be 
+being
+been 
+ is 
+ are 
+ were
+ was 
+have
+ has 
+ had 
+ can 
+ could 
+ may 
+ might 
+want
+ wanted
+ wish 
+have to
+has to  
+ must 
+ will 
+ shall 
+ should 
+ would 
+come 
+coming 
+comes 
+came 
+become 
+stay
+keep
+remain
+goes 
+ go 
+going 
+went 
+gone 
+let 
+ lets 
+find 
+ finds 
+found 
+ sets 
+set 
+setting 
+put 
+suppose
+ supposes 
+assume
+ lays 
+lay
+laid 
+ lies 
+lie 
+lain 
+ take 
+ takes 
+ took 
+taken 
+bring 
+ brings 
+brought 
+fit 
+ fits 
+match 
+ matches 
+ do 
+don't
+ does 
+ done
+make 
+ makes 
+ made
+get 
+gets 
+got 
+gotten 
+ enter 
+ enters 
+serve 
+serves 
+build 
+ builds 
+ applies 
+apply 
+stimulate 
+encourage 
+promote 
+discourage 
+realize 
+work 
+ works 
+appear 
+appears 
+ run 
+ runs 
+running
+ ran 
+shut
+ shuts 
+closed 
+closes
+call 
+ calls 
+address 
+ tries 
+ try 
+stand 
+stands 
+stood 
+concern 
+ concerns
+ act 
+ acts 
+ reacts
+boot 
+reboot 
+operate
+ operates
+activate
+discuss 
+alter 
+ alters 
+change 
+ changes 
+send
+ sends 
+ sent
+determine
+limit 
+ limits 
+restrict 
+ restricts 
+provide 
+ provides 
+supply
+supplies 
+give 
+ gives 
+gave 
+given
+lead 
+ leads 
+ led 
+look 
+ looks 
+erase 
+ erases 
+follow 
+ follows 
+summarize 
+ summarizes 
+arrive 
+ arrives 
+happen 
+ happens 
+suggest 
+ suggests 
+hold 
+ holds 
+retain 
+ retains 
+mean 
+relate 
+ relates 
+select 
+ selects 
+tend 
+ tends 
+require 
+ requires 
+insert 
+prepare 
+evaluate 
+duce 
+duces 
+ use 
+ uses 
+move 
+ moves 
+add 
+ adds 
+edit 
+receive
+register 
+crease
+press 
+attach 
+ attaches 
+transfer
+transmit 
+transmits
+lack 
+lacks 
+carry 
+ carries 
+begin 
+ begins 
+ began 
+ begun 
+ ends 
+stop 
+ stops 
+start
+continue
+allow 
+allowed
+ allows 
+ changes 
+change 
+check 
+save 
+ saves
+load 
+ loads
+turn 
+turns 
+tains 
+seem 
+ seems 
+read 
+ reads 
+write 
+ writes 
+ wrote
+ written
+manage 
+ manages 
+sort 
+ sorts 
+consider 
+search 
+ searches 
+seek 
+ seeks 
+scan 
+ scans 
+comprise
+expand 
+ expands 
+contain 
+contains 
+clude 
+cludes 
+fer 
+fers 
+fill 
+help
+repair
+ tell
+ told
+ to 
+ing 
+ spend 
+ spent 
+ spends 
+ grow 
+ grows
+ suggest 
+ suggests 
+ say
+ said
+ says
+ begin
+ feel
+fer 
+ comment
+ concur 
+ concurs 
+ confirm 
+ confirms 
+ define
+ thinks
+ think
+ thought
+ fight
+ fought
+ discuss 
+ discusses
+ discussed
+indicate
+show
+claim
+ see 
+ sees 
+ seen 
+ prove
+ meets
+ meet 
+ met 
+ reveal
+ know 
+ knows 
+ knew
+ known
+ believe
+ize 
+izes
+ized
+ doesn
+ didn
+ accept
+ accepts
+ accepted
+tain
+join
+explain
+break
+broke
+broken
+ify 
+ified 
+ifies 
+ens 
+ening 
+ened 
+ arise
+ sit 
+ sits 
+ sat 
+ leave
+ choose
+ chose
+ enforce 
+ enforces
+ enforced
+ evolv
+ exist 
+ exists
+ existed
+ ignore
+examine
+exceed
+lose
+lost
+asserts
+assert 
+presents
+consist 
+consists
+propose
+create
+ceive
+agree 
+agrees
+agreed
+mit 
+mits 
+mitted
+ated 
+ized 
+travel
+restore
+ed 
+ed.
+ed,
+isn
+ won
+iate
+built
+occur 
+occurs 
+>----------------------------------<
+
+
+
+SIGNAL-WORDS TO HANDLE
+princip
+condition
+determinant
+ first 
+ second 
+ third 
+always
+never
+everywhere
+nowhere
+ rule
+definition
+mechanism
+process
+method
+system
+important
+ caus
+ result
+consequence
+ reason 
+argument
+outcome
+input
+output
+function
+element
+ part 
+unit 
+group
+cluster
+finally
+conclu
+relation
+barrier
+obstacle
+effect 
+effects
+task
+influence
+category
+classification 
+ type 
+theory
+supposition
+assum
+hypothesis
+connect
+analog
+premis 
+total 
+entirely 
+completely 
+summary
+attention
+beware
+scenario
+exchang
+chang
+modif
+variabl
+structur
+interact
+thought
+idea
+problem
+solution
+develop
+>----------------------------------<
+
+
+LINK-WORDS TO HANDLE
+ and 
+ or 
+ neither
+ nor 
+ either
+ as 
+ both 
+>----------------------------------<
+
+
+PREPOSITIONS TO HANDLE
+ on 
+ in 
+ of 
+ off 
+ beside
+ out 
+ into 
+ from 
+ atop 
+ under 
+ over 
+ with 
+ about 
+ at 
+by 
+between
+within
+without
+against
+ up 
+ down 
+ among
+through
+ for 
+in front of
+behind
+toward
+around
+beyond
+near
+until 
+ into 
+ prior 
+ above 
+ beneath 
+ across 
+>----------------------------------<
+
+
+
+NOUN-ANNOUNCERS TO HANDLE
+The 
+ the 
+ an 
+ a 
+A 
+An 
+ this 
+ those 
+ these 
+ some 
+ many 
+ my 
+ your 
+ his 
+ her 
+ its 
+ our 
+ their 
+My 
+Your 
+His 
+Her 
+Its 
+Our 
+Your 
+Their 
+>----------------------------------<
+
+
+
+NOUN-REPLACERS TO HANDLE
+ I 
+ you 
+ he 
+ she 
+ it 
+ we 
+ they 
+You 
+He 
+She 
+It 
+We 
+They 
+ me 
+ him 
+ us 
+ them 
+ mine 
+ yours 
+ hers 
+ ours 
+ theirs 
+myself
+yourself
+himself
+itself
+herself
+ourselves
+yourselves
+theirselves
+>----------------------------------<
+
+
+EINDE

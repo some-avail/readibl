@@ -1,0 +1,41 @@
+
+<!-- flashread.html version 1.2 matching flashread.nim version 0.84-0.85 -->
+<div class="row-main">
+  <div class="col-mid">
+    <form action="/flashread-form" method="POST" target="{{newtab}}">
+      <div class="mid-top">
+        Status:
+        <div class=statustext>
+          <p>
+          {{statustext}}<br>
+          {{statusdata}}
+          </p>
+        </div>
+      </div>
+      <div class="mid-mid">
+        <div class="mmid-left">
+          <p><button type="submit">{{submit}}</button></p>
+          {{{radiobuttons_1}}}
+        </div>
+        <div class="mmid-right">
+          <p>
+          {{{text_language}}}<br><br>
+          {{{taglist}}}
+          </p>
+          {{{checkboxes_1}}}
+        </div>
+      </div>
+
+      <div class="mid-bottom">
+        {{textbox-remark}}<br>
+        <textarea class = "pasted_textarea" name="pasted_text">{{pastedtext}}</textarea>
+        <textarea class = "url_textarea" name="url_text">{{urltext}}</textarea>
+      </div>
+    </form>
+  </div>
+
+  <div class="col-right">
+    <h4>Processed text or initial paths:</h4>
+    {{{processedtext}}}
+  </div>
+</div>

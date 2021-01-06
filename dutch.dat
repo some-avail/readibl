@@ -1,0 +1,525 @@
+Formatting-strings for parsing with Flashread.
+Language: dutch
+version: 1.3
+
+
+PUNCTUATION OF SENTENCES TO HANDLE
+.
+?
+!
+>----------------------------------<
+
+
+
+PUNCTUATION OF SENTENCE-PARTS TO HANDLE
+, 
+: 
+)
+>----------------------------------<
+
+
+PRONOUNS TO HANDLE
+ die 
+ dat 
+voordat
+nadat
+omdat
+opdat
+totdat
+doordat
+zodat
+welke
+waarmee
+waarbij
+waarover
+waardoor
+waarin
+waarvoor 
+ waar 
+ wat 
+ wie 
+ maar 
+ terwijl
+vanwege
+wanneer
+(
+>----------------------------------<
+
+
+VERBS TO HANDLE
+geweest
+word 
+wordt 
+worden
+ werden
+geworden
+heb 
+heeft
+hebben
+hadden
+gehad
+kunnen
+ kon 
+ konden
+ mag 
+ mogen
+ mocht 
+mochten
+wil 
+ wilde
+willen
+moet 
+moeten
+zal 
+zullen
+zou 
+zouden
+ kom 
+komt
+komen
+kwam
+kwamen
+gekomen
+blijft 
+blijven
+gebleven
+gaat
+gaan
+ ging
+gegaan
+laat 
+laten
+ liet 
+gelaten
+vindt 
+vinden
+gevonden
+ vond
+ zet
+zetten
+gezet
+ stel 
+stelt
+stellen
+steld
+ leg
+leggen
+gelegd 
+ lig 
+ligt
+liggen
+gelegen
+neem
+nemen
+genomen
+ brengt
+bracht
+brengen
+passen
+past
+ doet
+ deed 
+doen
+ doe 
+gedaan
+ maak
+maken 
+gemaakt
+haal 
+halen
+gehaald
+ dien 
+dient
+dienen
+gediend
+geldt
+gelden
+ moedigt
+moedigen
+gemoedigd
+ bevorder 
+bevordert
+bevorderen
+bevorderd
+stimuleer
+stimuleren
+realiseer
+realiseren
+ werk 
+werken
+werkt
+lijkt
+lijken
+verwezenlijkt
+verwezenlijken
+lopen
+loopt
+liep
+ sluit 
+sluiten
+gesloten
+ roep 
+ roepen
+  richt 
+richtte
+gericht
+richten
+tracht
+poogt 
+probeer
+staan
+staat
+stond
+betreft 
+handelt
+handelen
+handeld
+bepaalt
+bepalen
+beperken
+levert
+geef
+geven 
+leiden
+leidt
+geleid
+ volgen 
+volgt
+samenvatten
+samengevat
+gebeurd
+gebeurt 
+krijg
+kreeg
+kregen
+houdt
+houden
+ziet
+zien 
+bedoelen
+bedoelt
+ te 
+ is
+ was 
+ ben 
+ waren 
+ werd 
+ had 
+ kan 
+ testen 
+ geven 
+ opge
+ afge
+ aange
+ inge
+ uitge
+ doorge
+ hang
+zeggen
+zegt
+zeg
+zei 
+ verloopt
+eert
+eren
+eerde
+eerd
+weten 
+weet 
+noem
+stop
+start
+zoeken
+zoekt
+zocht
+kiest
+kiezen
+koos
+gekozen
+bouwen
+bouwt
+ denk 
+ denkt
+ denken
+ gedacht
+ tellen 
+ telt 
+ telde 
+ blijkt
+ bleek 
+ gebleken
+ blijk 
+ blijken
+schijnen
+schijnt
+scheen
+schenen
+gebruiken
+gebruikt
+betekent
+betekenen
+ kennen 
+ kent 
+ ken 
+ gekend
+ kijken
+ kijk 
+ kijkt
+ keek
+ gekeken
+ horen 
+ hoorde
+ hoort 
+ gehoord
+ zit 
+ zat 
+ gezeten
+ werp 
+werpt 
+wierp
+worpen
+leefde
+leef
+schrijven
+schrijf
+schreef
+geschreven
+vertrekt
+vertrekken
+beloven
+belooft
+beloofd
+hoopt
+hopen
+gehoopt
+steken
+stak
+gestoken
+steunt
+steunen
+gesteund
+voelt
+voelen
+gevoeld
+valt
+vallen
+breekt
+brak
+gebroken
+veroorza
+nemen 
+neem 
+nam 
+genomen
+dragen
+droeg
+draag
+spelen
+speelt
+gespeeld
+trek
+trok
+igt
+igen
+geplaatst
+gelegd
+ toege
+begint
+beginnen
+moest
+ kon 
+ konden 
+ wou 
+ wilden 
+ mocht
+verdwijn
+verdween
+verdwenen
+dek 
+dekt 
+dekken 
+wonen
+woont
+begrijp
+begrepen
+deelt 
+deelde 
+deeld 
+wijst 
+wijzen 
+wees 
+wezen 
+ont
+d 
+>----------------------------------<
+
+
+
+SIGNAL-WORDS TO HANDLE
+princip
+voorwaarde
+determinant
+altijd
+nooit
+overal
+nergens
+beginsel
+ regel 
+ regels 
+defini
+mechanisme
+proces
+methode
+systeem
+stelsel
+belangrijk
+oorzaak
+gevolg
+ reden 
+ redenen
+argument
+consequentie
+input
+output
+element
+onderdeel
+onderdelen
+groep
+cluster
+ten slotte
+conclu
+relatie
+gerelateerd
+hindernis
+barri
+effecten
+effect 
+functie
+taak
+taken
+invloed
+categorie
+klasse
+theor
+veronderstelling
+verband 
+analoog
+hypothese
+aanname
+stelling
+totaal 
+geheel 
+volledig
+samenvatting
+bewijs
+bewijzen
+aanwijzing
+gedachte
+idee
+scenario
+verloop
+essenti
+proble
+oplossing
+overeenkomst
+verschil
+verander
+variab
+wijzig
+uitkomst
+structuur
+interact
+uitwissel
+wisselwerk
+eerste
+tweede
+derde
+ontwikkel
+>----------------------------------<
+
+
+
+LINK-WORDS TO HANDLE
+ en 
+ of 
+ danwel
+ noch
+ tevens 
+ ook 
+ als 
+ indien 
+ hetzij 
+ wegens 
+>----------------------------------<
+
+
+PREPOSITIONS TO HANDLE
+ in 
+ uit 
+ op 
+ naast 
+ onder 
+ over 
+ tussen 
+ bij 
+ van 
+ door 
+ voor 
+ achter 
+ na 
+ tegen 
+ aan 
+ binnen 
+ buiten 
+ met 
+ tot 
+ naar 
+ tijdens 
+ ter 
+ ten 
+>----------------------------------<
+
+
+NOUN-ANNOUNCERS TO HANDLE
+De 
+ de 
+ het 
+ een 
+Een 
+ mijn 
+Mijn 
+ jouw 
+ haar 
+ onze 
+ hun 
+ deze 
+ dit 
+ sommige 
+ vele 
+>----------------------------------<
+
+
+NOUN-REPLACERS TO HANDLE
+ ik 
+ jij 
+ hij 
+ wij 
+ jullie 
+ zij 
+ ze 
+Ik 
+Jij 
+Hij
+Wij 
+Jullie 
+Zij 
+Ze 
+ mij 
+ jou 
+ hem 
+ ons 
+ hen
+>----------------------------------<
+
+
+EINDE

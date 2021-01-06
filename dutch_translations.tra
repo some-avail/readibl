@@ -1,0 +1,27 @@
+# Translation-file for flashread
+# target-language: dutch
+# version 1.0
+
+
+>>>flashread-form<<<
+Paste from the clipboard___Plakken vanaf het klembord
+Transfer belonging text___Bijbehorende tekst overzetten
+Calculate word-frequencies___Woord-frequenties berekenen
+Reformat transferred text___Overgezette tekst herformatteren
+Choose and run___Kiezen en uitvoeren
+Your item will be pasted here (text or web-link):___Je item zal hier geplakt worden (tekst of webkoppeling):
+Paste from the clipboard to the input-box.___Plak vanaf het klembord in het invoervakje.
+Press button to paste the content of the clipboard.___Knop indrukken om de inhoud van het klembord te plakken.
+Paste from the clipboard to the input-box.___Vanaf het klembord naar het invoervak plakken.
+Output number of characters:___Uitgevoerde aantal tekens:
+Text transferred to right column___Tekst overgezet naar rechter kolom
+Pasted. Now transfer text from link or pasted text.___Geplakt. Nu tekst of koppeling overzetten / omzetten.
+Calculated frequencies for minimal word-length:___Berekende frequenties voor de minimale woordlengte:
+Text-language:___Taal vd tekst:
+Pick taglist:___Kies merklijst:
+Jump to end-step___Spring naar eindstap
+Summarize (extract certain sentences)___Samenvatten (bepaalde zinnen onttrekken)
+Perform in-site reformating___Binnen webzijde herformatteren
+Open result in new tab___Uitkomst in nieuwe tab
+Server-start: ___ Server-start: 
+Text Reformatter___Tekstomvormer
