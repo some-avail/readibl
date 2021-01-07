@@ -414,6 +414,12 @@ iate
 built
 occur 
 occurs 
+perform 
+performs 
+push 
+pushes
+pull 
+pulls 
 >----------------------------------<
 
 
@@ -538,6 +544,9 @@ until
  above 
  beneath 
  across 
+ onto 
+ inside 
+ outside 
 >----------------------------------<
 
 

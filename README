@@ -1,5 +1,15 @@
-Readibl is a program to format normal text or html, so that it is easier to read and process mentally.
+Readibl Text Reformatter is a program to format normal text or html, so that it is easier to read and process mentally. The program was previously called FlashRead.
 The program is written in the language Nim.
+
+Pre-compiled packages will be added soon.
+Impatient persons with knowlegde of nim can download the code and run the command:
+nim c -d:ssl -r flashread.nim
+
+which will compile the code to an executable, which will then be executed. The running program acts then acts as a web-server, which can be invoked from a web-browser, by typing:
+http://localhost:5002/flashread-form
+
+Then you get the user-interface in the browser. From there on you can use the clipboard-contents to either reformat a copied text, or use a copied web-address to process and reformat. Experiment with the switches.
+
 
 To be continued...
 
