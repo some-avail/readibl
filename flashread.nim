@@ -15,7 +15,7 @@ in either one of those exists xbc.h, which is needed.
 
 
 VERSION-LINKS = CO-WORKING MODULES
-flashread     process_text   webgui_def    jo_htmlgen    stringstuff  f*.css  source_files outer_html.h* flashread.h* settings*
+flashread     process_text   webgui_def    jo_htmlgen    stringstuff  f*.css  source_files outer_html.h* flashread.h* settings*   fr_tools   loadgui
 070           0.25            0.2           0.2           0.1
 071           0.25/0.26       0.2           0.2           0.1           0.67
 080           0.26            0.2           0.2           0.1           0.68
@@ -23,7 +23,7 @@ flashread     process_text   webgui_def    jo_htmlgen    stringstuff  f*.css  so
 085           0.28            0.4           0.4           0.1           0.70    0.1           1.0             1.0         1.0
 086           0.28            0.5           0.4           0.1           0.70    0.1           1.0             1.1         1.0
 087           0.29
-
+089           0.30            0.6           0.5           0.1           0.80    0.2           1.1             1.2         1.1         0.1       0.1
 
 
 
@@ -58,14 +58,14 @@ ADAP HIS
   -oplossing C;
     -javascript toepassen
 -improve reformating in-situ
+-update titel
+-talen-info verhuizen van de broncode naar de tekstbestanden
 
 
 ADAP NOW
 
 
 ADAP FUT
--update titel
--talen-info verhuizen van de broncode naar de tekstbestanden
 -check if additional sources can be loaded like css and pictures
 -prevalidate language-dat-file before running
 -javascript toevoegen
@@ -98,7 +98,7 @@ var
 
 
 const 
-  versionfl:float = 0.88
+  versionfl:float = 0.89
   minimal_word_lengthit = 7
   appnamebriefst:string = "RD"
   appnamenormalst = "Readibl"
@@ -116,9 +116,10 @@ if sourcefilestatust != "":
 else:
   statustekst = newlang("Press button to paste the content of the clipboard.")
 
+
 settings:
-  port = Port(5002) # development
   # port = Port(5003)   # production
+  port = Port(parseInt(readOptionFromFile("port-number", "value")))  # development
 
 
 var 

@@ -10,6 +10,7 @@ import strutils
 var 
   interfacelanguagestatust*: string = ""
   test: string
+  versionfl: float = 0.1
 
 
 

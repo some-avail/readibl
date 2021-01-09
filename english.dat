@@ -83,6 +83,7 @@ came
 become 
 stay
 keep
+kept
 remain
 goes 
  go 
@@ -338,6 +339,7 @@ claim
  see 
  sees 
  seen 
+ saw 
  prove
  meets
  meet 
@@ -420,6 +422,12 @@ push
 pushes
 pull 
 pulls 
+ hear 
+ hears 
+live
+ hide
+ hid 
+ hidden
 >----------------------------------<
 
 
@@ -612,7 +620,7 @@ itself
 herself
 ourselves
 yourselves
-theirselves
+themselves
 >----------------------------------<
 
 
