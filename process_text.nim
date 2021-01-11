@@ -47,7 +47,7 @@ import fr_tools
 
 
 const 
-  versionfl:float = 0.30
+  versionfl:float = 0.31
 
   input_tekst = "chimpansee noot mies een chimpansee is een leuk dier\pde chimpansee is het slimste dier naar het schijnt.\pmaar naast de chimpansee zijn er ook andere slimme \pdieren zoals de raaf, de dolfijn en de hond."
   tekst = "pietje staat. gister niet, maar toch. wat\pjantje. wimpie, onno\pkeesje.grietje,antje\pdirkje"
@@ -653,7 +653,7 @@ proc extractSentencesFromText(input_tekst, languagest:string) :string =
               
               if sentencest.contains(line):
                 # echo line
-                if sentencest.len < 500 and sentencecountit > introductionit:
+                if sentencest.len < 5000 and sentencecountit > introductionit:
                   summarysq.add(sentencest)
                   # to prevent more adds for more extraction-words
                   break
@@ -697,6 +697,115 @@ proc extractSentencesFromText(input_tekst, languagest:string) :string =
     echo "Could not open file!"
 
   return summaryst
+
+
+proc new_extractSentencesFromText(input_tekst, languagest:string) :string =
+  #[ 
+  Process the input-text by extracting sentences that have a certain 
+  string in them, so that a summary arises.
+  Use summary-definition-file (like summary_english.dat)
+  Users may also use  a custom-file for a   specific subject 
+  (for example for a history-text or a political text).
+  
+  ADAP FUT
+  -code is copied from proc applyDefinitionFileToText and has to be 
+  heavily pruned.
+  ]#
+
+
+  var 
+    myfile: File
+
+    blockseparatorst = ">----------------------------------<"
+    lastline: string
+    phasetekst:string = input_tekst
+    # def_filenamest:string = "summary_" & languagest & ".dat"
+    def_filenamest:string = languagest & ".dat"
+
+    sentencesq: seq[string] = phasetekst.split(".")
+    sentencecountit: int = 0
+    summarysq: seq[string] = @[]
+    summaryst: string
+    processingbo: bool
+    # the number of lines always added from the introduction
+    introductionit: int = 4
+
+  echo sentencesq
+
+  if open(myfile, def_filenamest):    # try to open the def-file
+    try:
+
+      echo "\n=====Begin extraction===="
+      # walk thru the sentences of the input-text
+      for sentencest in sentencesq:
+        echo sentencest
+        # add the first sentences always to the summary
+        if sentencecountit <= introductionit:
+          summarysq.add(sentencest)
+
+        processingbo = false  # header not yet reached
+
+        # walk thru the lines of the def-file
+        for line in myfile.lines:
+          lastline = line
+
+          # check for block-header
+          if line == "SIGNAL-WORDS TO HANDLE":
+            processingbo = true
+          elif processingbo:
+
+            if line != blockseparatorst:   # block-separating string
+
+              # echo "line = " & line
+              
+              if sentencest.contains(line):
+                # echo line
+                if sentencest.len < 5000 and sentencecountit > introductionit:
+                  summarysq.add(sentencest)
+                  # to prevent more adds for more extraction-words
+                  break
+            else:
+              processingbo = false
+
+        sentencecountit += 1
+        # reset to first line of file
+        myfile.setFilePos(0)
+
+      echo "===End of extraction ===="
+
+      echo phasetekst
+      # concatenate extracted sentences to text
+      summaryst = ""
+      for senst in summarysq:
+        summaryst &= strip(senst, true, true) & ". "
+
+    except IOError:
+      echo "IO error!"
+    
+    except RangeError:
+      echo "\p\p+++++++ search-config not found +++++++++++\p"
+      echo "You have probably entered a search-config that could not be found. \p" &
+          "Re-examine you search-config. \p" &
+          "The problem originated probably in the above EDIT FILE-block"
+      let errob = getCurrentException()
+      echo "\p******* Technical error-information ******* \p" 
+      echo "Last def-file-line read: " & lastline & "\p"
+      echo repr(errob) & "\p****End exception****\p"
+
+    
+    except:
+      let errob = getCurrentException()
+      echo "\p******* Unanticipated error ******* \p" 
+      echo "Last def-file-line read: " & lastline & "\p"
+      echo repr(errob) & "\p****End exception****\p"
+        
+    finally:
+      close(myfile)
+  else:
+    echo "Could not open file!"
+
+  return summaryst
+
 
 
 proc replaceInText*(input_tekst, languagest, preprocesst:string):string =

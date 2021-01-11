@@ -29,7 +29,7 @@ flashread     process_text   webgui_def    jo_htmlgen    stringstuff  f*.css  so
 
 ADAP HIS
 -moustachu invoeren
-  -construct maken (c)
+
   -html aanpassen
 -definitionize / variablize remaining controls
   v-setDropDownSelection to jo_htmlgen
