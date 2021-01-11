@@ -1,12 +1,11 @@
-## Readibl Text Reformatter
+##Readibl Text Reformatter
 
-[I'm an inline-style link](https://www.test.net)
 
 Readibl Text Reformatter is a program to format normal text or html, so that it is easier to read and process mentally. The program was previously called FlashRead.
 The program is written in the language Nim.
 
 
-INSTALLATION ON LINUX:
+#### Installation on linux
 -download latest linux-release (tar.gz).
 -unpack, place it somewhere in your user-folder, and run the executable "flashread".
 -to access the local web-server you just started, type: http://localhost:5050/flashread-form
@@ -15,14 +14,13 @@ INSTALLATION ON LINUX:
 If the paths you see on the webpage dont match the location of the application, adjust and run the linux-script flashread_sh. If the app is started from the dir where the application resides, path-problems can be avoided.
 
 
-
-INSTALLATION ON WINDOWS:
+####Installation on windows
 -download latest windows-release (.zip)
 -unpack, place it somewhere in your user-folder, and run the executable "flashread".
 -to access the local web-server you just started, type: http://localhost:5050/flashread-form
 
 
-USAGE
+####Usage
 Then you get the user-interface in the browser. From there on you can use the clipboard-contents to either reformat a copied text, or use a copied web-address to process and reformat. Experiment with the switches.
 In: settings_flashread.conf:
 -the port-number can be adjusted
@@ -31,7 +29,7 @@ In: settings_flashread.conf:
 
 
 
-INSTALLATION BY BUILDING (for developers):
+####Installation by building (for developers)
 Developer with knowledge of nim can download the code and do the following:
 -install external components:
 > nimclipboard-lib:
@@ -51,6 +49,4 @@ The port-number can be adjusted in: settings_flashread.conf
 
 
 Created by Joris Bollen.
-
-To be continued...
 
