@@ -3,7 +3,7 @@ The program is written in the language Nim.
 
 
 INSTALLATION ON LINUX:
--download RD 0.89 tar.gz.
+-download latest linux-release (tar.gz).
 -unpack, place it somewhere in your user-folder, and run the executable "flashread".
 -to access the local web-server you just started, type: http://localhost:5050/flashread-form
 -the portnumber can now be changed in the configuration-file: settings_flashread.conf
@@ -13,7 +13,17 @@ If the paths you see on the webpage dont match the location of the application, 
 
 
 INSTALLATION ON WINDOWS:
-Installation-packages are forthcoming for windows.
+-download latest windows-release (.zip)
+-unpack, place it somewhere in your user-folder, and run the executable "flashread".
+-to access the local web-server you just started, type: http://localhost:5050/flashread-form
+
+
+USAGE
+Then you get the user-interface in the browser. From there on you can use the clipboard-contents to either reformat a copied text, or use a copied web-address to process and reformat. Experiment with the switches.
+In: settings_flashread.conf:
+-the port-number can be adjusted
+-interface-language can set (besides english only dutch for, but you can make you own language-file *translations.tra).
+-possible processing text-languages; only english.dat en dutch.dat exist for now, but can make your own.
 
 
 
@@ -35,7 +45,6 @@ http://localhost:5050/flashread-form
 
 The port-number can be adjusted in: settings_flashread.conf
 
-Then you get the user-interface in the browser. From there on you can use the clipboard-contents to either reformat a copied text, or use a copied web-address to process and reformat. Experiment with the switches.
 
 Created by Joris Bollen.
 
