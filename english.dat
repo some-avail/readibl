@@ -90,7 +90,7 @@ goes
 going 
 went 
 gone 
-let 
+ let 
  lets 
 find 
  finds 
@@ -201,8 +201,8 @@ look
  looks 
 erase 
  erases 
-follow 
- follows 
+follow
+follows
 summarize 
  summarizes 
 arrive 
@@ -428,6 +428,9 @@ live
  hide
  hid 
  hidden
+ assist 
+ assists
+delete
 >----------------------------------<
 
 
@@ -520,7 +523,7 @@ PREPOSITIONS TO HANDLE
  in 
  of 
  off 
- beside
+beside
  out 
  into 
  from 
@@ -548,13 +551,14 @@ beyond
 near
 until 
  into 
- prior 
- above 
- beneath 
- across 
+prior 
+above 
+beneath 
+across 
  onto 
- inside 
+inside 
  outside 
+below
 >----------------------------------<
 
 
