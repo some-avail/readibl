@@ -1,3 +1,7 @@
+## Readibl Text Reformatter
+
+[I'm an inline-style link](https://www.test.net)
+
 Readibl Text Reformatter is a program to format normal text or html, so that it is easier to read and process mentally. The program was previously called FlashRead.
 The program is written in the language Nim.
 
