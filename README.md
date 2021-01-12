@@ -2,7 +2,9 @@
 
 ![wikipedia_flower.png](screenshots/wikipedia_flower.png)
 
-See below for more screenshots.
+
+[See below for more screenshots](#more-screenshots)
+[Go to downloadable releases for windows and linux](https://github.com/some-avail/readibl/releases "Downloads for Readible")
 
 Readibl Text Reformatter is a program to format normal text or html, so that it is easier to read and process mentally. The program was previously called FlashRead.
 The program is written in the language Nim.
@@ -49,10 +51,11 @@ nim c -d:ssl -r flashread.nim
 which will compile the code to an executable, which will then be executed. The running program then acts as a local  web-server, which can be invoked from a web-browser, by typing:
 http://localhost:5050/flashread-form
 
-
 Created by Joris Bollen.
 
-More pics:
+
+<a name="more-screenshots">More screenshots:</a>
+
 Before application of readible reformatting:
 ![before_readible.png](screenshots/before_readible.png)
 
