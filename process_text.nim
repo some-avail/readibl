@@ -47,7 +47,7 @@ import fr_tools
 
 
 const 
-  versionfl:float = 0.31
+  versionfl:float = 0.32
 
   input_tekst = "chimpansee noot mies een chimpansee is een leuk dier\pde chimpansee is het slimste dier naar het schijnt.\pmaar naast de chimpansee zijn er ook andere slimme \pdieren zoals de raaf, de dolfijn en de hond."
   tekst = "pietje staat. gister niet, maar toch. wat\pjantje. wimpie, onno\pkeesje.grietje,antje\pdirkje"
@@ -58,13 +58,13 @@ Alle lelijke trekjes die de Europese politiek de afgelopen jaren vertoonde, kwam
 
   testtekst_eng = """
   Testing-text here. The first principle is good. But then. Under
-the condition of something. Not any more. sometekst.
-The first one is understood. what is up. The third is not.
+the condition of something. Not any more. sometekst. 
+The first one is understood. what is up. The third and second are not. 
 
-Point taken. You must do this. That is always good.
+Point taken. You must do this. That is always good. 
 Some other text without signalling words. And 
 some abbreviations e.g. in the U.S., in the U.K.
-But never here. Bye all....
+But never here. Bye all rules....
 """
 
   testtekst_nl = """
@@ -591,7 +591,7 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest,
     echo repr(errob) & "\p****End exception****\p"
 
 
-proc extractSentencesFromText(input_tekst, languagest:string) :string =
+proc old_extractSentencesFromText(input_tekst, languagest:string) :string =
   #[ 
   Process the input-text by extracting sentences that have a certain 
   string in them, so that a summary arises.
@@ -699,22 +699,30 @@ proc extractSentencesFromText(input_tekst, languagest:string) :string =
   return summaryst
 
 
-proc new_extractSentencesFromText(input_tekst, languagest:string) :string =
+proc extractSentencesFromText(input_tekst, languagest:string) :string =
   #[ 
   Process the input-text by extracting sentences that have a certain 
-  string in them, so that a summary arises.
-  Use summary-definition-file (like summary_english.dat)
-  Users may also use  a custom-file for a   specific subject 
-  (for example for a history-text or a political text).
+  search-string in them, so that a summary arises.
+  The search-strings originate from the language-files (like english.dat),
+  specifically the category SIGNAL-WORDS TO HANDLE.
+
+  The previously used summary-definition-file (like summary_english.dat)
+  are currently not used.
+
+  ADAP HIS
+  -prune and correct the code
+
+  ADAP NOW
   
   ADAP FUT
-  -code is copied from proc applyDefinitionFileToText and has to be 
-  heavily pruned.
+  -users may also use a custom-file for a specific subject 
+  (for example for a history-text or a political text), for which separate 
+  files must be reinstated, plus some selection-way.
   ]#
 
 
   var 
-    myfile: File
+    deffile: File
 
     blockseparatorst = ">----------------------------------<"
     lastline: string
@@ -722,58 +730,80 @@ proc new_extractSentencesFromText(input_tekst, languagest:string) :string =
     # def_filenamest:string = "summary_" & languagest & ".dat"
     def_filenamest:string = languagest & ".dat"
 
-    sentencesq: seq[string] = phasetekst.split(".")
+    sentencesq: seq[string] = phasetekst.split(". ")
     sentencecountit: int = 0
     summarysq: seq[string] = @[]
     summaryst: string
     processingbo: bool
     # the number of lines always added from the introduction
     introductionit: int = 4
+    signal_strings_starting_pointit:int64 = 0
+    tbo = false
+    countit: int
+    leftpartst, rightpartst: string
+    stringsizeit:int = 1500
+    linesq: seq[string] 
 
-  echo sentencesq
 
-  if open(myfile, def_filenamest):    # try to open the def-file
+  if tbo: echo sentencesq
+
+  if open(deffile, def_filenamest):    # try to open the def-file
     try:
 
-      echo "\n=====Begin extraction===="
+      if tbo: echo "\n=====Begin extraction===="
       # walk thru the sentences of the input-text
       for sentencest in sentencesq:
-        echo sentencest
+        if tbo: echo sentencest
         # add the first sentences always to the summary
         if sentencecountit <= introductionit:
-          summarysq.add(sentencest)
+          if sentencest.len < stringsizeit:
+            summarysq.add(sentencest)
+        else:
+          processingbo = false  # header not yet reached
 
-        processingbo = false  # header not yet reached
-
-        # walk thru the lines of the def-file
-        for line in myfile.lines:
-          lastline = line
-
-          # check for block-header
-          if line == "SIGNAL-WORDS TO HANDLE":
+          if signal_strings_starting_pointit > 0:
+            deffile.setFilePos(signal_strings_starting_pointit)
             processingbo = true
-          elif processingbo:
 
-            if line != blockseparatorst:   # block-separating string
+          # -----------walk thru the lines of the def-file------------
+          for line in deffile.lines:
+            lastline = line
 
-              # echo "line = " & line
-              
-              if sentencest.contains(line):
-                # echo line
-                if sentencest.len < 5000 and sentencecountit > introductionit:
-                  summarysq.add(sentencest)
+            # check for block-header
+            if line == "SIGNAL-WORDS TO HANDLE":
+              processingbo = true
+              signal_strings_starting_pointit = deffile.getFilePos() + 1
+            elif processingbo:
+
+              if line != blockseparatorst:   # block-separating string; end of job
+
+                # echo "line = " & line
+                
+                if sentencest.contains(line):
+                  # echo line
+                  if sentencest.len < stringsizeit:   # to skip long irrelevant lists
+                    countit = count(sentencest, '.')
+                    if countit == 0 or  countit > 1:
+                      summarysq.add(sentencest)
+                    elif countit == 1:
+                      linesq = sentencest.split('.')
+                      leftpartst = linesq[0]
+                      rightpartst = linesq[1]
+                      if leftpartst.contains(line): summarysq.add(leftpartst)
+                      if rightpartst.contains(line): summarysq.add(rightpartst)
                   # to prevent more adds for more extraction-words
                   break
-            else:
-              processingbo = false
+              else:
+                # stop because end-of-signalwords
+                break
 
         sentencecountit += 1
-        # reset to first line of file
-        myfile.setFilePos(0)
+        
 
-      echo "===End of extraction ===="
+      if tbo: echo "===End of extraction ===="
 
-      echo phasetekst
+      if tbo: echo phasetekst
+
       # concatenate extracted sentences to text
       summaryst = ""
       for senst in summarysq:
@@ -800,7 +830,7 @@ proc new_extractSentencesFromText(input_tekst, languagest:string) :string =
       echo repr(errob) & "\p****End exception****\p"
         
     finally:
-      close(myfile)
+      close(deffile)
   else:
     echo "Could not open file!"
 
@@ -865,4 +895,6 @@ when isMainModule:
 
   # echo handleTextPartsFromHtml("https://nl.wikipedia.org/wiki/Geschiedenis", "extract", "dutch", "paragraph-only")
   # echo "hoi"
-  echo getTitleFromWebsite("https://nl.wikipedia.org/wiki/Geschiedenis")
+  # echo getTitleFromWebsite("https://nl.wikipedia.org/wiki/Geschiedenis")
+  # echo new_extractSentencesFromText(testtekst_eng, "english")
+  echo extractSentencesFromText(testtekst_eng, "english")
