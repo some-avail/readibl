@@ -17,6 +17,7 @@ PUNCTUATION OF SENTENCE-PARTS TO HANDLE
 >----------------------------------<
 
 
+
 PRONOUNS TO HANDLE
  that 
 before
@@ -122,6 +123,7 @@ match
  do 
 don't
  does 
+ did 
  done
 make 
  makes 
@@ -431,6 +433,10 @@ live
  assist 
  assists
 delete
+enable
+disable
+flect 
+flects
 >----------------------------------<
 
 
