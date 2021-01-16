@@ -301,7 +301,7 @@ proc applyDefinitionFileToText(input_tekst, languagest:string): string =
   # reads now from preloaded textfilestring from module source_files
 
   var 
-    blockheadar: seq[string] = @[
+    blockheadersq: seq[string] = @[
         "PUNCTUATION OF SENTENCES TO HANDLE",
         "PUNCTUATION OF SENTENCE-PARTS TO HANDLE",
         "PRONOUNS TO HANDLE",
@@ -310,7 +310,9 @@ proc applyDefinitionFileToText(input_tekst, languagest:string): string =
         "LINK-WORDS TO HANDLE",
         "PREPOSITIONS TO HANDLE",
         "NOUN-ANNOUNCERS TO HANDLE",
-        "NOUN-REPLACERS TO HANDLE"]
+        "NOUN-REPLACERS TO HANDLE",
+        "AMBIGUOUS WORD-FUNCTIONS TO HANDLE"]
+
     blockphasest: string = ""
     blocklineit: int
     blockseparatorst = ">----------------------------------<"
@@ -330,7 +332,7 @@ proc applyDefinitionFileToText(input_tekst, languagest:string): string =
       lastline = line
 
       # check for block-header
-      if line in blockheadar:
+      if line in blockheadersq:
         blockphasest = line
         echo blockphasest
         blocklineit = 0
@@ -367,10 +369,10 @@ proc applyDefinitionFileToText(input_tekst, languagest:string): string =
               phasetekst = replace(phasetekst, line, "<span style=color:magenta>" & line & "</span>")
           elif blockphasest == "SIGNAL-WORDS TO HANDLE":
             if use_custom_replacebo:
-              phasetekst = customReplace(phasetekst, line, "<span style=color:orange>" & line & "</span>",
+              phasetekst = customReplace(phasetekst, line, "<span style=color:#ff6600>" & line & "</span>",
                                     true, "", @[])
             else:
-              phasetekst = replace(phasetekst, line, "<span style=color:orange>" & line & "</span>")
+              phasetekst = replace(phasetekst, line, "<span style=color:#ff6600>" & line & "</span>")
           elif blockphasest == "LINK-WORDS TO HANDLE":
             if use_custom_replacebo:
               phasetekst = customReplace(phasetekst, line, "<span style=color:red>" & line & "</span>",
@@ -385,16 +387,22 @@ proc applyDefinitionFileToText(input_tekst, languagest:string): string =
               phasetekst = replace(phasetekst, line, "<span style=color:limegreen>" & line & "</span>")
           elif blockphasest == "NOUN-ANNOUNCERS TO HANDLE":
             if use_custom_replacebo:
-              phasetekst = customReplace(phasetekst, line, "<span style=color:brown>" & line & "</span>",
+              phasetekst = customReplace(phasetekst, line, "<span style=color:#b35919>" & line & "</span>",
                                     true, "", @[])
             else:
-              phasetekst = replace(phasetekst, line, "<span style=color:brown>" & line & "</span>")
+              phasetekst = replace(phasetekst, line, "<span style=color:#b35919>" & line & "</span>")
           elif blockphasest == "NOUN-REPLACERS TO HANDLE":
             if use_custom_replacebo:
               phasetekst = customReplace(phasetekst, line, "<span style=color:darkturquoise>" & line & "</span>",
                                     true, "", @[])
             else:
               phasetekst = replace(phasetekst, line, "<span style=color:darkturquoise>" & line & "</span>")
+          elif blockphasest == "AMBIGUOUS WORD-FUNCTIONS TO HANDLE":
+            if use_custom_replacebo:
+              phasetekst = customReplace(phasetekst, line, "<span style=color:#e6b800>" & line & "</span>",
+                                    true, "", @[])
+            else:
+              phasetekst = replace(phasetekst, line, "<span style=color:#e6b800>" & line & "</span>")
 
 
         else:
@@ -706,7 +714,7 @@ proc extractSentencesFromText(input_tekst, languagest:string) :string =
   The search-strings originate from the language-files (like english.dat),
   specifically the category SIGNAL-WORDS TO HANDLE.
 
-  The previously used summary-definition-file (like summary_english.dat)
+  The previously used summary-definition-files (like summary_english.dat)
   are currently not used.
 
   ADAP HIS
