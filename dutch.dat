@@ -49,7 +49,7 @@ wanneer
 VERBS TO HANDLE
 geweest
 word 
-wordt 
+wordt
 worden
  werden
 geworden
@@ -109,6 +109,7 @@ gelegd
 ligt
 liggen
 gelegen
+ lag 
 neem
 nemen
 genomen
@@ -125,7 +126,7 @@ gedaan
  maak
 maken 
 gemaakt
-haal 
+haalt 
 halen
 gehaald
  dien 
@@ -145,7 +146,6 @@ stimuleer
 stimuleren
 realiseer
 realiseren
-werken
 werkt
 lijkt
 lijken
@@ -167,7 +167,7 @@ tracht
 poogt 
 probeer
 staan
-staat
+staat 
 stond
 betreft 
 handelt
@@ -181,7 +181,6 @@ geef
 geven 
 leiden
 leidt
-geleid
  volgen 
 volgt
 samenvatten
@@ -197,6 +196,7 @@ ziet
 zien 
 bedoelen
 bedoelt
+bedoel 
  te 
  is 
  was 
@@ -219,12 +219,9 @@ zegt
 zeg
 zei 
  verloopt
-eert
-eren
-eerde
-eerd
 weten 
 weet 
+wist
 noem
 stop
 start
@@ -270,15 +267,16 @@ betekenen
  hoorde
  hoort 
  gehoord
- zit 
+zitten
+zit 
  zat 
- gezeten
+gezeten
  werp 
 werpt 
 wierp
 worpen
 leefde
-leef
+leef 
 schrijven
 schrijf
 schreef
@@ -292,16 +290,16 @@ hoopt
 hopen
 gehoopt
 steken
-stak
+stak 
 gestoken
 steunt
 steunen
 gesteund
 voelt
-voelen
+voelen 
 gevoeld
 valt
-vallen
+viel
 breekt
 brak
 gebroken
@@ -316,7 +314,8 @@ draag
 spelen
 speelt
 gespeeld
-trek
+trekken 
+trekt
 trok
 igt
 igen
@@ -349,7 +348,7 @@ wijst
 wijzen 
 wees 
 wezen 
-ont
+ ont
 toon
 tonen 
 draaien 
@@ -361,6 +360,53 @@ biedt
 bieden
 bood 
 geboden
+scheiden 
+scheidt 
+scheidde 
+gescheiden
+raken 
+raakt 
+raakte 
+geraakt 
+meldt 
+meld 
+melden 
+gemeld 
+slaan
+slaat
+sla 
+sloeg
+geslagen
+kopen
+koopt
+kocht
+vormt
+vormd
+vormen
+eert 
+eerde 
+eerd 
+wek 
+wekt 
+wekken 
+wekte 
+gewekt
+bind
+bonden
+voeren
+voert
+voerd
+spreken
+spreek
+sprak 
+gesproken
+praten
+praat
+merkt
+merken
+hoeven
+hoeft
+hoefde
 >----------------------------------<
 
 
@@ -487,6 +533,7 @@ PREPOSITIONS TO HANDLE
  tijdens 
  ter 
  ten 
+ om 
 >----------------------------------<
 
 
@@ -529,6 +576,13 @@ Ze
  hem 
  ons 
  hen
+>----------------------------------<
+
+
+
+AMBIGUOUS WORD-FUNCTIONS TO HANDLE
+ zijn 
+ ge
 >----------------------------------<
 
 
