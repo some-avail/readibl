@@ -459,7 +459,7 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest,
   Based on the webaddress as input-parameter, the webpage is downloaded.
   
   if typest is extract (old procedure): 
-  Then the html is parsed and pieces of readable text (aot markup-codes)
+  Then the html is parsed and pieces of readable text (aot most markup-codes)
   are extracted, concatenated and returned to procedure.
 
   if typest is replace:
@@ -467,7 +467,26 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest,
   are cut out, reformatted and pasted back into their original location.
   Thus a reformatted webpage arizes and is returned.
 
+  More precise flow:
+  the procedure is a loop which:
+  -searches for certain tags and handles (extracts or replaces) the elements 
+  that go with it. These tags are placed in a sequence-variable that can be 
+  expanded when needed.
+  -cycles thru the tag-sequence seeking for the handlable tag that comes first, 
+  seeking from a certain position, and moving on.
+  -when the starting-part of this tag is found (like <p), then the 
+  ending-part of it is searched for (like </p>).
+  -when both are found the element / string is handled; that is either: 
+  extracted and appended, or 
+  cut, replaced and put back.
+
+  ADAP HIS:
+  -debug repetition of text-parts; repetition is caused by the website 
+  itself! That is the article is repeted for different show-cases.
+
   ADAP NOW:
+
+
    ]#
 
 
@@ -516,7 +535,7 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest,
     # substringcountit = count(websitest, "<p>")
     # echo "\ptagcount = " & $substringcountit
 
-    beginposit = -1
+    posit = -1
 
     while not allfoundbo:   # not all tags found yet
       outerloopit += 1
@@ -529,7 +548,6 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest,
       # walk thru the tags and determine the first one of them (smallest position)
       for tagsq in extractable_tagsq2:
         if tbo: echo "tagindexit = " & $tagindexit
-        posit = beginposit
         tagstartst = tagsq[1]
         thisoccurit = find(websitest, tagstartst, posit + 1)
         if thisoccurit > -1:    # found
@@ -540,7 +558,6 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest,
             if tbo: echo "found tag"
         tagindexit += 1
 
-      beginposit = smallestposit
       posit = smallestposit
       curtagsq = extractable_tagsq2[smallestindexit]
       curtagnamest = curtagsq[0]
@@ -549,7 +566,7 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest,
       if tbo: echo curtagnamest
       if tbo: echo "posit = " & $posit
 
-      if smallestposit != bigassit:   # tag found
+      if smallestposit != bigassit:   # at least one tag found
         # test if it is not a similar tag, like <picture> for <p>
         test = websitest[posit + len(curtagstartst) .. posit + len(curtagstartst)]
         if tbo: echo test
@@ -901,8 +918,8 @@ when isMainModule:
   # echo handleTextPartsFromHtml("https://nl.wikipedia.org/wiki/Geschiedenis", "replace", "dutch")
   # echo new_handleTextPartsFromHtml("https://nl.wikipedia.org/wiki/Geschiedenis", "replace", "dutch")
 
-  # echo handleTextPartsFromHtml("https://nl.wikipedia.org/wiki/Geschiedenis", "extract", "dutch", "paragraph-only")
+  echo handleTextPartsFromHtml("https://nl.wikipedia.org/wiki/Geschiedenis", "extract", "dutch", "paragraph-only")
   # echo "hoi"
   # echo getTitleFromWebsite("https://nl.wikipedia.org/wiki/Geschiedenis")
   # echo new_extractSentencesFromText(testtekst_eng, "english")
-  echo extractSentencesFromText(testtekst_eng, "english")
+  # echo extractSentencesFromText(testtekst_eng, "english")
