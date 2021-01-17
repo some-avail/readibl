@@ -24,7 +24,7 @@ by module loadgui.nim
 
 import tables
 
-var versionfl = 0.6
+var versionfl = 0.7
 
 
 # radio-button-sets (set is necessary for radio-buttons):
@@ -66,8 +66,13 @@ var dropdownsta* =  [("calledname", "somelabel",
                                 @[["dutch", "Dutch"], 
                                 ["english", "English"]]),
                         ("taglist", "Pick taglist:",
-                                @[["paragraph-only", "Paragraph only"], 
-                                ["full-list", "Full list"]])
+                                @[
+                                ["paragraph-only", "Paragraph only"], 
+                                ["paragraph-with-headings", "Paragraph with headings"], 
+                                ["full-list", "Full list"],
+                                ["full-list-with-headings", "Full list with headings"]
+                                ]
+                        )
                       ]
 
 

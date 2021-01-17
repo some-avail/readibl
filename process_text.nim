@@ -47,7 +47,7 @@ import fr_tools
 
 
 const 
-  versionfl:float = 0.32
+  versionfl:float = 0.33
 
   input_tekst = "chimpansee noot mies een chimpansee is een leuk dier\pde chimpansee is het slimste dier naar het schijnt.\pmaar naast de chimpansee zijn er ook andere slimme \pdieren zoals de raaf, de dolfijn en de hond."
   tekst = "pietje staat. gister niet, maar toch. wat\pjantje. wimpie, onno\pkeesje.grietje,antje\pdirkje"
@@ -519,6 +519,201 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest,
     extractable_tagsq2 = @[
                     @["paragraph", "<p", "</p>", ""]
                   ]
+
+  if taglist == "paragraph-with-headings":
+    extractable_tagsq2 = @[
+                    @["paragraph", "<p", "</p>", ""],
+                    @["heading1", "<h1", "</h1>", "extract-only"],
+                    @["heading2", "<h2", "</h2>", "extract-only"],
+                    @["heading3", "<h3", "</h3>", "extract-only"],
+                    @["heading4", "<h4", "</h4>", "extract-only"],
+                    @["heading5", "<h5", "</h5>", "extract-only"],
+                    @["heading6", "<h6", "</h6>", "extract-only"]
+                  ]
+
+
+  elif taglist == "full-list":
+    extractable_tagsq2 = @[
+                    @["paragraph", "<p", "</p>", ""],
+                    @["unordered_list", "<ul", "</ul>", ""],
+                    @["ordered_list", "<ol", "</ol>", ""],
+                    @["description_list", "<dl", "</dl>", ""],
+                    @["block_quote", "<blockquote", "</blockquote>", ""]
+                  ]
+
+  elif taglist == "full-list-with-headings":
+    extractable_tagsq2 = @[
+                    @["paragraph", "<p", "</p>", ""],
+                    @["heading1", "<h1", "</h1>", "extract-only"],
+                    @["heading2", "<h2", "</h2>", "extract-only"],
+                    @["heading3", "<h3", "</h3>", "extract-only"],
+                    @["heading4", "<h4", "</h4>", "extract-only"],
+                    @["heading5", "<h5", "</h5>", "extract-only"],
+                    @["heading6", "<h6", "</h6>", "extract-only"],                    
+                    @["unordered_list", "<ul", "</ul>", ""],
+                    @["ordered_list", "<ol", "</ol>", ""],
+                    @["description_list", "<dl", "</dl>", ""],
+                    @["block_quote", "<blockquote", "</blockquote>", ""]                    
+                  ]
+
+
+  try:
+    websitest = client.getContent(webaddresst)
+    if tbo: echo "charcount = " & $len(websitest)
+
+    # substringcountit = count(websitest, "<p>")
+    # echo "\ptagcount = " & $substringcountit
+
+    posit = -1
+
+    while not allfoundbo:   # not all tags found yet
+      outerloopit += 1
+      if tbo: echo "----------------\pouterloopit = " & $outerloopit
+
+      tagindexit = 0
+      smallestposit = bigassit
+      nosimilartagbo = false
+
+      # walk thru the tags and determine the first one of them (smallest position)
+      for tagsq in extractable_tagsq2:
+        if tbo: echo "tagindexit = " & $tagindexit
+        if (typest == "extract" and tagsq[3] == "extract-only") or tagsq[3] == "":
+          tagstartst = tagsq[1]
+          thisoccurit = find(websitest, tagstartst, posit + 1)
+          if thisoccurit > -1:    # found
+            if thisoccurit < smallestposit:
+              smallestposit = thisoccurit
+              # smallesttagst = tagnamest
+              smallestindexit = tagindexit
+              if tbo: echo "found tag"
+        tagindexit += 1
+
+      posit = smallestposit
+      curtagsq = extractable_tagsq2[smallestindexit]
+      curtagnamest = curtagsq[0]
+      curtagstartst = curtagsq[1]
+      curtagendst = curtagsq[2]
+      if tbo: echo curtagnamest
+      if tbo: echo "posit = " & $posit
+
+      if smallestposit != bigassit:   # at least one tag found
+        # test if it is not a similar tag, like <picture> for <p>
+        test = websitest[posit + len(curtagstartst) .. posit + len(curtagstartst)]
+        if tbo: echo test
+        if test == " " or test == ">":
+          nosimilartagbo = true
+          textstartit = posit
+      elif smallestposit == bigassit:
+        # no tags found anymore
+        allfoundbo = true
+        if tbo: echo "allfound = true"
+
+      if not allfoundbo and nosimilartagbo:
+        # search tag-end
+        pos2it = posit
+        pos2it = find(websitest, curtagendst, pos2it + 1)
+
+        if pos2it != -1:    # par. end found
+          textendit = pos2it + 4
+          if tbo: echo "pos2it= " & $pos2it
+          # echo textstartit
+          # echo textendit
+          textpartst = websitest[textstartit .. textendit]
+
+          if typest == "extract":
+            textallst &= textpartst
+            # echo "\p============processText=========================="
+            # echo textpartst
+            # echo "================================================="
+
+          elif typest == "replace":
+            websitest.delete(textstartit, textendit)
+            reformatedst = applyDefinitionFileToText(textpartst, languagest)
+            posit += len(reformatedst) - 2
+            websitest.insert(reformatedst, textstartit)
+
+        else:
+          echo "End-tag not found; tag unclosed"
+
+    if typest == "extract":
+      return textallst
+    elif typest == "replace":
+      return websitest
+
+  except:
+    let errob = getCurrentException()
+    echo "\p******* Unanticipated error ******* \p" 
+    echo repr(errob) & "\p****End exception****\p"
+
+
+proc old_handleTextPartsFromHtml*(webaddresst, typest, languagest,
+                          taglist:string = "paragraph-only"): string =
+
+  #[ 
+  This procedure is a forth-development of extractTextPartsFromHtml.
+  Based on the webaddress as input-parameter, the webpage is downloaded.
+  
+  if typest is extract (old procedure): 
+  Then the html is parsed and pieces of readable text (aot most markup-codes)
+  are extracted, concatenated and returned to procedure.
+
+  if typest is replace:
+  Then the html is parsed and pieces of readable text (aot markup-codes)
+  are cut out, reformatted and pasted back into their original location.
+  Thus a reformatted webpage arizes and is returned.
+
+  More precise flow:
+  the procedure is a loop which:
+  -searches for certain tags and handles (extracts or replaces) the elements 
+  that go with it. These tags are placed in a sequence-variable that can be 
+  expanded when needed.
+  -cycles thru the tag-sequence seeking for the handlable tag that comes first, 
+  seeking from a certain position, and moving on.
+  -when the starting-part of this tag is found (like <p), then the 
+  ending-part of it is searched for (like </p>).
+  -when both are found the element / string is handled; that is either: 
+  extracted and appended, or 
+  cut, replaced and put back.
+
+  ADAP HIS:
+  -debug repetition of text-parts; repetition is caused by the website 
+  itself! That is the article is repeted for different show-cases.
+
+  ADAP NOW:
+
+
+   ]#
+
+
+  var
+    client = newHttpClient()
+    websitest: string
+    test:string
+    textpartst, textallst:string
+    substringcountit: int
+    posit, textstartit, textendit:int
+    allfoundbo: bool = false
+    proef:string
+    pos2it:int
+    reformatedst:string
+    tagstartst:string
+    thisoccurit, smallestposit:int
+    tagindexit:int
+    smallestindexit:int
+    curtagsq:seq[string]
+    curtagnamest, curtagstartst, curtagendst:string
+    outerloopit:int = 0
+    beginposit:int
+    nosimilartagbo:bool
+    tbo:bool = false   # enable or disable echo-statements for testing
+    extractable_tagsq2:seq[seq[string]]
+    bigassit = 100000000
+
+
+  if taglist == "paragraph-only":
+    extractable_tagsq2 = @[
+                    @["paragraph", "<p", "</p>", ""]
+                  ]
   elif taglist == "full-list":
     extractable_tagsq2 = @[
                     @["paragraph", "<p", "</p>", ""],
@@ -614,6 +809,7 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest,
     let errob = getCurrentException()
     echo "\p******* Unanticipated error ******* \p" 
     echo repr(errob) & "\p****End exception****\p"
+
 
 
 proc old_extractSentencesFromText(input_tekst, languagest:string) :string =
