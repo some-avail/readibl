@@ -1,6 +1,7 @@
 Formatting-strings for parsing with Flashread.
 Language: english
-version: 1.25
+version: 1.4
+
 
 
 PUNCTUATION OF SENTENCES TO HANDLE
@@ -104,7 +105,7 @@ suppose
  supposes 
 assume
  lays 
-lay
+ lay 
 laid 
  lies 
 lie 
@@ -283,8 +284,6 @@ write
  written
 manage 
  manages 
-sort 
- sorts 
 consider 
 search 
  searches 
@@ -441,6 +440,7 @@ fects
  cross 
  crosses 
  crossed 
+reach
 >----------------------------------<
 
 
@@ -569,6 +569,8 @@ across
 inside 
  outside 
 below
+ amid 
+througout
 >----------------------------------<
 
 
