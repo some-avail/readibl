@@ -47,7 +47,7 @@ import fr_tools
 
 
 const 
-  versionfl:float = 0.33
+  versionfl:float = 0.34
 
   input_tekst = "chimpansee noot mies een chimpansee is een leuk dier\pde chimpansee is het slimste dier naar het schijnt.\pmaar naast de chimpansee zijn er ook andere slimme \pdieren zoals de raaf, de dolfijn en de hond."
   tekst = "pietje staat. gister niet, maar toch. wat\pjantje. wimpie, onno\pkeesje.grietje,antje\pdirkje"
@@ -541,6 +541,7 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest,
                     @["block_quote", "<blockquote", "</blockquote>", ""]
                   ]
 
+
   elif taglist == "full-list-with-headings":
     extractable_tagsq2 = @[
                     @["paragraph", "<p", "</p>", ""],
@@ -644,6 +645,7 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest,
     let errob = getCurrentException()
     echo "\p******* Unanticipated error ******* \p" 
     echo repr(errob) & "\p****End exception****\p"
+
 
 
 proc old_handleTextPartsFromHtml*(webaddresst, typest, languagest,
@@ -948,8 +950,8 @@ proc extractSentencesFromText(input_tekst, languagest:string) :string =
     blockseparatorst = ">----------------------------------<"
     lastline: string
     phasetekst:string = input_tekst
-    # def_filenamest:string = "summary_" & languagest & ".dat"
-    def_filenamest:string = languagest & ".dat"
+    def_filenamest:string = "summary_" & languagest & ".dat"
+    # def_filenamest:string = languagest & ".dat"
 
     sentencesq: seq[string] = phasetekst.split(". ")
     sentencecountit: int = 0

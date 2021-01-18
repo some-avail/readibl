@@ -216,6 +216,10 @@ routes:
 
   post "/flashread-form":
     if request.params["orders"] == "pasteclip":
+
+      var clipob = clipboard_new(nil)
+      var past = clipob.clipboard_text()
+
       if @"jump_to_end" == "":
         # copy the from clipboard to the textbox
         # move to next radiobutton transfer
@@ -223,8 +227,6 @@ routes:
         statustekst = "Pasted. Now transfer text from link or pasted text."
         statusdatast = @"jump_to_end"
 
-        var clipob = clipboard_new(nil)
-        var past = clipob.clipboard_text()
 
         innervarob["statustext"] = newlang(statustekst)
         innervarob["statusdata"] = statusdatast
@@ -243,8 +245,8 @@ routes:
         elif @"newtab" == "newtab":
           innervarob["newtab"] = "_blank"
 
-
         resp showPage()
+
 
       elif @"jump_to_end" == "jump_to_end":
         if @"insite_reformating" == "":
@@ -253,12 +255,12 @@ routes:
           statusdatast = $len(output_tekst)
           innervarob["statustext"] = newlang(statustekst)
           innervarob["statusdata"] = statusdatast
-          innervarob["pastedtext"] = @"pasted_text"
+          innervarob["pastedtext"] = $past
           innervarob["processedtext"] = output_tekst
           innervarob["text_language"] = setDropDown("text-language", @"text-language")
           innervarob["taglist"] = setDropDown("taglist", @"taglist")
           innervarob["radiobuttons_1"] = setRadioButtons("orders", "pasteclip")
-          innervarob["urltext"] = @"url_text"
+          innervarob["urltext"] = ""
           innervarob["checkboxes_1"] = setCheckBoxSet("fr_checkset1", @[@"jump_to_end", @"summarize", 
                                                 @"insite_reformating", @"newtab"])
           innervarob["submit"] = newlang("Choose and run")
@@ -279,12 +281,12 @@ routes:
           statusdatast = $len(newinnerhtmlst)
           innervarob["statustext"] = newlang(statustekst)
           innervarob["statusdata"] = statusdatast
-          innervarob["pastedtext"] = @"pasted_text"
+          innervarob["pastedtext"] = $past
           innervarob["processedtext"] = newinnerhtmlst
           innervarob["text_language"] = setDropDown("text-language", @"text-language")
           innervarob["taglist"] = setDropDown("taglist", @"taglist")          
           innervarob["radiobuttons_1"] = setRadioButtons("orders", "pasteclip")
-          innervarob["urltext"] = @"url_text"
+          innervarob["urltext"] = ""
           innervarob["checkboxes_1"] = setCheckBoxSet("fr_checkset1", @[@"jump_to_end", @"summarize", 
                                       @"insite_reformating", @"newtab"])
           innervarob["submit"] = newlang("Choose and run")
