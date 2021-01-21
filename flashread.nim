@@ -177,6 +177,7 @@ proc showPage(custominnerhtmlst:string=""): string =
   return render(textsourcefileta["outer_html.html"] , outervarob)
 
 
+
 routes:
 
   get "/flashread-form":
