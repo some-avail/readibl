@@ -148,6 +148,7 @@ stimuleren
 realiseer
 realiseren
 werkt
+werken
 lijkt
 lijken
 verwezenlijkt
@@ -159,7 +160,11 @@ liep
 sluiten
 gesloten
  roep 
+ roept
  roepen
+riepen 
+ riep 
+ beroept
   richt 
 richtte
 gericht
@@ -235,9 +240,9 @@ koos
 gekozen
 bouwen
 bouwt
- denk 
- denkt
- denken
+denk 
+denkt
+denken
  gedacht
  tellen 
  telt 
@@ -404,10 +409,42 @@ gesproken
 praten
 praat
 merkt
-merken
 hoeven
 hoeft
 hoefde
+wenden 
+wendt 
+ wend 
+gewend 
+wendde
+weigeren
+weigert
+weigerd
+stapt
+dring
+drong
+dwing
+dwong
+keren 
+keert 
+keerd
+verwijderen
+verwijdert
+verwijderd
+bereiden
+bereidt
+bereidde
+voorbereid
+stemt
+stemd
+klink
+klonk
+duidt
+duiden
+geduid
+vatten
+gevat
+vat
 >----------------------------------<
 
 
@@ -472,7 +509,7 @@ bewijs
 bewijzen
 aanwijzing
 gedachte
-idee
+ idee
 scenario
 verloop
 essenti
@@ -490,7 +527,7 @@ uitwissel
 wisselwerk
 eerste 
 tweede 
-derde 
+ derde 
 ontwikkel
 >----------------------------------<
 
@@ -507,6 +544,7 @@ LINK-WORDS TO HANDLE
  indien 
  hetzij 
  wegens 
+zoals
 >----------------------------------<
 
 
@@ -584,6 +622,8 @@ Ze
 AMBIGUOUS WORD-FUNCTIONS TO HANDLE
  zijn 
  ge
+stemmen
+merken
 >----------------------------------<
 
 
