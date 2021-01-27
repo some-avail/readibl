@@ -1,6 +1,6 @@
 Formatting-strings for parsing with Flashread.
 Language: english
-version: 1.4
+version: 1.5
 
 
 
@@ -57,6 +57,7 @@ VERBS TO HANDLE
  be 
 being
 been 
+ am 
  is 
  are 
  were
@@ -65,6 +66,7 @@ have
  has 
  had 
  can 
+ cannot
  could 
  couldn
  may 
@@ -88,7 +90,7 @@ came
 become 
 stay
 keep
-kept
+kept 
 remain
 goes 
  go 
@@ -280,9 +282,9 @@ seem
 read 
  reads 
 write 
- writes 
- wrote
- written
+writes 
+wrote
+written
 manage 
  manages 
 consider 
@@ -319,6 +321,7 @@ ing
  says
  begin
  feel
+ felt
 fer 
  comment
  concur 
@@ -358,7 +361,6 @@ ized
  accept
  accepts
  accepted
-tain
 join
 explain
 break
@@ -405,7 +407,6 @@ agreed
 mit 
 mits 
 mitted
-ated 
 ized 
 travel
 restore
@@ -426,7 +427,10 @@ pull
 pulls 
  hear 
  hears 
-live
+live 
+lives
+deliver 
+delivers
  hide
  hid 
  hidden
@@ -448,6 +452,34 @@ structs
 structed
 handle
 render
+regard
+volve 
+volves 
+volved 
+load 
+watch
+ aims
+replace
+ talk 
+ dictate
+earn 
+earns 
+earned
+ ask
+ surround
+ated 
+bate
+cate
+eate
+fate
+gate
+hate
+iate
+nate
+pate
+sate
+uate
+vate
 >----------------------------------<
 
 
@@ -526,13 +558,15 @@ develop
 
 LINK-WORDS TO HANDLE
  and 
+And 
  or 
+Or 
 neither
  nor 
  either
  as 
  both 
- like 
+ than 
 >----------------------------------<
 
 
@@ -564,9 +598,11 @@ through
 in front of
 behind
 toward
+inward
+outward
 around
 beyond
-near
+ near 
 until 
  into 
 prior 
@@ -592,10 +628,16 @@ The
 A 
 An 
  this 
+This
+That 
  those 
+Those
  these 
+These 
  some 
+Some 
  many 
+Many 
  my 
  your 
  his 
@@ -654,7 +696,13 @@ AMBIGUOUS WORD-FUNCTIONS TO HANDLE
  to 
  present 
  need
-load 
+claim
+tain
+date
+late
+mate
+rate
+tate
 >----------------------------------<
 
 

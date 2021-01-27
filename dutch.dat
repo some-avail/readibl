@@ -1,6 +1,6 @@
 Formatting-strings for parsing with Flashread.
 Language: dutch
-version: 1.4
+version: 1.5
 
 
 
@@ -389,6 +389,7 @@ kocht
 vormt
 vormd
 vormen
+eren 
 eert 
 eerde 
 eerd 
@@ -445,6 +446,10 @@ geduid
 vatten
 gevat
 vat
+registreren
+vernietigen
+vernietigd
+vernietigt
 >----------------------------------<
 
 
@@ -545,6 +550,7 @@ LINK-WORDS TO HANDLE
  hetzij 
  wegens 
 zoals
+ dan 
 >----------------------------------<
 
 
@@ -595,9 +601,11 @@ Mijn
 >----------------------------------<
 
 
+
 NOUN-REPLACERS TO HANDLE
  ik 
  jij 
+ je 
  hij 
  wij 
  jullie 

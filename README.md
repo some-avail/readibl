@@ -35,7 +35,7 @@ Then you get the user-interface in the browser. From there on you can use the cl
 In the config-file "settings_flashread.conf" you can do the following:
 - the port-number can be adjusted
 - interface-language can be set (besides english there is only dutch for now, but you can make you own language-file *translations.tra).
-- possible processing text-languages; only english.dat en dutch.dat exist for now, but can make your own.
+- possible processing text-languages; only english.dat en dutch.dat exist for now, but you can make your own.
 
 
 #### Installation by building (for developers)
