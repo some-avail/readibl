@@ -1,6 +1,15 @@
-Look at the commit-list:
+Look at the commit-list for details:
 https://github.com/some-avail/readibl/commits/main
 
 
-version		commit-start	commit-end
-0.90		Jan 11, 2021	Jan 21, 2021
+Version-changes:
+Readibl 0.90:
+-improved rendering of in-site reformatting
+-upgraded summarization
+	-reinstated separate summary-files
+-improved some field updates
+-new category "ambiguous words" introduced (either verb-related or different function)
+-heading-extraction added to of-site mode
+-blockquote added
+
+
