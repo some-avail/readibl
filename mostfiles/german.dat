@@ -1,0 +1,392 @@
+Formatting-strings for parsing with Flashread.
+Language: template
+version: 1.5
+
+
+
+PUNCTUATION OF SENTENCES TO HANDLE
+.
+?
+!
+>----------------------------------<
+
+
+PUNCTUATION OF SENTENCE-PARTS TO HANDLE
+, 
+: 
+)
+>----------------------------------<
+
+
+
+PRONOUNS TO HANDLE
+ vor dem 
+ vordem 
+ bevor 
+ nachdem 
+ weil 
+ somit 
+ bis dem 
+ durch dem 
+ welche
+ mit dem 
+ womit 
+ bei dem 
+ wobei 
+ über dem 
+ worüber
+ worin 
+ in dem
+ wo 
+ was
+ wer
+ aber 
+ während
+ wegen 
+ wenn 
+ wie
+ sondern 
+(
+>----------------------------------<
+
+
+
+VERBS TO HANDLE
+ bin 
+ bist 
+ ist 
+ ist.
+ ist,
+ sind 
+ sind,
+ sind.
+ seit 
+ gewesen
+ war
+ habst 
+ habe 
+ hat 
+ hat.
+ hat,
+ haben
+ gehabt
+ kann
+ konnt
+ kön
+ mag
+ mögen
+ mögt
+ mocht
+ will
+ woll
+ wollt
+ muß
+ müs
+ musst
+ soll
+ werde 
+ wirst
+ wird
+ werden
+ geworden
+ worden 
+ worden.
+ wurd
+ würd
+ieren 
+ieren,
+ieren.
+iert 
+iert,
+iert.
+ierten
+ ange
+ aufge
+ zuge
+ ausge
+ einge
+ abge
+ unterge
+ anzu
+ aufzu
+ zuzu
+ auszu
+ einzu
+ abzu
+ unterzu
+veränder
+verbesser
+setzen
+setzt
+nehmen
+nimmt
+genommen
+stehen
+steht
+standen
+bestand
+entstand
+teilen
+teilt
+legen 
+legt
+stellen
+stellt
+schreib
+schrieb
+liefer
+geben
+gibt
+gab 
+entwickel
+arbeite
+liegen
+liegt
+deuten
+deutet
+sprech
+sproch
+sprachen
+brauchen
+braucht
+zeichnen
+zeichnet
+trachten
+trachtet
+passen
+past
+scheiden
+scheidet
+schieden
+suchen
+sucht
+gründen
+gründet
+ermöglich
+vermittel
+heben
+hiebt 
+hob 
+hoben 
+sehen
+sieht
+sahen 
+sah 
+treiben
+treibt
+trieben
+ trieb
+folgen
+folgt
+schwinden
+schwindet
+schwand
+schwund
+dienen
+dient
+bleiben
+bleibt
+machen
+macht
+tun 
+tut 
+kommen
+komt
+kamen
+kam 
+leiten
+leitet
+fassen
+fasst
+faßt
+wenden
+wendet
+nennen
+nennt
+genannt
+wirken
+wirkt
+lösen
+löst
+kennen
+kent
+kannt
+gelten
+gilt
+treffen
+trift
+ traf
+getroffen
+gehen
+geht
+ging
+gegangen
+erweiter
+erwähn
+behandel
+beschäftig
+bilden
+bildet
+beinhalt
+laufen
+läuft
+drohen
+droht
+steueren
+steuert
+führen
+führt
+breiten
+breitet
+sitzen
+sitzt
+saß
+gesessen
+igt
+stecken
+steckt
+schließen
+schließt
+schloß
+schlossen
+et 
+et,
+et.
+>----------------------------------<
+
+
+
+
+SIGNAL-WORDS TO HANDLE
+>----------------------------------<
+
+
+LINK-WORDS TO HANDLE
+ und 
+ oder 
+ einerseits 
+ andererseits 
+ ob 
+ noch 
+ ebenso 
+ dann
+ sowohl
+ auch 
+ als 
+>----------------------------------<
+
+
+
+PREPOSITIONS TO HANDLE
+ an 
+ am 
+ auf 
+ hinter 
+ neben 
+ in 
+ im 
+ über 
+ unter 
+ vor 
+ zwischen 
+ mit 
+ nach 
+ bei 
+ beim 
+ seit 
+ von 
+ vom 
+ zu 
+ zur 
+ zum 
+ neben 
+ ausser 
+ aus 
+ durch 
+ bis 
+ für 
+ um 
+ ohne 
+ während
+ innerhalb 
+ außerhalb
+>----------------------------------<
+
+
+
+NOUN-ANNOUNCERS TO HANDLE
+ der 
+ dem 
+ den 
+ die 
+ das 
+ des 
+Der 
+Die 
+Das 
+ dies
+Dies
+ jene
+Jene
+ ein 
+ eine 
+ einem 
+ einer 
+ eines 
+ einen 
+Ein 
+ mein
+ dein
+ seine
+ unser
+ euer
+ ihr
+ Ihr
+ jede
+ manche
+ viele
+ diejenig
+ dessen 
+ deren 
+>----------------------------------<
+
+
+
+
+NOUN-REPLACERS TO HANDLE
+ ich 
+ du 
+ er 
+ es 
+ sie 
+ wir 
+ ihr 
+ sie 
+ Sie 
+ mich 
+ mir 
+ dich 
+ dir 
+ ihn 
+ ihm 
+ uns 
+ euch 
+ etwas 
+ nichts
+ denen 
+>----------------------------------<
+
+
+
+AMBIGUOUS WORD-FUNCTIONS TO HANDLE
+ sein 
+ ge
+ten 
+ten.
+ten,
+te 
+>----------------------------------<
+
+
+
+EINDE
