@@ -40,7 +40,6 @@ PRONOUNS TO HANDLE
  wo 
  was
  wer
- aber 
  während
  wegen 
  wenn 
@@ -93,13 +92,6 @@ VERBS TO HANDLE
  worden.
  wurd
  würd
-ieren 
-ieren,
-ieren.
-iert 
-iert,
-iert.
-ierten
  ange
  aufge
  zuge
@@ -123,9 +115,8 @@ nimmt
 genommen
 stehen
 steht
-standen
-bestand
-entstand
+standen 
+stand 
 teilen
 teilt
 legen 
@@ -145,6 +136,7 @@ liegt
 deuten
 deutet
 sprech
+spricht
 sproch
 sprachen
 brauchen
@@ -154,7 +146,7 @@ zeichnet
 trachten
 trachtet
 passen
-past
+passt
 scheiden
 scheidet
 schieden
@@ -189,6 +181,8 @@ bleibt
 machen
 macht
 tun 
+tun,
+tun.
 tut 
 kommen
 komt
@@ -242,16 +236,71 @@ sitzen
 sitzt
 saß
 gesessen
-igt
 stecken
 steckt
 schließen
 schließt
 schloß
 schlossen
+nutzen
+nutzt
+verwalten
+verwaltet
+hören
+hört
+lasten
+lastet
+finden
+findet
+fand
+gefunden
+halten
+hält
+hielt
+gehalten
+bauen
+baut
+beginnen
+beginnt
+begann
+begonnen
+enden
+endet
+reifen
+reift
+bringen
+bringt
+bracht
+drängen
+drängt
+integrieren
+integriert
+veranschaulichen
+veranschaulicht
+zählen
+zählt
+erzielen
+erzielt
+variieren
+variiert
+lauben
+laubt
+ähnelen
+ähnelt
+lesen
+lest 
+ieren 
+ieren,
+ieren.
+iert 
+iert,
+iert.
+ierten
+ierte
 et 
 et,
 et.
+igt
 >----------------------------------<
 
 
@@ -310,6 +359,7 @@ PREPOSITIONS TO HANDLE
  während
  innerhalb 
  außerhalb
+ oberhalb
 >----------------------------------<
 
 
@@ -385,6 +435,7 @@ ten
 ten.
 ten,
 te 
+ ver
 >----------------------------------<
 
 
