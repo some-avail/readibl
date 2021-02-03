@@ -44,6 +44,8 @@ waarvoor
 vanwege
 wanneer
 (
+waarop
+hoe 
 >----------------------------------<
 
 
@@ -124,7 +126,7 @@ past
 doen
  doe 
 gedaan
- maak
+maak
 maken 
 gemaakt
 haalt 
@@ -182,6 +184,8 @@ handeld
 bepaalt
 bepalen
 beperken
+beperkt
+beperk 
 levert
 geef
 geven 
@@ -200,6 +204,8 @@ houdt
 houden
 ziet
 zien 
+ zag 
+gezien
 bedoelen
 bedoelt
 bedoel 
@@ -243,7 +249,7 @@ bouwt
 denk 
 denkt
 denken
- gedacht
+ gedacht 
  tellen 
  telt 
  telde 
@@ -283,6 +289,7 @@ wierp
 worpen
 leefde
 leef 
+leefd
 schrijven
 schrijf
 schreef
@@ -393,6 +400,7 @@ eren
 eert 
 eerde 
 eerd 
+eerd.
 wek 
 wekt 
 wekken 
@@ -445,11 +453,27 @@ duiden
 geduid
 vatten
 gevat
-vat
+vat 
 registreren
 vernietigen
 vernietigd
 vernietigt
+antwoordt
+geantwoord
+antwoorden
+antwoordde
+vraagt
+vroeg
+gevraagd
+tellen 
+telt 
+teld 
+telde 
+vechten
+gevochten
+vrezen
+vreest
+gevreesd
 >----------------------------------<
 
 
@@ -613,16 +637,21 @@ NOUN-REPLACERS TO HANDLE
  ze 
 Ik 
 Jij 
+Je 
 Hij
 Wij 
 Jullie 
 Zij 
 Ze 
  mij 
+ me 
  jou 
+ je 
  hem 
  ons 
  hen
+ iets
+ niets
 >----------------------------------<
 
 
@@ -630,7 +659,9 @@ Ze
 AMBIGUOUS WORD-FUNCTIONS TO HANDLE
 stemmen
 merken
+leven
 >----------------------------------<
+
 
 
 EINDE

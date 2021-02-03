@@ -83,9 +83,9 @@ has to
  shouldn
  would 
  wouldn
-come 
+ come 
 coming 
-comes 
+ comes 
 came 
 become 
 stay
@@ -103,7 +103,7 @@ find
  finds 
 found 
  sets 
-set 
+ set 
 setting 
 put 
 suppose
@@ -163,8 +163,6 @@ shut
  shuts 
 closed 
 closes
-call 
- calls 
 address 
  tries 
  try 
@@ -188,7 +186,7 @@ change
  changes 
 send
  sends 
- sent
+ sent 
 determine
 limit 
  limits 
@@ -221,6 +219,7 @@ suggest
  suggests 
 hold 
  holds 
+ held 
 retain 
  retains 
 mean 
@@ -248,8 +247,9 @@ receive
 register 
 crease
 press 
-attach 
- attaches 
+tach 
+taches 
+tached 
 transfer
 transmit 
 transmits
@@ -344,7 +344,6 @@ show
  sees 
  seen 
  saw 
- prove
  meets
  meet 
  met 
@@ -390,7 +389,7 @@ ened
  ignore
 examine
 exceed
-lose
+ lose 
 lost
 asserts
 assert 
@@ -411,9 +410,6 @@ mitted
 ized 
 travel
 restore
-ed 
-ed.
-ed,
 isn
  won
 iate
@@ -492,6 +488,37 @@ treated
 sist 
 sists 
 sisted
+refuse
+ slam 
+ slams 
+ slammed 
+ported 
+sweep
+swept
+compare
+cover 
+covers
+covered
+pend 
+pends 
+pended
+publish
+ sue
+pursue 
+punish
+scribe
+argue
+prove
+imagine
+unfold
+drive
+drove
+driven
+promote
+press
+ed 
+ed.
+ed,
 >----------------------------------<
 
 
@@ -573,6 +600,7 @@ LINK-WORDS TO HANDLE
 And 
  or 
 Or 
+ and/or 
 neither
  nor 
  either
@@ -650,6 +678,8 @@ These
 Some 
  many 
 Many 
+ such 
+Such 
  my 
  your 
  his 
@@ -700,6 +730,8 @@ herself
 ourselves
 yourselves
 themselves
+something
+nothing
 >----------------------------------<
 
 
@@ -714,6 +746,10 @@ date
 late
 mate
 tate
+port 
+ports 
+call 
+ calls 
 >----------------------------------<
 
 
