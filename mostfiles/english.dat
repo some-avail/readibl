@@ -48,6 +48,7 @@ whether
  so 
 therefor
 despite
+ then 
 (
 >----------------------------------<
 
@@ -59,16 +60,20 @@ being
 been 
  am 
  is 
+ isn't
  are 
  were
+ weren't
  was 
+ wasn't 
 have
  has 
+ hasn't
  had 
  can 
  cannot
- could 
- couldn
+ can't
+ could
  may 
  might 
 want
@@ -87,7 +92,8 @@ has to
 coming 
  comes 
 came 
-become 
+become
+becomes 
 stay
 keep
 kept 
@@ -102,18 +108,11 @@ gone
 find 
  finds 
 found 
- sets 
- set 
-setting 
 put 
-suppose
- supposes 
 assume
  lays 
  lay 
 laid 
- lies 
-lie 
 lain 
  take 
  takes 
@@ -129,15 +128,17 @@ match
  do 
 don't
  does 
+ doesn't
  did 
+ didn't
  done
 make 
  makes 
  made
-get 
-gets 
-got 
-gotten 
+ get 
+ gets 
+ got 
+ gotten 
  enter 
  enters 
 serve 
@@ -169,11 +170,10 @@ address
 stand 
 stands 
 stood 
-concern 
- concerns
  act 
  acts 
  reacts
+ react 
 boot 
 reboot 
 operate
@@ -217,12 +217,14 @@ happen
  happens 
 suggest 
  suggests 
+holding
 hold 
  holds 
  held 
 retain 
  retains 
 mean 
+meant
 relate 
  relates 
 select 
@@ -236,8 +238,8 @@ prepare
 evaluate 
 duce 
 duces 
- use 
  uses 
+ used 
 move 
  moves 
 add 
@@ -246,7 +248,6 @@ edit
 receive
 register 
 crease
-press 
 tach 
 taches 
 tached 
@@ -277,6 +278,7 @@ save
 turn 
 turns 
 tains 
+tained
 seem 
  seems 
 read 
@@ -299,16 +301,16 @@ expand
  expands 
 contain 
 contains 
-clude 
-cludes 
+clude
 fer 
 fers 
+fere 
+feres 
 fill 
 help
 repair
  tell
  told
-ing 
  spend 
  spent 
  spends 
@@ -328,6 +330,7 @@ fer
  concurs 
  confirm 
  confirms 
+ confirmed
  define
  thinks
  think
@@ -356,8 +359,11 @@ show
 ize 
 izes
 ized
- doesn
- didn
+ise 
+ises 
+ised 
+ doesn't
+ didn't
  accept
  accepts
  accepted
@@ -366,13 +372,9 @@ explain
 break
 broke
 broken
-ify 
-ified 
-ifies 
-ens 
-ening 
-ened 
- arise
+rise 
+rose 
+risen 
  sit 
  sits 
  sat 
@@ -398,7 +400,6 @@ assert
 presents
 consist 
 consists
-propose
 create
 ceive
 agree 
@@ -407,12 +408,9 @@ agreed
 mit 
 mits 
 mitted
-ized 
 travel
 restore
-isn
- won
-iate
+ won't
 built
 occur 
 occurs 
@@ -424,8 +422,7 @@ pull
 pulls 
  hear 
  hears 
-live 
-lives
+ heard
 deliver 
 delivers
  hide
@@ -434,7 +431,7 @@ delivers
  assist 
  assists
 delete
-enable
+ enable
 disable
 flect 
 flects
@@ -464,31 +461,18 @@ earns
 earned
  ask
  surround
-ated 
-bate
-cate
-eate
-fate
-gate
-hate
-iate
-nate
-pate
-rate
-sate
-uate
-vate
-expose
-inspect 
-spects 
-spected
+pect 
+pects 
+pected
 treat 
 treats 
 treated
 sist 
 sists 
 sisted
-refuse
+fuse 
+fuses 
+fused
  slam 
  slams 
  slammed 
@@ -505,7 +489,8 @@ pended
 publish
  sue
 pursue 
-punish
+punish 
+punishes 
 scribe
 argue
 prove
@@ -515,10 +500,124 @@ drive
 drove
 driven
 promote
-press
+press 
+presses 
+pressed
+controls
+controlled
+sign 
+signs 
+speak
+spoke
+grades
+graded
+beg 
+begs 
+begged
+ share 
+ shares 
+ shared 
+bear 
+bears
+bore 
+born 
+warn
+warns
+warned
+pose 
+poses
+posed
+ vary
+ varies
+ varied
+ thrive
+announce 
+announces 
+announced
+conducts
+calls 
+called
+call 
+ win 
+ wins 
+ won 
+rupt 
+rupts 
+rupted 
+avoid 
+avoids 
+avoided
+demn 
+demns
+demned
+wait 
+waits 
+waited
+retrieve
+respond
+notices
+jected
+posit 
+posits 
+posited
+combine
+raise
+ rely 
+ relie
+plore
+assess 
+assesse
+completes
+completed
+ mention
+manded
+enjoy
+ride 
+rides 
+rode 
+ridden
+tect 
+tects 
+tected
+analyze
+unlock
+directs
+ marks
+execute
+parse
+tract 
+tracts 
+tracted
+promised
+pass 
+passes 
+passed 
+placed
+replace
+bode
+acknowlegde 
+acknowlegdes
+acknowlegded
+ated 
+bate
+eate
+fate
+gate
+hate
+iate
+sate
+uate
 ed 
 ed.
 ed,
+ify 
+ified 
+ifies 
+ifying
+ens 
+ening 
+ened 
+ing 
 >----------------------------------<
 
 
@@ -528,8 +627,11 @@ princip
 condition
 determinant
  first 
+ firstly
  second 
+ secondly
  third 
+ thirdly
 always
 never
 everywhere
@@ -607,6 +709,7 @@ neither
  as 
  both 
  than 
+instead
 >----------------------------------<
 
 
@@ -656,6 +759,7 @@ below
  amid 
 throughout
  back 
+ upon 
 >----------------------------------<
 
 
@@ -741,15 +845,58 @@ AMBIGUOUS WORD-FUNCTIONS TO HANDLE
  present 
  need
 claim
-tain
+tain 
+tains 
+cate
 date
 late
 mate
+rate
 tate
+vate
+nate
+pate
 port 
 ports 
-call 
- calls 
+ control 
+ grade 
+ live 
+lives
+means
+point 
+points 
+pointed 
+ hit
+ sounds 
+ shape
+ sets 
+ set 
+setting 
+notic
+ use 
+ end 
+ concern
+mand
+mands
+walk
+promise
+ject 
+jects 
+lock
+install 
+installs
+count 
+counts 
+counted
+press 
+split
+play
+answer
+request
+places
+fall
+fell
+ lie
 >----------------------------------<
 
 

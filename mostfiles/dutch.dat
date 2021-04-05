@@ -105,7 +105,8 @@ gezet
 stelt
 stellen
 steld
- leg
+ leg 
+ legt
 leggen
 gelegd 
  lig 
@@ -131,7 +132,7 @@ maken
 gemaakt
 haalt 
 halen
-gehaald
+haald
  dien 
 dient
 dienen
@@ -155,12 +156,13 @@ lijkt
 lijken
 verwezenlijkt
 verwezenlijken
-lopen
+lopen 
 loopt
 liep
  sluit 
 sluiten
-gesloten
+sloot
+sloten
  roep 
  roept
  roepen
@@ -188,10 +190,14 @@ beperkt
 beperk 
 levert
 geef
-geven 
+geven
+gegeven
+ gaf 
 leiden
 leidt
  volgen 
+ volgen.
+ volgen,
 volgt
 samenvatten
 samengevat
@@ -205,6 +211,7 @@ houden
 ziet
 zien 
  zag 
+zagen 
 gezien
 bedoelen
 bedoelt
@@ -214,17 +221,10 @@ bedoel
  was 
  ben 
  waren 
- werd 
+ werd
  had 
  kan 
- testen 
- geven 
- opge
- afge
- aange
- inge
- uitge
- doorge
+ testen
  hang
 zeggen
 zegt
@@ -262,8 +262,8 @@ schijnen
 schijnt
 scheen
 schenen
-gebruiken
-gebruikt
+bruiken
+bruikt
 betekent
 betekenen
  kennen 
@@ -282,6 +282,7 @@ betekenen
 zitten
 zit 
  zat 
+ zaten
 gezeten
  werp 
 werpt 
@@ -311,6 +312,7 @@ gesteund
 voelt
 voelen 
 gevoeld
+ vallen 
 valt
 viel
 breekt
@@ -330,8 +332,6 @@ gespeeld
 trekken 
 trekt
 trok
-igt
-igen
 geplaatst
 gelegd
  toege
@@ -361,7 +361,6 @@ wijst
 wijzen 
 wees 
 wezen 
- ont
 toon
 tonen 
 draaien 
@@ -396,11 +395,6 @@ kocht
 vormt
 vormd
 vormen
-eren 
-eert 
-eerde 
-eerd 
-eerd.
 wek 
 wekt 
 wekken 
@@ -460,10 +454,9 @@ vernietigd
 vernietigt
 antwoordt
 geantwoord
-antwoorden
 antwoordde
 vraagt
-vroeg
+vroegen
 gevraagd
 tellen 
 telt 
@@ -474,7 +467,99 @@ gevochten
 vrezen
 vreest
 gevreesd
+duren
+duurt
+duurd
+vergaderen
+vergadert
+vergaderd
+klaren
+klaart
+klaard
+stuiten
+stuit
+schaffen
+schaft
+gelasten
+gelast
+groeien
+groeit
+groeid
+klagen
+klaagt
+klaagd
+gepland
+raadt 
+grijpen
+grijpt
+grepen
+geraden
+bewegen
+beweegt
+bewoog
+bewogen
+eisen
+eist
+stijgen
+stijgt
+steeg
+stegen
+dalen
+daalt
+daald
+reizen
+reist
+gereisd
+achten
+ acht 
+geacht
+zorgt
+gezorgd
+schouwen
+schouwt
+schouwd
+prijzen
+prijst
+prees
+prezen
+falen
+faalt
+faald
+red 
+redt 
+redde 
+gered 
+sjouw
+wachten
+wacht
+deelt
+verdelen
+deeld
+verplaatsen
+verplaatst
+ opge
+ afge
+ aange
+ inge
+ uitge
+ doorge
+eerden
+vangen
+vangt
+ving
+eert 
+eert,
+eert.
+eerde 
+eerde,
+eerde.
+eerd 
+eerd.
+eerd,
+igt
+igd
 >----------------------------------<
+
 
 
 
@@ -603,6 +688,7 @@ PREPOSITIONS TO HANDLE
  ter 
  ten 
  om 
+ terug
 >----------------------------------<
 
 
@@ -659,7 +745,19 @@ Ze
 AMBIGUOUS WORD-FUNCTIONS TO HANDLE
 stemmen
 merken
-leven
+leven 
+vragen
+vroeg
+raden 
+igen
+ zijn
+eren 
+eren.
+eren,
+ ont
+ zorgen
+delen
+antwoorden
 >----------------------------------<
 
 

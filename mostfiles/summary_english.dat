@@ -23,19 +23,11 @@ argument
 outcome
 input
 output
-function
-element
- part 
-unit 
-group
 cluster
-finally
 conclu
 relation
 barrier
 obstacle
-effect 
-effects
 task
 influence
 category
@@ -45,13 +37,9 @@ theory
 supposition
 assum
 hypothesis
-connect
 analog
 premis 
-total 
 summary
-attention
-beware
 scenario
 exchang
 chang
@@ -59,10 +47,11 @@ modif
 variabl
 structur
 interact
-thought
-idea
 problem
 solution
 develop
+strateg
+plan
+policy
 >----------------------------------<
 

@@ -91,8 +91,8 @@ Returns for sample-def (default):
 <label for="id_noot">notenboom</label><br>
 <input type="checkbox" id="id_mies" name="mies" checked>
 <label for="id_mies">mies-bouwman</label><br>
-
  ]#
+
 
 
   let buttonsq = checkboxesta[setnamest]

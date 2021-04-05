@@ -24,7 +24,7 @@ by module loadgui.nim
 
 import tables
 
-var versionfl = 0.7
+var versionfl = 0.8
 
 
 # radio-button-sets (set is necessary for radio-buttons):
@@ -43,8 +43,8 @@ const radiobuttonsta* = {
                       }.toTable
 
 
-# checkbox-sets:
-const checkboxesta* = {
+# checkbox-sets (may load defaults from config-file thru loadgui.nim)
+var checkboxesta* = {
       "aapnootmies": @[("aap", "grote aap", false),
                       ("noot", "notenboom", true),
                       ("mies", "mies-bouwman", true)],
@@ -58,7 +58,7 @@ const checkboxesta* = {
 
 # dropdowns or in html-lingo: selects
 #  -concerns single items aot sets
-#  -updated in loadgui
+#  -updated in loadgui.nim
 var dropdownsta* =  [("calledname", "somelabel",
                                 @[["first-value", "first shown value"], 
                                 ["second-value", "second shown value"]]),
@@ -77,7 +77,7 @@ var dropdownsta* =  [("calledname", "somelabel",
 
 
 when isMainModule:
-  echo dropdownsta
+  echo checkboxesta
   # echo dropdownsta[0]
   # echo dropdownsta[0][0]
   # echo dropdownsta[0][1]

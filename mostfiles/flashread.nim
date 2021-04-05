@@ -98,7 +98,7 @@ var
 
 
 const 
-  versionfl:float = 0.90
+  versionfl:float = 0.901
   minimal_word_lengthit = 7
   appnamebriefst:string = "RD"
   appnamenormalst = "Readibl"
@@ -187,7 +187,7 @@ routes:
     innervarob["pastedtext"] = ""
     innervarob["processedtext"] = filepathst
     innervarob["text_language"] = setDropDown("text-language", readOptionFromFile("text-language", "value"))
-    innervarob["taglist"] = setDropDown("taglist", "paragraph-only")
+    innervarob["taglist"] = setDropDown("taglist", "paragraph-with-headings")
     innervarob["radiobuttons_1"] = setRadioButtons("orders","")
     innervarob["urltext"] = ""
     innervarob["checkboxes_1"] = setCheckBoxSet("fr_checkset1", @["default"])

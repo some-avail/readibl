@@ -3,6 +3,12 @@ https://github.com/some-avail/readibl/commits/main
 
 
 Version-changes:
+
+Readibl 0.901:
+-optionize the starting values of the checkboxes.
+-set the taglist to: paragraph with headings
+
+
 Readibl 0.90:
 -improved rendering of in-site reformatting
 -upgraded summarization
