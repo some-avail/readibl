@@ -11,8 +11,15 @@ import strutils
 import os
 import tables
 
-
 var versionfl = 0.2
+
+var debugbo: bool = false
+
+
+template log(messagest: string) =
+  # replacement for echo that is only co-compiled when debugbo = true
+  if debugbo:
+    echo messagest
 
 
 # [("calledname", "somelabel", @[["first-value", "first shown value"], ["second-value", "second shown value"]]), 
@@ -21,12 +28,14 @@ var versionfl = 0.2
 
 
 proc loadTextLangsFromConfig() =
-  
-# Set the processing-languages of the dropdown "dropdownsta" of webgui_def.nim from the config-file
+
+# Load the processing-languages of the dropdown "dropdownsta" of 
+# webgui_def.nim from the config-file
+
 
   var
     valuelist: string
-    sourcelangsq:seq[string]
+    sourcelangsq: seq[string]
     langvaluelistsq: seq[array[2, string]]
     tbo: bool = false
 
@@ -49,6 +58,37 @@ proc loadTextLangsFromConfig() =
   if tbo: echo dropdownsta[1]
   dropdownsta[1][2] = langvaluelistsq
   if tbo: echo dropdownsta[1]
+
+
+
+proc loadComboFromDir(combobokst, filenamepartst: string) =  
+# proc loadComboFromDir() =  
+  # Load the combo/dropdown-definition named combobokst in "dropdownsta"
+  # of webgui_def.nim with the file-names with namepart filenamepartst 
+  # from the current directory
+
+  var
+    combovaluelistsq: seq[array[2, string]]
+    filenamest: string
+    summary_namepartst: string
+
+
+  # walk thru the file-iterator and sequence the right file(names)
+  for kind, path in walkDir(getAppDir()):
+    if kind == pcFile:
+      filenamest = extractFileName(path)
+      if len(filenamest) > 8:
+        if filenamest[0..7] == filenamepartst:
+          log(filenamest)
+          summary_namepartst = "*" & filenamest[7..len(filenamest) - 1]
+          combovaluelistsq.add([filenamest, summary_namepartst])
+          log(summary_namepartst)
+
+
+  # locate and reset the summaries from dropdownsta
+  log($dropdownsta[3])
+  dropdownsta[3][2] = combovaluelistsq
+  log($dropdownsta[3])
 
 
 
@@ -82,6 +122,24 @@ proc setCheckboxSetFromConfig(setnamest: string) =
   if tbo: echo buttonsq
 
 
+proc testWalkdir() = 
+  for kind, path in walkDir(getAppDir()):
+    case kind:
+    of pcFile:
+      echo "File: ", path
+    of pcDir:
+      echo "Dir: ", path
+    of pcLinkToFile:
+      echo "Link to file: ", path
+    of pcLinkToDir:
+      echo "Link to dir: ", path
+
+
+
 loadTextLangsFromConfig()
 setCheckboxSetFromConfig("fr_checkset1")
+loadComboFromDir("summarylist", "summary_")
 
+ 
+when isMainModule:
+  discard

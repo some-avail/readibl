@@ -5,13 +5,13 @@ Some tools like:
 ]#
 
 
-import strutils
+import strutils, times
 
 var 
   interfacelanguagestatust*: string = ""
-  test: string
+  # test: string
   versionfl: float = 0.1
-
+  debugbo: bool = true
 
 
 proc readOptionFromFile*(optnamest, typest: string):string =
@@ -153,9 +153,37 @@ proc newlang*(englishtekst:string):string =
 
   return transdatast
 
-test = newlang("something")
+
+proc doWork(x: int) =
+  var n = x
+  for i in 0..10000000:
+    n += i
+ 
+
+template timeStuff*(statement: untyped): string =
+  let t0 = cpuTime()
+  statement
+  formatFloat(cpuTime() - t0, ffDecimal, precision = 3)
+ 
+
+template timeNeatly(statement: untyped): float =
+  let t0 = cpuTime()
+  statement
+  cpuTime() - t0
+
+
+template log(messagest: string) =
+  # replacement for echo that is only co-compiled when debugbo = true
+  if debugbo:
+    echo messagest
+
+
+# test = newlang("something")
 
 when isMainModule:
-  echo readOptionFromFile("interface-language", "value-list")
+  # echo readOptionFromFile("interface-language", "value-list")
   # echo newlang("not translated")
-
+  echo "Time = ", timeNeatly(doWork(100)).formatFloat(ffDecimal, precision = 3), " s"
+  echo "Time = ", timeRoughly(doWork(100)), " s"
+  # log("hallo yall")
+  # discard

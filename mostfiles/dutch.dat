@@ -41,6 +41,7 @@ waarvoor
  wie 
  maar 
  terwijl
+ toen 
 vanwege
 wanneer
 (
@@ -85,7 +86,7 @@ kwamen
 gekomen
 blijft 
 blijven
-gebleven
+bleven
 gaat
 gaan
  ging
@@ -96,6 +97,7 @@ laten
 gelaten
 vindt 
 vinden
+vind 
 gevonden
  vond
  zet
@@ -114,18 +116,16 @@ ligt
 liggen
 gelegen
  lag 
-neem
-nemen
-genomen
  brengt
 bracht
 brengen
 passen
 past
- doet
- deed 
+doet 
 doen
- doe 
+doe 
+deden 
+deed 
 gedaan
 maak
 maken 
@@ -199,6 +199,7 @@ leidt
  volgen.
  volgen,
 volgt
+volgd
 samenvatten
 samengevat
 gebeurd
@@ -236,7 +237,7 @@ weet
 wist
 noem
 stop
-start
+starten
 zoeken
 zoekt
 zocht
@@ -321,6 +322,7 @@ gebroken
 veroorza
 nemen 
 neem 
+neemt
 nam 
 genomen
 dragen
@@ -378,7 +380,7 @@ scheidde
 gescheiden
 raken 
 raakt 
-raakte 
+raakte
 geraakt 
 meldt 
 meld 
@@ -498,7 +500,6 @@ bewegen
 beweegt
 bewoog
 bewogen
-eisen
 eist
 stijgen
 stijgt
@@ -535,6 +536,41 @@ wacht
 deelt
 verdelen
 deeld
+voegen
+voegt
+voegd
+meten
+meet
+slaagt
+slaagd
+leren 
+leert
+leerd
+lezen 
+leest
+las 
+lazen 
+schermt
+schermen
+schermd
+splitsen 
+splitst 
+koester
+tref
+trof
+prijk
+bereikt
+bereiken
+schiet
+schoot
+schoten
+waarschuwen
+waarschuwt
+waarschuwd
+drukken 
+drukt 
+drukten 
+strijk
 verplaatsen
 verplaatst
  opge
@@ -558,6 +594,8 @@ eerd.
 eerd,
 igt
 igd
+dde 
+dt 
 >----------------------------------<
 
 
@@ -643,6 +681,7 @@ eerste
 tweede 
  derde 
 ontwikkel
+ doel
 >----------------------------------<
 
 
@@ -650,6 +689,7 @@ ontwikkel
 LINK-WORDS TO HANDLE
  en 
  of 
+ ofwel 
  danwel
  noch
  tevens 
@@ -689,6 +729,8 @@ PREPOSITIONS TO HANDLE
  ten 
  om 
  terug
+ vanuit 
+ vanaf 
 >----------------------------------<
 
 
@@ -743,10 +785,12 @@ Ze
 
 
 AMBIGUOUS WORD-FUNCTIONS TO HANDLE
+eisen
 stemmen
 merken
 leven 
 vragen
+start
 vroeg
 raden 
 igen
@@ -754,10 +798,17 @@ igen
 eren 
 eren.
 eren,
- ont
  zorgen
 delen
 antwoorden
+slagen 
+streek
+streken
+ aansch
+ opsch
+ insch
+ uitsch
+ afsch
 >----------------------------------<
 
 

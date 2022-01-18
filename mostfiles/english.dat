@@ -48,7 +48,6 @@ whether
  so 
 therefor
 despite
- then 
 (
 >----------------------------------<
 
@@ -67,6 +66,7 @@ been
  was 
  wasn't 
 have
+'ve 
  has 
  hasn't
  had 
@@ -135,10 +135,10 @@ don't
 make 
  makes 
  made
- get 
- gets 
- got 
- gotten 
+get 
+gets 
+got 
+gotten 
  enter 
  enters 
 serve 
@@ -152,8 +152,6 @@ encourage
 promote 
 discourage 
 realize 
-work 
- works 
 appear 
 appears 
  run 
@@ -188,8 +186,6 @@ send
  sends 
  sent 
 determine
-limit 
- limits 
 restrict 
  restricts 
 provide 
@@ -231,10 +227,11 @@ select
  selects 
 tend 
  tends 
-require 
- requires 
+quire 
+quires 
+quired 
 insert 
-prepare 
+prepare
 evaluate 
 duce 
 duces 
@@ -264,7 +261,6 @@ begin
  ends 
 stop 
  stops 
-start
 continue
 allow 
 allowed
@@ -290,8 +286,6 @@ written
 manage 
  manages 
 consider 
-search 
- searches 
 seek 
  seeks 
 scan 
@@ -304,10 +298,13 @@ contains
 clude
 fer 
 fers 
+ferred
 fere 
 feres 
+fered
 fill 
-help
+helps
+helped
 repair
  tell
  told
@@ -316,6 +313,8 @@ repair
  spends 
  grow 
  grows
+ grew
+ grown
  suggest 
  suggests 
  say
@@ -325,7 +324,6 @@ repair
  feel
  felt
 fer 
- comment
  concur 
  concurs 
  confirm 
@@ -369,7 +367,8 @@ ised
  accepted
 join
 explain
-break
+break 
+breaks 
 broke
 broken
 rise 
@@ -418,8 +417,8 @@ perform
 performs 
 push 
 pushes
-pull 
 pulls 
+pulled
  hear 
  hears 
  heard
@@ -435,8 +434,6 @@ delete
 disable
 flect 
 flects
-fect 
-fects 
  cross 
  crosses 
  crossed 
@@ -455,6 +452,7 @@ watch
  aims
 replace
  talk 
+ talked 
  dictate
 earn 
 earns 
@@ -486,7 +484,9 @@ covered
 pend 
 pends 
 pended
-publish
+publish 
+publishes
+published
  sue
 pursue 
 punish 
@@ -496,7 +496,6 @@ argue
 prove
 imagine
 unfold
-drive
 drove
 driven
 promote
@@ -505,8 +504,6 @@ presses
 pressed
 controls
 controlled
-sign 
-signs 
 speak
 spoke
 grades
@@ -535,9 +532,7 @@ announce
 announces 
 announced
 conducts
-calls 
 called
-call 
  win 
  wins 
  won 
@@ -554,7 +549,9 @@ wait
 waits 
 waited
 retrieve
-respond
+respond 
+responds 
+responded
 notices
 jected
 posit 
@@ -595,12 +592,148 @@ passed
 placed
 replace
 bode
+ buy 
+ buys 
+ bought 
+ sell
+ sold
+mend 
+mends 
+mended
+pel 
+pels 
+pelled 
+fend 
+fends 
+fended 
+rests 
+rested 
+adjust 
+adjusts 
+adjusted 
+divide
+ aim 
+ aims 
+ aimed 
+vert 
+verts 
+verted
+cend
+deny
+denies
+denied
+establish 
+establishes
+established
+implement 
+implements
+implemented
+shine
+shone
+drag 
+drags 
+wander
+spread
+absorb 
+absorbs
+absorbed
+invent 
+invents
+invented
+emerge 
+emerges
+emerged
+enhance 
+enhances
+enhanced
+springs
+sprang
+sprung
+occupy
+occupie
+hinder
+collect 
+collects 
+collected 
+inform 
+informs
+informed
+draw 
+draws 
+drawn
+dwell
+align 
+aligns 
+aligned
+gains 
+gained
+caught
+gather
+injure
+remember
+generate
+signed
+ afford
+settle 
+settles
+settled
+thank 
+ fly 
+ flew 
+ flown 
+ploy 
+ploys 
+ployed 
+worked
+convene
+invite
+tend 
+tends
+tended
+fetch
+ cares 
+ cared 
+ defy 
+ defies
+ defied
+  banned
+corroborate
+collaborate
+elaborate
+liberate
+oversee
+accuse
+refresh 
+refreshes
+refreshed
+declare
+inherit 
+inherits 
+inherited
+plains 
+plain 
+plained
+merge
+merges
+merged
+achieve 
+achieves
+achieved
+convince
+teach 
+teaches
+taught
+learn
+destroy
+bury
+burie
+tested
+accesses
 acknowlegde 
 acknowlegdes
 acknowlegded
 ated 
 bate
-eate
 fate
 gate
 hate
@@ -614,7 +747,6 @@ ify
 ified 
 ifies 
 ifying
-ens 
 ening 
 ened 
 ing 
@@ -623,77 +755,6 @@ ing
 
 
 SIGNAL-WORDS TO HANDLE
-princip
-condition
-determinant
- first 
- firstly
- second 
- secondly
- third 
- thirdly
-always
-never
-everywhere
-nowhere
- rule
-definition
-mechanism
-process
-method
-system
-important
- caus
- result
-consequence
- reason 
-argument
-outcome
-input
-output
-function
-element
- part 
-unit 
-group
-cluster
-finally
-conclu
-relation
-barrier
-obstacle
-effect 
-effects
-task
-influence
-category
-classification 
- type 
-theory
-supposition
-assum
-hypothesis
-connect
-analog
-premis 
-total 
-entirely 
-completely 
-summary
-attention
-beware
-scenario
-exchang
-chang
-modif
-variabl
-structur
-interact
-thought
-idea
-problem
-solution
-develop
 >----------------------------------<
 
 
@@ -799,6 +860,19 @@ Its
 Our 
 Your 
 Their 
+other
+Other
+ each 
+Each
+ two 
+ three 
+ four 
+ five 
+ six 
+ seven 
+ eight 
+ nine 
+ ten 
 >----------------------------------<
 
 
@@ -836,6 +910,9 @@ yourselves
 themselves
 something
 nothing
+body 
+one 
+ones 
 >----------------------------------<
 
 
@@ -849,9 +926,9 @@ tain
 tains 
 cate
 date
+eate
 late
 mate
-rate
 tate
 vate
 nate
@@ -874,7 +951,6 @@ pointed
 setting 
 notic
  use 
- end 
  concern
 mand
 mands
@@ -892,11 +968,73 @@ press
 split
 play
 answer
-request
 places
 fall
-fell
+fell 
  lie
+spawn
+work 
+ works
+chase
+ face
+order
+focus
+desire
+ end 
+ ends 
+ ended 
+love
+stitute
+ cut 
+ens 
+close
+search 
+searches 
+experience
+limit 
+limits 
+limited
+comment 
+comments 
+drew 
+rest 
+fect 
+fects 
+talks 
+gain 
+releas
+trace
+catch
+rescue
+ kill
+ silence
+sign 
+signs 
+ fear
+ list
+ ban 
+ bans 
+ care 
+elay
+cast 
+casts
+flies 
+struggle
+access 
+help 
+ hunt
+escape 
+escapes
+test 
+tests 
+calls 
+call 
+start
+note
+ pull 
+form 
+forms
+formed
 >----------------------------------<
 
 

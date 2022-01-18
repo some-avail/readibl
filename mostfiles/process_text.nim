@@ -305,7 +305,181 @@ proc calculateWordFrequencies*(input_tekst:string, wordlengthit:int,
   return output_tekst
 
 
-proc applyDefinitionFileToText(input_tekst, languagest:string): string =
+
+proc applyDefinitionFileToText(input_tekst, languagest: string, 
+                    highlightbo: bool, summaryfilest: string = ""): string =
+
+  # Is now used in 2 cases / passes with separate arguments:
+  # - signal-words-based hightlighting using the file 'summary_language_qualifier.dat'
+  #     > so you get for example: 'summary_english_concise.dat'
+  # - grammar-based text-coloring using the file 'language.dat'
+  #     > reads from preloaded textfilestring from module source_files
+  
+
+  var 
+    blockheadersq: seq[string]
+    blockphasest: string = ""
+    blocklineit: int
+    blockseparatorst = ">----------------------------------<"
+    lastline: string
+    all_argst: string
+    argumentsq: seq[string] = @[]
+    phasetekst:string = input_tekst
+    def_filenamest:string
+    use_custom_replacebo: bool = true
+    deffilest:string
+
+
+  if highlightbo == false:
+    echo "text coloring...."
+    def_filenamest = languagest & ".dat"
+    deffilest = textsourcefileta[def_filenamest]
+    blockheadersq = @[
+        "PUNCTUATION OF SENTENCES TO HANDLE",
+        "PUNCTUATION OF SENTENCE-PARTS TO HANDLE",
+        "PRONOUNS TO HANDLE",
+        "VERBS TO HANDLE",
+        "LINK-WORDS TO HANDLE",
+        "PREPOSITIONS TO HANDLE",
+        "NOUN-ANNOUNCERS TO HANDLE",
+        "NOUN-REPLACERS TO HANDLE",
+        "AMBIGUOUS WORD-FUNCTIONS TO HANDLE"]
+  elif highlightbo == true:
+    echo "=============================="
+    echo "highlighting..."
+    def_filenamest = summaryfilest
+    echo def_filenamest
+    deffilest = readFile(def_filenamest)
+    blockheadersq = @["SIGNAL-WORDS TO HANDLE"]
+    use_custom_replacebo = true
+
+
+  try:
+    # walk thru the lines of the def-file
+    echo "\n=====Begin processing===="
+    for line in deffilest.splitlines:
+      lastline = line
+
+      # check for block-header
+      if line in blockheadersq:
+        blockphasest = line
+        echo blockphasest
+        blocklineit = 0
+      elif blockphasest != "":
+
+        blocklineit += 1
+        if line != blockseparatorst:   # block-separating string
+
+          # echo "line = " & line
+          
+          if blockphasest == "PUNCTUATION OF SENTENCES TO HANDLE":
+            if use_custom_replacebo:
+              phasetekst = customReplace(phasetekst, line, line & "<br>&nbsp;&nbsp;&nbsp;&nbsp;",
+                                  true, "unique_occurrence", @[15])
+            else:
+              phasetekst = replace(phasetekst, line, line & "<br>&nbsp;&nbsp;&nbsp;&nbsp;")
+          elif blockphasest == "PUNCTUATION OF SENTENCE-PARTS TO HANDLE":
+            if use_custom_replacebo:
+              phasetekst = customReplace(phasetekst, line, line & "<br>",
+                                  true, "unique_occurrence", @[25])
+            else:
+              phasetekst = replace(phasetekst, line, line & "<br>")
+          elif blockphasest == "PRONOUNS TO HANDLE":
+            if use_custom_replacebo:
+              phasetekst = customReplace(phasetekst, line, "<br>" & line,
+                                    true, "", @[])
+            else:
+              phasetekst = replace(phasetekst, line, "<br>" & line)
+          elif blockphasest == "VERBS TO HANDLE":
+            if use_custom_replacebo:
+              phasetekst = customReplace(phasetekst, line, "<span style=color:magenta>" & line & "</span>",
+                                    true, "", @[])
+            else:
+              phasetekst = replace(phasetekst, line, "<span style=color:magenta>" & line & "</span>")
+          elif blockphasest == "SIGNAL-WORDS TO HANDLE":
+            if use_custom_replacebo:
+              phasetekst = customReplace(phasetekst, line, "<span style=background-color:#ffd280>" & line & "</span>",
+                                    true, "", @[])
+            else:
+              phasetekst = replace(phasetekst, line, "<span style=background-color:#ffd280>" & line & "</span>")
+          elif blockphasest == "LINK-WORDS TO HANDLE":
+            if use_custom_replacebo:
+              phasetekst = customReplace(phasetekst, line, "<span style=color:red>" & line & "</span>",
+                                    true, "", @[])
+            else:
+              phasetekst = replace(phasetekst, line, "<span style=color:red>" & line & "</span>")
+          elif blockphasest == "PREPOSITIONS TO HANDLE":
+            if use_custom_replacebo:
+              phasetekst = customReplace(phasetekst, line, "<span style=color:limegreen>" & line & "</span>",
+                                    true, "", @[])
+            else:
+              phasetekst = replace(phasetekst, line, "<span style=color:limegreen>" & line & "</span>")
+          elif blockphasest == "NOUN-ANNOUNCERS TO HANDLE":
+            if use_custom_replacebo:
+              phasetekst = customReplace(phasetekst, line, "<span style=color:#b35919>" & line & "</span>",
+                                    true, "", @[])
+            else:
+              phasetekst = replace(phasetekst, line, "<span style=color:#b35919>" & line & "</span>")
+          elif blockphasest == "NOUN-REPLACERS TO HANDLE":
+            if use_custom_replacebo:
+              phasetekst = customReplace(phasetekst, line, "<span style=color:darkturquoise>" & line & "</span>",
+                                    true, "", @[])
+            else:
+              phasetekst = replace(phasetekst, line, "<span style=color:darkturquoise>" & line & "</span>")
+          elif blockphasest == "AMBIGUOUS WORD-FUNCTIONS TO HANDLE":
+            if use_custom_replacebo:
+              phasetekst = customReplace(phasetekst, line, "<span style=color:#e6b800>" & line & "</span>",
+                                    true, "", @[])
+            else:
+              phasetekst = replace(phasetekst, line, "<span style=color:#e6b800>" & line & "</span>")
+
+
+        else:
+          # then the former block is completed
+          blockphasest = ""
+          # set arguments to none here:
+          # somearg = none
+      
+          # remove superflous whitelines
+          phasetekst = replace(phasetekst, ",<br><br><br>", ",<br>")
+          phasetekst = replace(phasetekst, ",<br><br>", ",<br>")
+          phasetekst = replace(phasetekst, ",<br> <br>", ",<br>")
+          phasetekst = replace(phasetekst, ", <br><br><br>", ",<br>")
+          phasetekst = replace(phasetekst, ", <br><br>", ",<br>")
+          phasetekst = replace(phasetekst, ", <br> <br>", ",<br>")
+          phasetekst = replace(phasetekst, "<br> <br>", "<br><br>")
+          phasetekst = replace(phasetekst, "<br><br><br><br>", "<br><br>")
+          phasetekst = replace(phasetekst, "<br><br><br>", "<br><br>")
+          phasetekst = replace(phasetekst, "<br><p>", "<p>")
+
+    echo "===End of processing===="
+  
+  except IOError:
+    echo "IO error!"
+  
+  except RangeError:
+    echo "\p\p+++++++ search-config not found +++++++++++\p"
+    echo "You have probably entered a search-config that could not be found. \p" &
+        "Re-examine you search-config. \p" &
+        "The problem originated probably in the above EDIT FILE-block"
+    let errob = getCurrentException()
+    echo "\p******* Technical error-information ******* \p" 
+    echo "block-phase: " & blockphasest & "\p"
+    echo "Last def-file-line read: " & lastline & "\p"
+    echo repr(errob) & "\p****End exception****\p"
+
+  
+  except:
+    let errob = getCurrentException()
+    echo "\p******* Unanticipated error ******* \p" 
+    echo "block-phase: " & blockphasest & "\p"
+    echo "Last def-file-line read: " & lastline & "\p"
+    echo repr(errob) & "\p****End exception****\p"
+
+  return phasetekst
+
+
+proc applyDefinitionFileToTextOld(input_tekst, languagest:string): string =
   # reads now from preloaded textfilestring from module source_files
 
   var 
@@ -377,10 +551,10 @@ proc applyDefinitionFileToText(input_tekst, languagest:string): string =
               phasetekst = replace(phasetekst, line, "<span style=color:magenta>" & line & "</span>")
           elif blockphasest == "SIGNAL-WORDS TO HANDLE":
             if use_custom_replacebo:
-              phasetekst = customReplace(phasetekst, line, "<span style=color:#ff6600>" & line & "</span>",
+              phasetekst = customReplace(phasetekst, line, "<span style=background-color:#ffd280>" & line & "</span>",
                                     true, "", @[])
             else:
-              phasetekst = replace(phasetekst, line, "<span style=color:#ff6600>" & line & "</span>")
+              phasetekst = replace(phasetekst, line, "<span style=background-color:#ffd280" & line & "</span>")
           elif blockphasest == "LINK-WORDS TO HANDLE":
             if use_custom_replacebo:
               phasetekst = customReplace(phasetekst, line, "<span style=color:red>" & line & "</span>",
@@ -507,8 +681,8 @@ proc convertRelPathsToAbsolute(inputtekst, htmlbasepathst: string): string =
 
 
 
-proc handleTextPartsFromHtml*(webaddresst, typest, languagest,
-                          taglist:string = "paragraph-only"): string =
+proc handleTextPartsFromHtml*(webaddresst, typest, languagest: string,
+          taglist:string = "paragraph-only", summaryfilest: string = ""): string =
 
   #[ 
   This procedure is a forth-development of extractTextPartsFromHtml.
@@ -556,6 +730,7 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest,
     proef:string
     pos2it:int
     reformatedst:string
+    highlightedst: string
     tagstartst:string
     thisoccurit, smallestposit:int
     tagindexit:int
@@ -594,7 +769,8 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest,
                     @["unordered_list", "<ul", "</ul>", ""],
                     @["ordered_list", "<ol", "</ol>", ""],
                     @["description_list", "<dl", "</dl>", ""],
-                    @["block_quote", "<blockquote", "</blockquote>", ""]
+                    @["block_quote", "<blockquote", "</blockquote>", ""],
+                    @["font_html4", "<font", "</font>", ""]
                   ]
 
 
@@ -610,7 +786,8 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest,
                     @["unordered_list", "<ul", "</ul>", ""],
                     @["ordered_list", "<ol", "</ol>", ""],
                     @["description_list", "<dl", "</dl>", ""],
-                    @["block_quote", "<blockquote", "</blockquote>", ""]                    
+                    @["block_quote", "<blockquote", "</blockquote>", ""] ,
+                    @["font_html4", "<font", "</font>", ""]                                       
                   ]
 
 
@@ -691,7 +868,8 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest,
 
           elif typest == "replace":
             websitest.delete(textstartit, textendit)
-            reformatedst = applyDefinitionFileToText(textpartst, languagest)
+            highlightedst = applyDefinitionFileToText(textpartst, languagest, true, summaryfilest)
+            reformatedst = applyDefinitionFileToText(highlightedst, languagest, false)
             posit += len(reformatedst) - 2
             websitest.insert(reformatedst, textstartit)
 
@@ -710,15 +888,17 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest,
 
 
 
-proc extractSentencesFromText(input_tekst, languagest:string) :string =
+proc extractSentencesFromText(input_tekst, languagest:string, 
+                    summaryfilest: string = "") :string =
   #[ 
   Process the input-text by extracting sentences that have a certain 
   search-string in them, so that a summary arises.
-  The search-strings originate from the language-files (like english.dat),
+
+  The summary-definition-files (like summary_english.dat) are used.
+
+  The search-strings originate no more from the language-files (like english.dat),
   specifically the category SIGNAL-WORDS TO HANDLE.
 
-  The previously used summary-definition-files (like summary_english.dat)
-  are currently not used.
 
   ADAP HIS
   -prune and correct the code
@@ -738,9 +918,7 @@ proc extractSentencesFromText(input_tekst, languagest:string) :string =
     blockseparatorst = ">----------------------------------<"
     lastline: string
     phasetekst:string = input_tekst
-    def_filenamest:string = "summary_" & languagest & ".dat"
-    # def_filenamest:string = languagest & ".dat"
-
+    def_filenamest: string
     sentencesq: seq[string] = phasetekst.split(". ")
     sentencecountit: int = 0
     summarysq: seq[string] = @[]
@@ -756,12 +934,15 @@ proc extractSentencesFromText(input_tekst, languagest:string) :string =
     linesq: seq[string] 
 
 
+  def_filenamest = summaryfilest
+
   if tbo: echo sentencesq
 
   if open(deffile, def_filenamest):    # try to open the def-file
     try:
 
       if tbo: echo "\n=====Begin extraction===="
+
       # walk thru the sentences of the input-text
       for sentencest in sentencesq:
         if tbo: echo sentencest
@@ -795,13 +976,18 @@ proc extractSentencesFromText(input_tekst, languagest:string) :string =
                   if sentencest.len < stringsizeit:   # to skip long irrelevant lists
                     countit = count(sentencest, '.')
                     if countit == 0 or  countit > 1:
+                      summarysq.add("<br>" & $sentencecountit & " ===============================" & "<br>")
                       summarysq.add(sentencest)
+
                     elif countit == 1:
+                      summarysq.add("<br>" &  $sentencecountit & " ===============================" & "<br>")
                       linesq = sentencest.split('.')
                       leftpartst = linesq[0]
                       rightpartst = linesq[1]
                       if leftpartst.contains(line): summarysq.add(leftpartst)
                       if rightpartst.contains(line): summarysq.add(rightpartst)
+
+
                   # to prevent more adds for more extraction-words
                   break
               else:
@@ -849,18 +1035,38 @@ proc extractSentencesFromText(input_tekst, languagest:string) :string =
 
 
 
-proc replaceInText*(input_tekst, languagest, preprocesst:string):string =
+proc replaceInText*(input_tekst, languagest, preprocesst: string, 
+                          summaryfilest: string = ""):string =
 
   var
-    r1,r2, r3:string
+    r1,r2, r3, r4: string
+
 
   r1 = replace(input_tekst, "\p", "<br>")
   if preprocesst == "summarize":
-    r2 = extractSentencesFromText(r1, languagest)
-    r3 = applyDefinitionFileToText(r2, languagest)
-  else:
-    r3 = applyDefinitionFileToText(r1, languagest)
-  return r3
+    r2 = extractSentencesFromText(r1, languagest, summaryfilest)
+    r3 = applyDefinitionFileToText(r2, languagest, true, summaryfilest)
+    r4 = applyDefinitionFileToText(r3, languagest, false)
+    result = r4
+  else:   # no summary requested
+    r2 = applyDefinitionFileToText(r1, languagest, true, summaryfilest)
+    r3 = applyDefinitionFileToText(r2, languagest, false)
+    result = r3
+  
+
+
+# proc replaceInTextOld*(input_tekst, languagest, preprocesst:string):string =
+
+#   var
+#     r1,r2, r3:string
+
+#   r1 = replace(input_tekst, "\p", "<br>")
+#   if preprocesst == "summarize":
+#     r2 = extractSentencesFromText(r1, languagest)
+#     r3 = applyDefinitionFileToText(r2, languagest)
+#   else:
+#     r3 = applyDefinitionFileToText(r1, languagest)
+#   return r3
 
 
 proc getTitleFromWebsite*(webaddresst:string): string =
@@ -913,7 +1119,7 @@ when isMainModule:
 
   # echo extractSentencesFromText(testtekst_nl, "dutch")
   # echo extractSentencesFromText(testtekst_eng, "english")
-  # echo replaceInText(testtekst, "english", true)
+  echo replaceInText(testtekst_eng, "english", "")
   # echo handleTextPartsFromHtml("https://nl.wikipedia.org/wiki/Geschiedenis", "replace", "dutch")
   # echo new_handleTextPartsFromHtml("https://nl.wikipedia.org/wiki/Geschiedenis", "replace", "dutch")
 
@@ -926,4 +1132,4 @@ when isMainModule:
   # echo addresstekst
   # echo "------"
   # echo convertRelPathsToAbsolute(addresstekst, "http://www.iets.nl")
-  echo getBaseFromWebAddress("http://www.x.nl/a/b/c/blah.html")
+  # echo getBaseFromWebAddress("http://www.x.nl/a/b/c/blah.html")

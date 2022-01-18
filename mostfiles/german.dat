@@ -60,13 +60,17 @@ VERBS TO HANDLE
  sind,
  sind.
  seit 
+ sei 
+ seien 
  gewesen
  war
+ wär
  habst 
  habe 
  hat 
  hat.
  hat,
+ hatte
  haben
  gehabt
  kann
@@ -275,6 +279,7 @@ drängen
 drängt
 integrieren
 integriert
+handel
 veranschaulichen
 veranschaulicht
 zählen
@@ -297,6 +302,9 @@ iert,
 iert.
 ierten
 ierte
+ete 
+ete,
+ete.
 et 
 et,
 et.
@@ -434,8 +442,9 @@ AMBIGUOUS WORD-FUNCTIONS TO HANDLE
 ten 
 ten.
 ten,
-te 
  ver
+ er
+ be
 >----------------------------------<
 
 

@@ -1,57 +1,18 @@
 Extraction-strings for summarizing with Flashread.
 Language: english
-Summary-type: generic
-version: 1.3
+Summary-type: historical
+version: >= 1.5
+
 
 
 
 SIGNAL-WORDS TO HANDLE
-princip
-condition
-determinant
- rule
-definition
-mechanism
-process
-method
-system
- caus
- result
-consequence
- reason 
-argument
-outcome
-input
-output
-cluster
-conclu
-relation
-barrier
-obstacle
-task
-influence
-category
-classification 
- type 
-theory
-supposition
-assum
-hypothesis
-analog
-premis 
-summary
-scenario
-exchang
-chang
-modif
-variabl
-structur
-interact
-problem
-solution
-develop
-strateg
-plan
-policy
+cultur
+race
+ they 
+ he 
+ she 
+civil
+ancestor
 >----------------------------------<
 

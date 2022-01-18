@@ -98,7 +98,7 @@ var
 
 
 const 
-  versionfl:float = 0.901
+  versionfl:float = 0.92
   minimal_word_lengthit = 7
   appnamebriefst:string = "RD"
   appnamenormalst = "Readibl"
@@ -132,6 +132,14 @@ outervarob["loadtime"] = newlang("Server-start: ") & $now()
 outervarob["pagetitle"] = appnamenormalst
 outervarob["namesuffix"] = newlang(appnamesuffikst)
 
+
+# set testbo to false when create a release!
+var testbo = true
+template log(messagest: string) =
+  if testbo:
+    echo messagest
+
+
 proc getWebTitle():string = 
   var 
     clipob = clipboard_new(nil)
@@ -147,7 +155,11 @@ proc getWebTitle():string =
   return appnamebriefst & "_" & inter_tekst
 
 
-proc jump_to_end_step(languagest, preprocesst, taglist:string, typest:string =""): string =
+proc jump_to_end_step(languagest, preprocesst, taglist, typest:string, 
+                                    summaryfilest: string): string =
+  # Skip the gradual steps from the radio-buttons and go to processing immediately
+  # typest determines if text-extraction or insite text-replacement is done
+
   var 
     clipob = clipboard_new(nil)
     past, inter_tekst, resulttekst:string
@@ -155,14 +167,16 @@ proc jump_to_end_step(languagest, preprocesst, taglist:string, typest:string =""
   past = $clipob.clipboard_text()
 
   if past[0 .. 3] == "http":   # pasted text is a link
-    inter_tekst = handleTextPartsFromHtml(past, "extract", languagest, taglist)
+    inter_tekst = handleTextPartsFromHtml(past, "extract", languagest, 
+                                                  taglist, summaryfilest)
   else:
     inter_tekst = past
 
   if typest == "":
-    resulttekst = replaceInText(inter_tekst, languagest, preprocesst)
+    resulttekst = replaceInText(inter_tekst, languagest, preprocesst, summaryfilest)
   elif typest == "insite_reformating":
-    resulttekst = handleTextPartsFromHtml(past, "replace", languagest, taglist)
+    resulttekst = handleTextPartsFromHtml(past, "replace", languagest, 
+                                                  taglist, summaryfilest)
   return resulttekst
 
 
@@ -180,6 +194,9 @@ proc showPage(custominnerhtmlst:string=""): string =
 
 routes:
 
+  get "/":
+    resp "Type: localhost:5050/flashread-form"
+
   get "/flashread-form":
     # load initial form
     innervarob["statustext"] = newlang(statustekst)
@@ -189,6 +206,7 @@ routes:
     innervarob["text_language"] = setDropDown("text-language", readOptionFromFile("text-language", "value"))
     innervarob["taglist"] = setDropDown("taglist", "paragraph-with-headings")
     innervarob["radiobuttons_1"] = setRadioButtons("orders","")
+    innervarob["summarylist"] = setDropDown("summarylist", "")
     innervarob["urltext"] = ""
     innervarob["checkboxes_1"] = setCheckBoxSet("fr_checkset1", @["default"])
     innervarob["submit"] = newlang("Choose and run")
@@ -198,21 +216,21 @@ routes:
     resp showPage()
 
 
-  get "/flashread-form/@errorst":
-    # load error-form - not used
-    innervarob["statustekst"] = @"errorst"
-    innervarob["statusdata"] = ""
-    innervarob["pastedtext"] = ""
-    innervarob["processedtext"] = filepathst
-    innervarob["text_language"] = setDropDown("text-language", readOptionFromFile("text-language", "value"))
-    innervarob["taglist"] = setDropDown("taglist", "paragraph-only")    
-    innervarob["radiobuttons_1"] = setRadioButtons("orders","")
-    innervarob["urltext"] = ""
-    innervarob["checkboxes_1"] = setCheckBoxSet("fr_checkset1", @["default"])
-    innervarob["submit"] = newlang("Choose and run")
-    innervarob["textbox-remark"] = newlang("Your item will be pasted here (text or web-link):")
+  # get "/flashread-form/@errorst":
+  #   # load error-form - not used
+  #   innervarob["statustekst"] = @"errorst"
+  #   innervarob["statusdata"] = ""
+  #   innervarob["pastedtext"] = ""
+  #   innervarob["processedtext"] = filepathst
+  #   innervarob["text_language"] = setDropDown("text-language", readOptionFromFile("text-language", "value"))
+  #   innervarob["taglist"] = setDropDown("taglist", "paragraph-only")    
+  #   innervarob["radiobuttons_1"] = setRadioButtons("orders","")
+  #   innervarob["urltext"] = ""
+  #   innervarob["checkboxes_1"] = setCheckBoxSet("fr_checkset1", @["default"])
+  #   innervarob["submit"] = newlang("Choose and run")
+  #   innervarob["textbox-remark"] = newlang("Your item will be pasted here (text or web-link):")
 
-    resp showPage()
+  #   resp showPage()
 
 
   post "/flashread-form":
@@ -235,6 +253,8 @@ routes:
         innervarob["processedtext"] = ""
         innervarob["text_language"] = setDropDown("text-language", @"text-language")
         innervarob["taglist"] = setDropDown("taglist", @"taglist")
+        innervarob["summarylist"] = setDropDown("summarylist", @"summarylist")
+
         innervarob["radiobuttons_1"] = setRadioButtons("orders", "transfer")
         innervarob["urltext"] = ""
         innervarob["checkboxes_1"] = setCheckBoxSet("fr_checkset1", @[@"jump_to_end", @"summarize", 
@@ -251,7 +271,8 @@ routes:
 
       elif @"jump_to_end" == "jump_to_end":
         if @"insite_reformating" == "":
-          output_tekst = jump_to_end_step(@"text-language", @"summarize", @"taglist")
+          output_tekst = jump_to_end_step(@"text-language", @"summarize", @"taglist", 
+                                                              "", @"summarylist")
           statustekst = "Output number of characters:"
           statusdatast = $len(output_tekst)
           innervarob["statustext"] = newlang(statustekst)
@@ -260,6 +281,8 @@ routes:
           innervarob["processedtext"] = output_tekst
           innervarob["text_language"] = setDropDown("text-language", @"text-language")
           innervarob["taglist"] = setDropDown("taglist", @"taglist")
+          innervarob["summarylist"] = setDropDown("summarylist", @"summarylist")
+
           innervarob["radiobuttons_1"] = setRadioButtons("orders", "pasteclip")
           innervarob["urltext"] = ""
           innervarob["checkboxes_1"] = setCheckBoxSet("fr_checkset1", @[@"jump_to_end", @"summarize", 
@@ -277,7 +300,8 @@ routes:
 
         elif @"insite_reformating" == "insite_reformating":
           # output_tekst = jump_to_end_step(@"text-language", @"summarize")
-          newinnerhtmlst = jump_to_end_step(@"text-language", @"summarize", @"taglist", @"insite_reformating")
+          newinnerhtmlst = jump_to_end_step(@"text-language", @"summarize", 
+                            @"taglist", @"insite_reformating", @"summarylist")
           statustekst = "Output number of chickens:"
           statusdatast = $len(newinnerhtmlst)
           innervarob["statustext"] = newlang(statustekst)
@@ -285,7 +309,9 @@ routes:
           innervarob["pastedtext"] = $past
           innervarob["processedtext"] = newinnerhtmlst
           innervarob["text_language"] = setDropDown("text-language", @"text-language")
-          innervarob["taglist"] = setDropDown("taglist", @"taglist")          
+          innervarob["taglist"] = setDropDown("taglist", @"taglist")
+          innervarob["summarylist"] = setDropDown("summarylist", @"summarylist")
+
           innervarob["radiobuttons_1"] = setRadioButtons("orders", "pasteclip")
           innervarob["urltext"] = ""
           innervarob["checkboxes_1"] = setCheckBoxSet("fr_checkset1", @[@"jump_to_end", @"summarize", 
@@ -316,7 +342,9 @@ routes:
         innervarob["pastedtext"] = output_tekst
         innervarob["processedtext"] = output_tekst
         innervarob["text_language"] = setDropDown("text-language", @"text-language")
-        innervarob["taglist"] = setDropDown("taglist", @"taglist")        
+        innervarob["taglist"] = setDropDown("taglist", @"taglist")
+        innervarob["summarylist"] = setDropDown("summarylist", @"summarylist")
+
         innervarob["radiobuttons_1"] = setRadioButtons("orders", "frequencies")
         innervarob["urltext"] = @"pasted_text"
         innervarob["checkboxes_1"] = setCheckBoxSet("fr_checkset1", @[@"jump_to_end", @"summarize", 
@@ -339,7 +367,9 @@ routes:
         innervarob["pastedtext"] = @"pasted_text"
         innervarob["processedtext"] = converted_tekst
         innervarob["text_language"] = setDropDown("text-language", @"text-language")
-        innervarob["taglist"] = setDropDown("taglist", @"taglist")        
+        innervarob["taglist"] = setDropDown("taglist", @"taglist")    
+        innervarob["summarylist"] = setDropDown("summarylist", @"summarylist")
+
         innervarob["radiobuttons_1"] = setRadioButtons("orders", "frequencies")
         innervarob["urltext"] = ""
         innervarob["checkboxes_1"] = setCheckBoxSet("fr_checkset1", @[@"jump_to_end", @"summarize", 
@@ -365,7 +395,9 @@ routes:
       innervarob["pastedtext"] = @"pasted_text"
       innervarob["processedtext"] = output_tekst
       innervarob["text_language"] = setDropDown("text-language", @"text-language")
-      innervarob["taglist"] = setDropDown("taglist", @"taglist")      
+      innervarob["taglist"] = setDropDown("taglist", @"taglist")
+      innervarob["summarylist"] = setDropDown("summarylist", @"summarylist")
+
       innervarob["radiobuttons_1"] = setRadioButtons("orders", "process_text")
       innervarob["urltext"] = @"url_text"
       innervarob["checkboxes_1"] = setCheckBoxSet("fr_checkset1", @[@"jump_to_end", @"summarize", 
@@ -381,8 +413,9 @@ routes:
 
 
     if request.params["orders"] == "process_text":
+      # If @"summarize" == "summarize":       
 
-      output_tekst = replaceInText(@"pasted_text", @"text-language", @"summarize")
+      output_tekst = replaceInText(@"pasted_text", @"text-language", @"summarize", @"summarylist")
       statustekst = "Output number of characters:"
       statusdatast = $len(output_tekst)
       innervarob["statustext"] = newlang(statustekst)
@@ -391,7 +424,9 @@ routes:
       innervarob["pastedtext"] = @"pasted_text"
       innervarob["processedtext"] = output_tekst
       innervarob["text_language"] = setDropDown("text-language", @"text-language")
-      innervarob["taglist"] = setDropDown("taglist", @"taglist")      
+      innervarob["taglist"] = setDropDown("taglist", @"taglist")
+      innervarob["summarylist"] = setDropDown("summarylist", @"summarylist")
+
       innervarob["radiobuttons_1"] = setRadioButtons("orders", "pasteclip")
       innervarob["urltext"] = @"url_text"
       innervarob["checkboxes_1"] = setCheckBoxSet("fr_checkset1", @[@"jump_to_end", @"summarize", 
@@ -425,7 +460,4 @@ routes:
     #   discard
     #   # redirect "/flashread-form/$1".format("Error_Enter_text_to_proceed")
 
-
-  get "/":
-    resp "Goodbye"
 

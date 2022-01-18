@@ -70,10 +70,11 @@ var dropdownsta* =  [("calledname", "somelabel",
                                 ["paragraph-only", "Paragraph only"], 
                                 ["paragraph-with-headings", "Paragraph with headings"], 
                                 ["full-list", "Full list"],
-                                ["full-list-with-headings", "Full list with headings"]
-                                ]
-                        )
+                                ["full-list-with-headings", "Full list with headings"]]),
+                        ("summarylist", "Highlighting / summaries:",
+                                @[["sumname", "summary_english_qual.dat"]])
                       ]
+
 
 
 when isMainModule:
