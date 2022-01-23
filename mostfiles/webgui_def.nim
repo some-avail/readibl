@@ -50,6 +50,7 @@ var checkboxesta* = {
                       ("mies", "mies-bouwman", true)],
       "fr_checkset1": @[("jump_to_end", "Jump to end-step", false),
                         ("summarize", "Summarize (extract certain sentences)", false),
+                        ("generate_contents","Generate contents (experimental)", false),
                         ("insite_reformating","Perform in-site reformating", false),
                         ("newtab", "Open result in new tab", false)]
                       }.toTable
@@ -70,8 +71,10 @@ var dropdownsta* =  [("calledname", "somelabel",
                                 ["paragraph-only", "Paragraph only"], 
                                 ["paragraph-with-headings", "Paragraph with headings"], 
                                 ["full-list", "Full list"],
-                                ["full-list-with-headings", "Full list with headings"]]),
-                        ("summarylist", "Highlighting / summaries:",
+                                ["full-list-with-headings", "Full list with headings"],
+                                ["exotic-list", "Exotic list"],
+                                ["exotic-list-with-headings", "Exotic list with headings"]]),
+                        ("summarylist", "Highlighting / summary (=prefix *):",
                                 @[["sumname", "summary_english_qual.dat"]])
                       ]
 

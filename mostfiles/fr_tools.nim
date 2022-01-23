@@ -172,10 +172,10 @@ template timeNeatly(statement: untyped): float =
   cpuTime() - t0
 
 
-template log(messagest: string) =
+template log(messagest: untyped) =
   # replacement for echo that is only co-compiled when debugbo = true
   if debugbo:
-    echo messagest
+    echo $(messagest)
 
 
 # test = newlang("something")
