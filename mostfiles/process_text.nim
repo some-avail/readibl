@@ -86,13 +86,8 @@ Afko zoals m.b.t., i.g.v. worden niet meegenomen, toch? Of wel.
 <link rel="file" href="//www.liveinternet.iets"
   """
 
-
+# see template log in fr_tools
 var debugbo: bool = true
-
-template log(messagest: untyped) =
-  # replacement for echo that is only co-compiled when debugbo = true
-  if debugbo:
-    echo $(messagest)
 
 
 proc testWebSite() =
@@ -864,6 +859,7 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest: string,
                     @["description_list", "<dl", "</dl>", ""],
                     @["block_quote", "<blockquote", "</blockquote>", ""],
                     @["font_html4", "<font", "</font>", ""],
+                    @["span-elem", "<span", "</span>", ""],
                     @["div-element", "<div", "</div>", ""]
                   ]
 
@@ -882,6 +878,7 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest: string,
                     @["description_list", "<dl", "</dl>", ""],
                     @["block_quote", "<blockquote", "</blockquote>", ""] ,
                     @["font_html4", "<font", "</font>", ""],
+                    @["span-elem", "<span", "</span>", ""],
                     @["div-element", "<div", "</div>", ""]                    
                   ]
 
@@ -990,6 +987,7 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest: string,
       if generatecontentst == "generate_contents":
         textallst.insert(headinglist, 0)
       result = textallst
+
     elif typest == "replace":
       result = websitest
 
@@ -1241,7 +1239,8 @@ proc handleTextPartsFromHtml_Old*(webaddresst, typest, languagest: string,
 
 
 proc extractSentencesFromText(input_tekst, languagest:string, 
-                    summaryfilest: string = "") :string =
+              summaryfilest: string = "", generatecontentst: string) :string =
+
   #[ 
   Process the input-text by extracting sentences that have a certain 
   search-string in them, so that a summary arises.
@@ -1282,11 +1281,16 @@ proc extractSentencesFromText(input_tekst, languagest:string,
     tbo = false
     countit: int
     leftpartst, rightpartst: string
-    stringsizeit:int = 1500
+    stringsizeit:int
     linesq: seq[string] 
 
-
   def_filenamest = summaryfilest
+
+  if generatecontentst == "":
+    stringsizeit = 1500
+  else:
+    # make sure the contents-area is not seen as garbage
+    stringsizeit = 15000
 
   if tbo: echo sentencesq
 
@@ -1388,7 +1392,7 @@ proc extractSentencesFromText(input_tekst, languagest:string,
 
 
 proc formatText*(input_tekst, languagest, preprocesst: string, 
-                          summaryfilest: string = ""):string =
+          summaryfilest: string = "", generatecontentst: string):string =
   
   # To apply html-formatting (coloring and highlighting), 
   # possibly after summarization
@@ -1396,12 +1400,12 @@ proc formatText*(input_tekst, languagest, preprocesst: string,
   var
     r1,r2, r3: string
 
-
   # r1 = replace(input_tekst, "\p", "<br>")
   r1 = input_tekst
 
   if preprocesst == "summarize":
-    r2 = extractSentencesFromText(r1, languagest, summaryfilest)
+    r2 = extractSentencesFromText(r1, languagest, summaryfilest, 
+                                    generatecontentst)
     r3 = applyDefinitionFileToText(r2, languagest, true, summaryfilest)
     result = applyDefinitionFileToText(r3, languagest, false)
 
@@ -1411,7 +1415,39 @@ proc formatText*(input_tekst, languagest, preprocesst: string,
 
 
 
-proc replaceInPastedText*(pastedtekst: string): string =
+proc replaceInPastedText*(pastedtekst, generatecontentst: string): string =
+  # To ensure correct conversion from text-format to html-format
+
+  var 
+    lengthit: int = 25
+    newtekst, contentst: string
+
+
+  for linest in pastedtekst.splitlines:
+    if len(linest) < lengthit:
+      if linest.len > 0:
+        if not linest.endsWith("."):
+          if generatecontentst != "":
+            contentst.add(linest & "<br>")
+          newtekst.add("<b>" & linest & "</b><br>")
+        else:
+          newtekst.add(linest & "<br><br>")
+
+    elif len(linest) > lengthit:
+      if linest.endsWith("."):
+        newtekst.add(linest & "<br><br>")
+      else:
+        newtekst.add(linest & " ")
+
+  contentst.add("<br>---------------------------------------------------<br><br>")
+  if generatecontentst != "":
+    newtekst.insert(contentst, 0)
+
+  result = newtekst
+
+
+
+proc replaceInPastedText_Old*(pastedtekst: string): string =
   # to ensure correct conversion from text-format to html-format
 
   var 
@@ -1422,19 +1458,6 @@ proc replaceInPastedText*(pastedtekst: string): string =
   result = replace(r2, "\p", " ")
 
 
-
-# proc replaceInTextOld*(input_tekst, languagest, preprocesst:string):string =
-
-#   var
-#     r1,r2, r3:string
-
-#   r1 = replace(input_tekst, "\p", "<br>")
-#   if preprocesst == "summarize":
-#     r2 = extractSentencesFromText(r1, languagest)
-#     r3 = applyDefinitionFileToText(r2, languagest)
-#   else:
-#     r3 = applyDefinitionFileToText(r1, languagest)
-#   return r3
 
 
 proc getTitleFromWebsite*(webaddresst:string): string =

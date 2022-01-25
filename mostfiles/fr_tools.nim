@@ -172,7 +172,14 @@ template timeNeatly(statement: untyped): float =
   cpuTime() - t0
 
 
-template log(messagest: untyped) =
+
+
+# Beware: variable debugbo can be used globally, modularly and procedurally
+# whereby lower scopes override the higher ones.
+# Maybe best to use modular vars to balance between an overload of 
+# messages and the need set the var at different places.
+
+template log*(messagest: untyped) =
   # replacement for echo that is only co-compiled when debugbo = true
   if debugbo:
     echo $(messagest)

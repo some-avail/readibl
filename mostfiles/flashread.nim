@@ -89,6 +89,10 @@ import loadgui
 import times
 
 
+
+# set debugbo to false when creating a release!
+var debugbo = true
+
 var
   statustekst, statusdatast:string
   output_tekst:string
@@ -98,7 +102,7 @@ var
 
 
 const 
-  versionfl:float = 0.92
+  versionfl:float = 0.921
   minimal_word_lengthit = 7
   appnamebriefst:string = "RD"
   appnamenormalst = "Readibl"
@@ -133,24 +137,20 @@ outervarob["pagetitle"] = appnamenormalst
 outervarob["namesuffix"] = newlang(appnamesuffikst)
 
 
-# set testbo to false when create a release!
-var testbo = true
-template log(messagest: string) =
-  if testbo:
-    echo messagest
-
-
 proc getWebTitle():string = 
   var 
     clipob = clipboard_new(nil)
     past, inter_tekst:string
+
+  const titlelenghit: int = 30
 
   past = $clipob.clipboard_text()
 
   if past[0 .. 3] == "http":   # pasted text is a link
     inter_tekst = getTitleFromWebsite(past)
   else:
-    inter_tekst = past[0 .. 20]
+    if inter_tekst.len > titlelenghit:
+      inter_tekst = past[0 .. titlelenghit]
 
   return appnamebriefst & "_" & inter_tekst
 
@@ -167,17 +167,20 @@ proc jump_to_end_step(languagest, preprocesst, taglist, typest, summaryfilest,
   past = $clipob.clipboard_text()
 
   if past[0 .. 3] == "http":   # pasted text is a link
-    inter_tekst = handleTextPartsFromHtml(past, "extract", languagest, 
-                                  taglist, summaryfilest, gencontentst)
-  else:
-    inter_tekst = past
+    if typest == "":
+      inter_tekst = handleTextPartsFromHtml(past, "extract", languagest, 
+                                    taglist, summaryfilest, gencontentst)
+      result = formatText(inter_tekst, languagest, preprocesst, 
+                            summaryfilest, gencontentst)
+    elif typest == "insite_reformating":
+      result = handleTextPartsFromHtml(past, "replace", languagest, 
+                                    taglist, summaryfilest, gencontentst)
 
-  if typest == "":
-    resulttekst = replaceInPastedText(inter_tekst)
-    result = formatText(resulttekst, languagest, preprocesst, summaryfilest)
-  elif typest == "insite_reformating":
-    result = handleTextPartsFromHtml(past, "replace", languagest, 
-                                  taglist, summaryfilest, gencontentst)
+  else:   # a text-block is pasted in this case
+    inter_tekst = past
+    resulttekst = replaceInPastedText(inter_tekst, gencontentst)
+    result = formatText(resulttekst, languagest, preprocesst, 
+                               summaryfilest, gencontentst)
 
 
 
@@ -196,7 +199,7 @@ proc showPage(custominnerhtmlst:string=""): string =
 routes:
 
   get "/":
-    resp "Type: localhost:5050/flashread-form"
+    resp "Hello user, to continue please type: http://localhost:5050/flashread-form"
 
   get "/flashread-form":
     # load initial form
@@ -239,8 +242,13 @@ routes:
     var clipob = clipboard_new(nil)
     var past = $clipob.clipboard_text()
     var converted_tekst: string
-    if request.params["orders"] == "pasteclip":
 
+    if past.len == 0:
+      statustekst = "The clipboard is empty; please copy a web-address or some text!"
+      redirect("/flashread-form")
+
+
+    if request.params["orders"] == "pasteclip":
 
       if @"jump_to_end" == "":
         # copy the from clipboard to the textbox
@@ -274,6 +282,13 @@ routes:
 
       elif @"jump_to_end" == "jump_to_end":
         if @"insite_reformating" == "":
+
+          if @"newtab" == "":
+            innervarob["newtab"] = "_self"
+          elif @"newtab" == "newtab":
+            innervarob["newtab"] = "_blank"
+            outervarob["pagetitle"] = getWebTitle()
+
           output_tekst = jump_to_end_step(@"text-language", @"summarize", @"taglist", 
                                         "", @"summarylist", @"generate_contents", )
           statustekst = "Output number of characters:"
@@ -292,17 +307,19 @@ routes:
                                             @"generate_contents", @"insite_reformating", @"newtab"])
           innervarob["submit"] = newlang("Choose and run")
           innervarob["textbox-remark"] = newlang("Your item will be pasted here (text or web-link):")
-          if @"newtab" == "":
-            innervarob["newtab"] = "_self"
-          elif @"newtab" == "newtab":
-            innervarob["newtab"] = "_blank"
-            outervarob["pagetitle"] = getWebTitle()
 
           resp showPage()
 
 
         elif @"insite_reformating" == "insite_reformating":
           # output_tekst = jump_to_end_step(@"text-language", @"summarize")
+
+          if @"newtab" == "":
+            innervarob["newtab"] = "_self"
+          elif @"newtab" == "newtab":
+            innervarob["newtab"] = "_blank"
+            outervarob["pagetitle"] = getWebTitle()
+
           newinnerhtmlst = jump_to_end_step(@"text-language", @"summarize", 
                                 @"taglist", @"insite_reformating", 
                                 @"summarylist", @"generate_contents")
@@ -322,11 +339,6 @@ routes:
                                       @"generate_contents", @"insite_reformating", @"newtab"])
           innervarob["submit"] = newlang("Choose and run")
           innervarob["textbox-remark"] = newlang("Your item will be pasted here (text or web-link):")
-          if @"newtab" == "":
-            innervarob["newtab"] = "_self"
-          elif @"newtab" == "newtab":
-            innervarob["newtab"] = "_blank"
-            outervarob["pagetitle"] = getWebTitle()
 
           resp showPage(newinnerhtmlst)
 
@@ -364,9 +376,7 @@ routes:
 
 
       else:
-        # var converted_tekst:string = replace(@"pasted_text", "\p", "<br>")
-        converted_tekst = replaceInPastedText(@"pasted_text")
-
+        converted_tekst = replaceInPastedText(@"pasted_text", @"generate_contents")
 
         statustekst = "Text transferred to right column"
         innervarob["statustext"] = newlang(statustekst)
@@ -394,14 +404,13 @@ routes:
 
     elif request.params["orders"] == "frequencies":
 
-      converted_tekst = replaceInPastedText(@"pasted_text")
-      output_tekst = calculateWordFrequencies(converted_tekst, minimal_word_lengthit, true)
+      output_tekst = calculateWordFrequencies(@"pasted_text", minimal_word_lengthit, true)
       statustekst = "Calculated frequencies for minimal word-length:"
       statusdatast = $minimal_word_lengthit
       innervarob["statustext"] = newlang(statustekst)
       innervarob["statusdata"] = statusdatast
 
-      innervarob["pastedtext"] = converted_tekst
+      innervarob["pastedtext"] = @"pasted_text"
       innervarob["processedtext"] = output_tekst
       innervarob["text_language"] = setDropDown("text-language", @"text-language")
       innervarob["taglist"] = setDropDown("taglist", @"taglist")
@@ -422,15 +431,22 @@ routes:
 
 
     if request.params["orders"] == "process_text":
-      # If @"summarize" == "summarize":       
-      converted_tekst = replaceInPastedText(@"pasted_text")
-      output_tekst = formatText(converted_tekst, @"text-language", @"summarize", @"summarylist")
+
+      if @"newtab" == "":
+        innervarob["newtab"] = "_self"
+      elif @"newtab" == "newtab":
+        innervarob["newtab"] = "_blank"
+        outervarob["pagetitle"] = getWebTitle()
+
+      # converted_tekst = replaceInPastedText(@"pasted_text", @"generate_contents")
+      output_tekst = formatText(@"pasted_text", @"text-language", @"summarize", 
+                                    @"summarylist", @"generate_contents")
       statustekst = "Output number of characters:"
       statusdatast = $len(output_tekst)
       innervarob["statustext"] = newlang(statustekst)
       innervarob["statusdata"] = statusdatast
 
-      innervarob["pastedtext"] = converted_tekst
+      innervarob["pastedtext"] = @"pasted_text"
       innervarob["processedtext"] = output_tekst
       innervarob["text_language"] = setDropDown("text-language", @"text-language")
       innervarob["taglist"] = setDropDown("taglist", @"taglist")
@@ -442,31 +458,6 @@ routes:
                                         @"generate_contents", @"insite_reformating", @"newtab"])
       innervarob["submit"] = newlang("Choose and run")
       innervarob["textbox-remark"] = newlang("Your item will be pasted here (text or web-link):")
-      if @"newtab" == "":
-        innervarob["newtab"] = "_self"
-      elif @"newtab" == "newtab":
-        innervarob["newtab"] = "_blank"
-        outervarob["pagetitle"] = getWebTitle()
 
       resp showPage()
-
-
-    # elif request.params["orders"] == "process_link":
-    #   output_tekst = extractTextPartsFromHtml(@"pasted_text")
-    #   # echo output_tekst
-    #   statust = "Output number of characters: " & $len(output_tekst)
-
-    #   resp FLASHREAD_FORM.format(
-    #         $versionfl,
-    #         statust,
-    #         @"pasted_text",
-    #         output_tekst,
-    #         setDropDownSelection(@"text-language"),
-    #         setRadioButtons("orders", "process_link")
-    #         )
-
-    # else:
-    #   discard
-    #   # redirect "/flashread-form/$1".format("Error_Enter_text_to_proceed")
-
 
