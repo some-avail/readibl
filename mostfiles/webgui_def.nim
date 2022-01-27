@@ -74,10 +74,9 @@ var dropdownsta* =  [("calledname", "somelabel",
                                 ["full-list-with-headings", "Full list with headings"],
                                 ["exotic-list", "Exotic list"],
                                 ["exotic-list-with-headings", "Exotic list with headings"]]),
-                        ("summarylist", "Highlighting / summary (=prefix *):",
+                        ("summarylist", "Highlighting/ summary = *:",
                                 @[["sumname", "summary_english_qual.dat"]])
                       ]
-
 
 
 when isMainModule:

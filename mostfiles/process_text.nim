@@ -37,7 +37,7 @@ ADAP FUT
  ]#
 
 
-import strutils
+import strutils, times
 import os
 import httpClient
 import tables, algorithm, sequtils
@@ -46,8 +46,18 @@ import source_files
 import fr_tools
 
 
+
+
+var debugbo: bool = false
+
+template log(messagest: string) =
+  # replacement for echo that is only evaluated when debugbo = true
+  if debugbo: 
+    echo messagest
+
+
 const 
-  versionfl:float = 0.35
+  versionfl:float = 0.36
 
   input_tekst = "chimpansee noot mies een chimpansee is een leuk dier\pde chimpansee is het slimste dier naar het schijnt.\pmaar naast de chimpansee zijn er ook andere slimme \pdieren zoals de raaf, de dolfijn en de hond."
   tekst = "pietje staat. gister niet, maar toch. wat\pjantje. wimpie, onno\pkeesje.grietje,antje\pdirkje"
@@ -85,9 +95,6 @@ Afko zoals m.b.t., i.g.v. worden niet meegenomen, toch? Of wel.
 <link rel="stylesheet" href="/static/front/build/css/split/selections-bar.-778058140.css">
 <link rel="file" href="//www.liveinternet.iets"
   """
-
-# see template log in fr_tools
-var debugbo: bool = true
 
 
 proc testWebSite() =
@@ -164,13 +171,13 @@ proc getDataBetweenTags(tekst, starttagst, endtagst:string,
     resultst:string
     invalid_stringbo: bool = false
 
-  echo "****************"
-  echo tekst
-  echo starttagst & " - " & endtagst
+  log("****************")
+  log(tekst)
+  log(starttagst & " - " & endtagst)
   starttagpositonssq = getSubstringPositions(tekst, starttagst)
-  echo "starttagpositonssq = " & $starttagpositonssq
+  log("starttagpositonssq = " & $starttagpositonssq)
   endtagpositionssq = getSubstringPositions(tekst, endtagst)
-  echo "endtagpositionssq = " & $endtagpositionssq
+  log("endtagpositionssq = " & $endtagpositionssq)
 
   starttagposit = starttagpositonssq[occurit]
   endtagposit = endtagpositionssq[occurit]
@@ -184,10 +191,10 @@ proc getDataBetweenTags(tekst, starttagst, endtagst:string,
       invalid_stringbo = true
       break
 
-  echo "length of textpart: " & $(endtagposit - starttagposit)
+  log("length of textpart: " & $(endtagposit - starttagposit))
 
-  echo starttagposit
-  echo endtagposit
+  log($starttagposit)
+  log($endtagposit)
 
 #    resultst = tekst[tekst.index(starttagst), tekst.index(endtagst)]
   if not invalid_stringbo:
@@ -214,7 +221,7 @@ proc getInnerText(tekst: string): string =
     log "-------------------------------"
     biggerit = count(tekst, ">")
     for it in 0 .. (biggerit - 1):
-      log(it)
+      log($it)
       innertekst &= getDataBetweenTags(tekst, ">", "<", it) & " "
     log("tekst=" & tekst)
     log("innertekst=" & innertekst)
@@ -229,7 +236,7 @@ proc getInnerText(tekst: string): string =
   
 proc myTest()=
   for x in 0..<3:
-    log(x)
+    log($x)
 
 
 
@@ -376,7 +383,6 @@ proc applyDefinitionFileToText(input_tekst, languagest: string,
     blockseparatorst = ">----------------------------------<"
     lastline: string
     all_argst: string
-    argumentsq: seq[string] = @[]
     phasetekst:string = input_tekst
     def_filenamest:string
     use_custom_replacebo: bool = true
@@ -384,7 +390,7 @@ proc applyDefinitionFileToText(input_tekst, languagest: string,
 
 
   if highlightbo == false:
-    echo "text coloring...."
+    log("text coloring....")
     def_filenamest = languagest & ".dat"
     deffilest = textsourcefileta[def_filenamest]
     blockheadersq = @[
@@ -398,10 +404,10 @@ proc applyDefinitionFileToText(input_tekst, languagest: string,
         "NOUN-REPLACERS TO HANDLE",
         "AMBIGUOUS WORD-FUNCTIONS TO HANDLE"]
   elif highlightbo == true:
-    echo "=============================="
-    echo "highlighting..."
+    log("==============================")
+    log("highlighting...")
     def_filenamest = summaryfilest
-    echo def_filenamest
+    log(def_filenamest)
     deffilest = readFile(def_filenamest)
     blockheadersq = @["SIGNAL-WORDS TO HANDLE"]
     use_custom_replacebo = true
@@ -426,65 +432,65 @@ proc applyDefinitionFileToText(input_tekst, languagest: string,
           # echo "line = " & line
           
           if blockphasest == "PUNCTUATION OF SENTENCES TO HANDLE":
-            if use_custom_replacebo:
-              phasetekst = customReplace(phasetekst, line, line & "<br>&nbsp;&nbsp;&nbsp;&nbsp;",
+            # if use_custom_replacebo:
+            phasetekst = customReplace(phasetekst, line, line & "<br>&nbsp;&nbsp;&nbsp;&nbsp;",
                                   true, "unique_occurrence", @[15])
-            else:
-              phasetekst = replace(phasetekst, line, line & "<br>&nbsp;&nbsp;&nbsp;&nbsp;")
+            # else:
+            #   phasetekst = replace(phasetekst, line, line & "<br>&nbsp;&nbsp;&nbsp;&nbsp;")
           elif blockphasest == "PUNCTUATION OF SENTENCE-PARTS TO HANDLE":
-            if use_custom_replacebo:
-              phasetekst = customReplace(phasetekst, line, line & "<br>",
+            # if use_custom_replacebo:
+            phasetekst = customReplace(phasetekst, line, line & "<br>",
                                   true, "unique_occurrence", @[25])
-            else:
-              phasetekst = replace(phasetekst, line, line & "<br>")
+            # else:
+            #   phasetekst = replace(phasetekst, line, line & "<br>")
           elif blockphasest == "PRONOUNS TO HANDLE":
-            if use_custom_replacebo:
-              phasetekst = customReplace(phasetekst, line, "<br>" & line,
+            # if use_custom_replacebo:
+            phasetekst = customReplace(phasetekst, line, "<br>" & line,
                                     true, "", @[])
-            else:
-              phasetekst = replace(phasetekst, line, "<br>" & line)
+            # else:
+            #   phasetekst = replace(phasetekst, line, "<br>" & line)
           elif blockphasest == "VERBS TO HANDLE":
-            if use_custom_replacebo:
-              phasetekst = customReplace(phasetekst, line, "<span style=color:magenta>" & line & "</span>",
+            # if use_custom_replacebo:
+            phasetekst = customReplace(phasetekst, line, "<span style=color:magenta>" & line & "</span>",
                                     true, "", @[])
-            else:
-              phasetekst = replace(phasetekst, line, "<span style=color:magenta>" & line & "</span>")
+            # else:
+            #   phasetekst = replace(phasetekst, line, "<span style=color:magenta>" & line & "</span>")
           elif blockphasest == "SIGNAL-WORDS TO HANDLE":
-            if use_custom_replacebo:
-              phasetekst = customReplace(phasetekst, line, "<span style=background-color:#ffd280>" & line & "</span>",
+            # if use_custom_replacebo:
+            phasetekst = customReplace(phasetekst, line, "<span style=background-color:#ffd280>" & line & "</span>",
                                     true, "", @[])
-            else:
-              phasetekst = replace(phasetekst, line, "<span style=background-color:#ffd280>" & line & "</span>")
+            # else:
+            #   phasetekst = replace(phasetekst, line, "<span style=background-color:#ffd280>" & line & "</span>")
           elif blockphasest == "LINK-WORDS TO HANDLE":
-            if use_custom_replacebo:
-              phasetekst = customReplace(phasetekst, line, "<span style=color:red>" & line & "</span>",
+            # if use_custom_replacebo:
+            phasetekst = customReplace(phasetekst, line, "<span style=color:red>" & line & "</span>",
                                     true, "", @[])
-            else:
-              phasetekst = replace(phasetekst, line, "<span style=color:red>" & line & "</span>")
+            # else:
+            #   phasetekst = replace(phasetekst, line, "<span style=color:red>" & line & "</span>")
           elif blockphasest == "PREPOSITIONS TO HANDLE":
-            if use_custom_replacebo:
-              phasetekst = customReplace(phasetekst, line, "<span style=color:limegreen>" & line & "</span>",
+            # if use_custom_replacebo:
+            phasetekst = customReplace(phasetekst, line, "<span style=color:limegreen>" & line & "</span>",
                                     true, "", @[])
-            else:
-              phasetekst = replace(phasetekst, line, "<span style=color:limegreen>" & line & "</span>")
+            # else:
+            #   phasetekst = replace(phasetekst, line, "<span style=color:limegreen>" & line & "</span>")
           elif blockphasest == "NOUN-ANNOUNCERS TO HANDLE":
-            if use_custom_replacebo:
-              phasetekst = customReplace(phasetekst, line, "<span style=color:#b35919>" & line & "</span>",
+            # if use_custom_replacebo:
+            phasetekst = customReplace(phasetekst, line, "<span style=color:#b35919>" & line & "</span>",
                                     true, "", @[])
-            else:
-              phasetekst = replace(phasetekst, line, "<span style=color:#b35919>" & line & "</span>")
+            # else:
+            #   phasetekst = replace(phasetekst, line, "<span style=color:#b35919>" & line & "</span>")
           elif blockphasest == "NOUN-REPLACERS TO HANDLE":
-            if use_custom_replacebo:
-              phasetekst = customReplace(phasetekst, line, "<span style=color:darkturquoise>" & line & "</span>",
+            # if use_custom_replacebo:
+            phasetekst = customReplace(phasetekst, line, "<span style=color:darkturquoise>" & line & "</span>",
                                     true, "", @[])
-            else:
-              phasetekst = replace(phasetekst, line, "<span style=color:darkturquoise>" & line & "</span>")
+            # else:
+            #   phasetekst = replace(phasetekst, line, "<span style=color:darkturquoise>" & line & "</span>")
           elif blockphasest == "AMBIGUOUS WORD-FUNCTIONS TO HANDLE":
-            if use_custom_replacebo:
-              phasetekst = customReplace(phasetekst, line, "<span style=color:#e6b800>" & line & "</span>",
+            # if use_custom_replacebo:
+            phasetekst = customReplace(phasetekst, line, "<span style=color:#e6b800>" & line & "</span>",
                                     true, "", @[])
-            else:
-              phasetekst = replace(phasetekst, line, "<span style=color:#e6b800>" & line & "</span>")
+            # else:
+            #   phasetekst = replace(phasetekst, line, "<span style=color:#e6b800>" & line & "</span>")
 
 
         else:
@@ -532,158 +538,6 @@ proc applyDefinitionFileToText(input_tekst, languagest: string,
   return phasetekst
 
 
-proc applyDefinitionFileToTextOld(input_tekst, languagest:string): string =
-  # reads now from preloaded textfilestring from module source_files
-
-  var 
-    blockheadersq: seq[string] = @[
-        "PUNCTUATION OF SENTENCES TO HANDLE",
-        "PUNCTUATION OF SENTENCE-PARTS TO HANDLE",
-        "PRONOUNS TO HANDLE",
-        "VERBS TO HANDLE",
-        "SIGNAL-WORDS TO HANDLE",
-        "LINK-WORDS TO HANDLE",
-        "PREPOSITIONS TO HANDLE",
-        "NOUN-ANNOUNCERS TO HANDLE",
-        "NOUN-REPLACERS TO HANDLE",
-        "AMBIGUOUS WORD-FUNCTIONS TO HANDLE"]
-
-    blockphasest: string = ""
-    blocklineit: int
-    blockseparatorst = ">----------------------------------<"
-    lastline: string
-    all_argst: string
-    argumentsq: seq[string] = @[]
-    phasetekst:string = input_tekst
-    def_filenamest:string = languagest & ".dat"
-    use_custom_replacebo: bool = true
-
-    filest:string = textsourcefileta[def_filenamest]
-
-  try:
-    # walk thru the lines of the file
-    echo "\n=====Begin processing===="
-    for line in filest.splitlines:
-      lastline = line
-
-      # check for block-header
-      if line in blockheadersq:
-        blockphasest = line
-        echo blockphasest
-        blocklineit = 0
-      elif blockphasest != "":
-
-        blocklineit += 1
-        if line != blockseparatorst:   # block-separating string
-
-          # echo "line = " & line
-          
-          if blockphasest == "PUNCTUATION OF SENTENCES TO HANDLE":
-            if use_custom_replacebo:
-              phasetekst = customReplace(phasetekst, line, line & "<br>&nbsp;&nbsp;&nbsp;&nbsp;",
-                                  true, "unique_occurrence", @[15])
-            else:
-              phasetekst = replace(phasetekst, line, line & "<br>&nbsp;&nbsp;&nbsp;&nbsp;")
-          elif blockphasest == "PUNCTUATION OF SENTENCE-PARTS TO HANDLE":
-            if use_custom_replacebo:
-              phasetekst = customReplace(phasetekst, line, line & "<br>",
-                                  true, "unique_occurrence", @[25])
-            else:
-              phasetekst = replace(phasetekst, line, line & "<br>")
-          elif blockphasest == "PRONOUNS TO HANDLE":
-            if use_custom_replacebo:
-              phasetekst = customReplace(phasetekst, line, "<br>" & line,
-                                    true, "", @[])
-            else:
-              phasetekst = replace(phasetekst, line, "<br>" & line)
-          elif blockphasest == "VERBS TO HANDLE":
-            if use_custom_replacebo:
-              phasetekst = customReplace(phasetekst, line, "<span style=color:magenta>" & line & "</span>",
-                                    true, "", @[])
-            else:
-              phasetekst = replace(phasetekst, line, "<span style=color:magenta>" & line & "</span>")
-          elif blockphasest == "SIGNAL-WORDS TO HANDLE":
-            if use_custom_replacebo:
-              phasetekst = customReplace(phasetekst, line, "<span style=background-color:#ffd280>" & line & "</span>",
-                                    true, "", @[])
-            else:
-              phasetekst = replace(phasetekst, line, "<span style=background-color:#ffd280" & line & "</span>")
-          elif blockphasest == "LINK-WORDS TO HANDLE":
-            if use_custom_replacebo:
-              phasetekst = customReplace(phasetekst, line, "<span style=color:red>" & line & "</span>",
-                                    true, "", @[])
-            else:
-              phasetekst = replace(phasetekst, line, "<span style=color:red>" & line & "</span>")
-          elif blockphasest == "PREPOSITIONS TO HANDLE":
-            if use_custom_replacebo:
-              phasetekst = customReplace(phasetekst, line, "<span style=color:limegreen>" & line & "</span>",
-                                    true, "", @[])
-            else:
-              phasetekst = replace(phasetekst, line, "<span style=color:limegreen>" & line & "</span>")
-          elif blockphasest == "NOUN-ANNOUNCERS TO HANDLE":
-            if use_custom_replacebo:
-              phasetekst = customReplace(phasetekst, line, "<span style=color:#b35919>" & line & "</span>",
-                                    true, "", @[])
-            else:
-              phasetekst = replace(phasetekst, line, "<span style=color:#b35919>" & line & "</span>")
-          elif blockphasest == "NOUN-REPLACERS TO HANDLE":
-            if use_custom_replacebo:
-              phasetekst = customReplace(phasetekst, line, "<span style=color:darkturquoise>" & line & "</span>",
-                                    true, "", @[])
-            else:
-              phasetekst = replace(phasetekst, line, "<span style=color:darkturquoise>" & line & "</span>")
-          elif blockphasest == "AMBIGUOUS WORD-FUNCTIONS TO HANDLE":
-            if use_custom_replacebo:
-              phasetekst = customReplace(phasetekst, line, "<span style=color:#e6b800>" & line & "</span>",
-                                    true, "", @[])
-            else:
-              phasetekst = replace(phasetekst, line, "<span style=color:#e6b800>" & line & "</span>")
-
-
-        else:
-          # then the former block is completed
-          blockphasest = ""
-          # set arguments to none here:
-          # somearg = none
-      
-          # remove superflous whitelines
-          phasetekst = replace(phasetekst, ",<br><br><br>", ",<br>")
-          phasetekst = replace(phasetekst, ",<br><br>", ",<br>")
-          phasetekst = replace(phasetekst, ",<br> <br>", ",<br>")
-          phasetekst = replace(phasetekst, ", <br><br><br>", ",<br>")
-          phasetekst = replace(phasetekst, ", <br><br>", ",<br>")
-          phasetekst = replace(phasetekst, ", <br> <br>", ",<br>")
-          phasetekst = replace(phasetekst, "<br> <br>", "<br><br>")
-          phasetekst = replace(phasetekst, "<br><br><br><br>", "<br><br>")
-          phasetekst = replace(phasetekst, "<br><br><br>", "<br><br>")
-          phasetekst = replace(phasetekst, "<br><p>", "<p>")
-
-    # echo "===End of processing===="
-  
-  except IOError:
-    echo "IO error!"
-  
-  except RangeError:
-    echo "\p\p+++++++ search-config not found +++++++++++\p"
-    echo "You have probably entered a search-config that could not be found. \p" &
-        "Re-examine you search-config. \p" &
-        "The problem originated probably in the above EDIT FILE-block"
-    let errob = getCurrentException()
-    echo "\p******* Technical error-information ******* \p" 
-    echo "block-phase: " & blockphasest & "\p"
-    echo "Last def-file-line read: " & lastline & "\p"
-    echo repr(errob) & "\p****End exception****\p"
-
-  
-  except:
-    let errob = getCurrentException()
-    echo "\p******* Unanticipated error ******* \p" 
-    echo "block-phase: " & blockphasest & "\p"
-    echo "Last def-file-line read: " & lastline & "\p"
-    echo repr(errob) & "\p****End exception****\p"
-
-  return phasetekst
-
 
 
 proc getBaseFromWebAddress(webaddresst: string): string = 
@@ -693,12 +547,13 @@ proc getBaseFromWebAddress(webaddresst: string): string =
   var 
     addressq: seq[string]
     basewebaddresst: string
-    tbo: bool = true
+    tbo: bool = false
     countit: int = 0
 
   # firstly chop the address up on the slashes
   addressq = webaddresst.split("/")
-  if tbo: echo addressq
+  # if tbo: echo addressq
+  echo addressq
 
   # then restore it for the first 3 parts
   for partst in addressq:
@@ -772,9 +627,10 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest: string,
   - removed evaluation for extract-only
 
   ADAP NOW:
-
    ]#
 
+
+  # const debugbo = false
 
   var
     client = newHttpClient()
@@ -804,6 +660,7 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest: string,
     headinglist: string
     headingdepthit: int
     indentst: string
+
 
 
   if taglist == "paragraph-only":
@@ -893,7 +750,7 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest: string,
     # adjust paths so that resource-files can be loaded (like css and pics)
     websitest = convertRelPathsToAbsolute(websitest, basewebaddresst)
 
-    if tbo: echo "charcount = " & $len(websitest)
+    log("charcount = " & $len(websitest))
 
     # substringcountit = count(websitest, "<p>")
     # echo "\ptagcount = " & $substringcountit
@@ -902,7 +759,7 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest: string,
 
     while not allfoundbo:   # not all tags found yet
       outerloopit += 1
-      if tbo: echo "----------------\pouterloopit = " & $outerloopit
+      log("----------------\pouterloopit = " & $outerloopit)
 
       tagindexit = 0
       smallestposit = bigassit
@@ -910,7 +767,7 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest: string,
 
       # walk thru the tags and determine the first one of them (smallest position)
       for tagsq in extractable_tagsq2:
-        if tbo: echo "tagindexit = " & $tagindexit
+        log("tagindexit = " & $tagindexit)
         # if (typest == "extract" and tagsq[3] == "extract-only") or tagsq[3] == "":
         tagstartst = tagsq[1]
         thisoccurit = find(websitest, tagstartst, posit + 1)
@@ -919,7 +776,7 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest: string,
             smallestposit = thisoccurit
             # smallesttagst = tagnamest
             curtagindexit = tagindexit
-            if tbo: echo "found tag"
+            log("found tag")
         tagindexit += 1
 
       posit = smallestposit
@@ -927,20 +784,20 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest: string,
       curtagnamest = curtagsq[0]
       curtagstartst = curtagsq[1]
       curtagendst = curtagsq[2]
-      if tbo: echo curtagnamest
-      if tbo: echo "posit = " & $posit
+      log(curtagnamest)
+      log("posit = " & $posit)
 
       if smallestposit != bigassit:   # at least one tag found
         # test if it is not a similar tag, like <picture> for <p>
         test = websitest[posit + len(curtagstartst) .. posit + len(curtagstartst)]
-        if tbo: echo test
+        log(test)
         if test == " " or test == ">":
           nosimilartagbo = true
           textstartit = posit
       elif smallestposit == bigassit:
         # no tags found anymore
         allfoundbo = true
-        if tbo: echo "allfound = true"
+        log("allfound = true")
 
       if not allfoundbo and nosimilartagbo:
         # search tag-end
@@ -949,7 +806,7 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest: string,
 
         if pos2it != -1:    # par. end found
           textendit = pos2it + len(curtagendst)
-          if tbo: echo "pos2it= " & $pos2it
+          log("pos2it= " & $pos2it)
           # echo textstartit
           # echo textendit
           textpartst = websitest[textstartit .. textendit]
@@ -1465,7 +1322,7 @@ proc getTitleFromWebsite*(webaddresst:string): string =
   var 
     client = newHttpClient()
     websitest, titlest:string
-    tbo:bool = true
+
 
   try:
     websitest = client.getContent(webaddresst)
@@ -1488,6 +1345,11 @@ proc testConversion()=
 
   # # adjust paths so that resource-files can be loaded (like css and pics)
   # websitest = convertRelPathsToAbsolute(websitest, basewebaddresst)
+
+
+# proc funcWrapper() = 
+#   var x: string = handleTextPartsFromHtml("https://nl.wikipedia.org/wiki/Geschiedenis", 
+#         "extract", "dutch", "paragraph-only", "summary_dutch.nl", "generate_contents")
 
 
 
@@ -1514,7 +1376,13 @@ when isMainModule:
   # echo handleTextPartsFromHtml("https://nl.wikipedia.org/wiki/Geschiedenis", "replace", "dutch")
   # echo new_handleTextPartsFromHtml("https://nl.wikipedia.org/wiki/Geschiedenis", "replace", "dutch")
 
-  # echo handleTextPartsFromHtml("https://nl.wikipedia.org/wiki/Geschiedenis", "extract", "dutch", "paragraph-only")
+  var st: string = ""
+  let t0 = cpuTime()
+  st = handleTextPartsFromHtml("https://nl.wikipedia.org/wiki/Computer", "replace", "dutch", 
+          "paragraph-only", "summary_dutch.dat", "")
+  echo "Execution-time = " & $formatFloat(cpuTime() - t0, ffDecimal, precision = 3)
+  echo st.len
+
   # echo "hoi"
   # echo getTitleFromWebsite("https://nl.wikipedia.org/wiki/Geschiedenis")
   # echo new_extractSentencesFromText(testtekst_eng, "english")
@@ -1524,7 +1392,7 @@ when isMainModule:
   # echo "------"
   # echo convertRelPathsToAbsolute(addresstekst, "http://www.iets.nl")
   # echo getBaseFromWebAddress("http://www.x.nl/a/b/c/blah.html")
-  echo getInnerText("<>a<>b<><>d<>")
+  # echo getInnerText("<>a<>b<><>d<>")
   # echo getInnerText(">tekst<")
   # echo getDataBetweenTags("<>a<>b<><>d<>", ">", "<", 5)
   # myTest()  

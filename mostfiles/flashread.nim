@@ -24,39 +24,17 @@ flashread     process_text   webgui_def    jo_htmlgen    stringstuff  f*.css  so
 086           0.28            0.5           0.4           0.1           0.70    0.1           1.0             1.1         1.0
 087           0.29
 089           0.30            0.6           0.5           0.1           0.80    0.2           1.1             1.2         1.1         0.1       0.1
+093           0.36            0.8           0.5           0.2           0.81    0.2           1.1             1.3         1.5         0.2       0.2
+
+Further belonging files:
+<language>.dat like english.dat
+summary_<language>_default.dat for different langs and subject-areas
+<language>_translations.tra like dutch_translations.tra
+
 
 
 
 ADAP HIS
--moustachu invoeren
-
-  -html aanpassen
--definitionize / variablize remaining controls
-  v-setDropDownSelection to jo_htmlgen
-  v-button-text
-  v-loose texts
-  x-textboxes
--multi-lingual support
--html-template als apart bestand plaatsen
--buitenkader en binnenkader invoeren
--implement source-files-module to:
-  -be accessible from all modules
-  -to limt file-access
--in situ omzetting (reformat a whole webpage); 
-  -bevindingen
-    -zolang de form in de innerhtml zit heb je beperkte 
-      controle over de target self of blank
-    -na de eerste herlading wordt het blank-target gekozen
-    -css wordt soms wel en soms niet geladen
-    -door de herformatering wordt soms ook stuurcode
-      vernaggeld
-  -oplossing A; 
-    -verplaatst het form naar de outerhtml
-    -doe toevoegen een knop voor target type
-  v-oplossing B:
-    -doe toevoegen een vinkvakje voor newtab
-  -oplossing C;
-    -javascript toepassen
 -improve reformating in-situ
 -update titel
 -talen-info verhuizen van de broncode naar de tekstbestanden
@@ -91,7 +69,13 @@ import times
 
 
 # set debugbo to false when creating a release!
-var debugbo = true
+var debugbo: bool = false
+
+template log(messagest: string) =
+  # replacement for echo that is only evaluated when debugbo = true
+  if debugbo: 
+    echo messagest
+
 
 var
   statustekst, statusdatast:string
@@ -102,7 +86,7 @@ var
 
 
 const 
-  versionfl:float = 0.921
+  versionfl:float = 0.93
   minimal_word_lengthit = 7
   appnamebriefst:string = "RD"
   appnamenormalst = "Readibl"
@@ -122,7 +106,7 @@ else:
 
 
 settings:
-  # port = Port(5003)   # production
+  # port = Port(5003)   # personal
   port = Port(parseInt(readOptionFromFile("port-number", "value")))  # development
 
 
@@ -132,27 +116,57 @@ var
   innerhtmlst:string
 
 outervarob["version"] = $versionfl
-outervarob["loadtime"] = newlang("Server-start: ") & $now()
+outervarob["loadtime"] = newlang("Started: ") & $now()
 outervarob["pagetitle"] = appnamenormalst
 outervarob["namesuffix"] = newlang(appnamesuffikst)
+
 
 
 proc getWebTitle():string = 
   var 
     clipob = clipboard_new(nil)
-    past, inter_tekst:string
-
-  const titlelenghit: int = 30
+    past, inter_tekst, test, parsestringit:string
+    
+  const 
+    titlelenghit = 60
+    parselenghtit = 500
 
   past = $clipob.clipboard_text()
 
-  if past[0 .. 3] == "http":   # pasted text is a link
-    inter_tekst = getTitleFromWebsite(past)
-  else:
-    if inter_tekst.len > titlelenghit:
-      inter_tekst = past[0 .. titlelenghit]
+  try:
+    if past[0 .. 3] == "http":   # pasted text is a link
+      inter_tekst = getTitleFromWebsite(past)
+    else:
+      if past.len > titlelenghit:
+        inter_tekst = strip(past[0 .. titlelenghit])
 
-  return appnamebriefst & "_" & inter_tekst
+    echo "\p\p===============READIBL==================="
+    echo inter_tekst
+
+
+    # Maybe future: advanced parsing to better strip
+    # whitespace and/or line-endings
+
+      # if past.len > parselenghtit:
+      #   parsestringit = past[0 .. parselenghtit]
+      # else:
+      #   parsestringit = past
+
+      # log(parsestringit)
+
+      # inter_tekst = getStrippedText(parsestringit)
+    
+      # if inter_tekst.len > titlelenghit:
+      #   inter_tekst = inter_tekst[0 .. titlelenghit]
+
+  except:
+    let errob = getCurrentException()
+    echo "\p******* Unanticipated error ******* \p" 
+    echo repr(errob) & "\p****End exception****\p"
+
+  result = appnamebriefst & "_" & inter_tekst
+
+
 
 
 proc jump_to_end_step(languagest, preprocesst, taglist, typest, summaryfilest,
@@ -210,7 +224,7 @@ routes:
     innervarob["text_language"] = setDropDown("text-language", readOptionFromFile("text-language", "value"))
     innervarob["taglist"] = setDropDown("taglist", "paragraph-with-headings")
     innervarob["radiobuttons_1"] = setRadioButtons("orders","")
-    innervarob["summarylist"] = setDropDown("summarylist", "")
+    innervarob["summarylist"] = setDropDown("summarylist", readOptionFromFile("summary-file", "value"))
     innervarob["urltext"] = ""
     innervarob["checkboxes_1"] = setCheckBoxSet("fr_checkset1", @["default"])
     innervarob["submit"] = newlang("Choose and run")
@@ -243,8 +257,11 @@ routes:
     var past = $clipob.clipboard_text()
     var converted_tekst: string
 
-    if past.len == 0:
-      statustekst = "The clipboard is empty; please copy a web-address or some text!"
+    if past.len < 5:
+      statustekst = """The clipboard is empty or holds a small string (<5); 
+                please copy a web-address or a bigger text!"""
+
+
       redirect("/flashread-form")
 
 

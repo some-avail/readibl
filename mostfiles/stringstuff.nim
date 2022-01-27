@@ -5,10 +5,21 @@ aangepaste zoek-en-vervang-functie
 
 import strutils
 
+var debugbo: bool = false
+
+template log(messagest: string) =
+  # replacement for echo that is only evaluated when debugbo = true
+  if debugbo: 
+    echo messagest
+
 var
-  versionfl:float = 0.1
+  versionfl:float = 0.2
   starttekst, searchst, insertst: string
   mystripextractbo: bool
+
+proc getStrippedText*(inputtekst: string): string =
+  discard
+
 
 
 proc countOccurencesInContext(stringst, subst, contexttypest:string, 
@@ -163,7 +174,7 @@ proc customReplace*(tekst:var string, searchst, insertst: string, stripextractbo
     elif posit == -1:
       stringfoundbo = false
 
-  return tekst
+  result = tekst
 
 
 

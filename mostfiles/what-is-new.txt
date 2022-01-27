@@ -4,6 +4,24 @@ https://github.com/some-avail/readibl/commits/main
 
 Version-changes:
 
+Readibl 0.93:
+features:
+-improved formatting and handling of pasted text.
+-summary-data are now stored in separate files:
+	>signal-words of summery-file used for both hightlighting and 
+	sentence-extraction (that is a summary).
+	>now it's easy to create your own specialised 
+	summary-file for example for history.
+	>set you in default-summary in settings_flashread.conf
+-performance has been improved.
+-extra tag added (better reformatting).
+-automatic content-generation (experimental)
+
+bugs:
+-title-extraction improved
+-crash on short clipboard-string fixed
+
+
 Readibl 0.901:
 -optionize the starting values of the checkboxes.
 -set the taglist to: paragraph with headings

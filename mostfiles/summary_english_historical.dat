@@ -1,18 +1,39 @@
 Extraction-strings for summarizing with Flashread.
 Language: english
 Summary-type: historical
-version: >= 1.5
-
+version: unknown
 
 
 
 SIGNAL-WORDS TO HANDLE
 cultur
+cult
 race
- they 
+people
+tribe
+they 
  he 
  she 
 civil
 ancestor
+group
+origin
+emerg
+begin
+arise
+genesis
+ rise 
+ source
+ evidence
+ proof
+ remain
+ remnant
+ relic
+ leftover
+ vestige
+ language
+ writing
 >----------------------------------<
+
+
 

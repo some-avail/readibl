@@ -7,11 +7,25 @@ Some tools like:
 
 import strutils, times
 
+var debugbo: bool = false
+
+
 var 
   interfacelanguagestatust*: string = ""
   # test: string
-  versionfl: float = 0.1
-  debugbo: bool = true
+  versionfl: float = 0.2
+
+
+# Beware: variable debugbo might be used globally, modularly and procedurally
+# whereby lower scopes override the higher ones?
+# Maybe best to use modular vars to balance between an overload of 
+# messages and the need set the var at different places.
+
+template log(messagest: string) =
+  # replacement for echo that is only evaluated when debugbo = true
+  if debugbo: 
+    echo messagest
+
 
 
 proc readOptionFromFile*(optnamest, typest: string):string =
@@ -173,24 +187,18 @@ template timeNeatly(statement: untyped): float =
 
 
 
-
-# Beware: variable debugbo can be used globally, modularly and procedurally
-# whereby lower scopes override the higher ones.
-# Maybe best to use modular vars to balance between an overload of 
-# messages and the need set the var at different places.
-
-template log*(messagest: untyped) =
-  # replacement for echo that is only co-compiled when debugbo = true
-  if debugbo:
-    echo $(messagest)
-
+# template log_experim*(messagest: untyped) =
+#   # replacement for echo that is only evaluated when debugbo = true
+#   if debugbo:
+#     echo $(messagest)
 
 # test = newlang("something")
+
 
 when isMainModule:
   # echo readOptionFromFile("interface-language", "value-list")
   # echo newlang("not translated")
-  echo "Time = ", timeNeatly(doWork(100)).formatFloat(ffDecimal, precision = 3), " s"
-  echo "Time = ", timeRoughly(doWork(100)), " s"
-  # log("hallo yall")
+  # echo "Time = ", timeNeatly(doWork(100)).formatFloat(ffDecimal, precision = 3), " s"
+  # echo "Time = ", timeStuff(doWork(100)), " s"
+  log("hallo yall")
   # discard

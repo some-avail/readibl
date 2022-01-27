@@ -11,14 +11,13 @@ import strutils
 import os
 import tables
 
-var versionfl = 0.2
+const versionfl = 0.2
 
 var debugbo: bool = false
-
-
+  
 template log(messagest: string) =
-  # replacement for echo that is only co-compiled when debugbo = true
-  if debugbo:
+  # replacement for echo that is only evaluated when debugbo = true
+  if debugbo: 
     echo messagest
 
 

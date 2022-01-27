@@ -25,7 +25,7 @@ proc addLanguageFiles() =
   var
     valuelist: string
     sourcelangsq:seq[string]
-    tbo: bool = true
+    tbo: bool = false
 
 
   # get the processing-languages from the config-file
