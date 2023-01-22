@@ -189,6 +189,9 @@ beperken
 beperkt
 beperk 
 levert
+leveren
+lever 
+leverd
 geef
 geven
 gegeven
@@ -251,9 +254,6 @@ denk
 denkt
 denken
  gedacht 
- tellen 
- telt 
- telde 
  blijkt
  bleek 
  gebleken
@@ -295,7 +295,7 @@ leefd
 schrijven
 schrijf
 schreef
-geschreven
+schreven
 vertrekt
 vertrekken
 beloven
@@ -330,7 +330,7 @@ droeg
 draag
 spelen
 speelt
-gespeeld
+speeld
 trekken 
 trekt
 trok
@@ -369,7 +369,6 @@ draaien
 draait
 draaide
 gedraaid
-bied 
 biedt 
 bieden
 bood 
@@ -464,7 +463,8 @@ tellen
 telt 
 teld 
 telde 
-vechten
+ vechten
+ vecht 
 gevochten
 vrezen
 vreest
@@ -473,7 +473,7 @@ duren
 duurt
 duurd
 vergaderen
-vergadert
+vergadert 
 vergaderd
 klaren
 klaart
@@ -496,10 +496,10 @@ grijpen
 grijpt
 grepen
 geraden
-bewegen
-beweegt
-bewoog
-bewogen
+wegen
+weegt
+woog
+wogen
 eist
 stijgen
 stijgt
@@ -533,9 +533,7 @@ gered
 sjouw
 wachten
 wacht
-deelt
 verdelen
-deeld
 voegen
 voegt
 voegd
@@ -567,10 +565,41 @@ schoten
 waarschuwen
 waarschuwt
 waarschuwd
+koppelen
+koppelt
+koppeld
+sturen
+stuurt
+stuurd
 drukken 
-drukt 
-drukten 
+drukt
+drukten
+win 
+wint 
+winnen
+won
 strijk
+leunt
+ leun 
+leunen
+leund
+vangen
+vangt
+lenen 
+leent 
+leend
+ving
+pakt
+treed
+treden
+trad
+heers 
+heerst
+heersen
+schokt
+vermoed 
+vermoedt
+vermoedd
 verplaatsen
 verplaatst
  opge
@@ -579,10 +608,8 @@ verplaatst
  inge
  uitge
  doorge
+ rondge
 eerden
-vangen
-vangt
-ving
 eert 
 eert,
 eert.
@@ -648,6 +675,7 @@ PREPOSITIONS TO HANDLE
  vanuit 
  vanaf 
  zonder 
+ toe 
 >----------------------------------<
 
 
@@ -710,17 +738,21 @@ vragen
 start
 vroeg
 raden 
-igen
- zijn
-eren 
-eren.
-eren,
+bied 
  zorgen
 delen
 antwoorden
 slagen 
 streek
 streken
+gebruik
+pakken
+pak 
+igen
+ zijn
+eren 
+eren.
+eren,
  aansch
  opsch
  insch

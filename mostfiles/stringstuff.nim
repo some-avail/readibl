@@ -13,7 +13,7 @@ template log(messagest: string) =
     echo messagest
 
 var
-  versionfl:float = 0.2
+  versionfl:float = 0.3
   starttekst, searchst, insertst: string
   mystripextractbo: bool
 
@@ -114,8 +114,77 @@ proc old_customReplace(tekst:var string, searchst, insertst: string, stripextrac
   return tekst
 
 
+proc customReplace*(sourcetekst: string, searchst, insertst: string, stripextractbo: bool,
+                  conditionst: string, cond_intsq:seq[int]): string =
 
-proc customReplace*(tekst:var string, searchst, insertst: string, stripextractbo: bool,
+  #[ 
+  UNIT INFO
+  Replace in a text by searching the string searchst, and after finding 
+  inserting insertst as the new string. 
+  When stripextractbo = true then only extract the string without 
+  trailing spaces.
+  Perform the replacement only when conditionst is met, based on the data
+  in cond_datasq. 
+  Supported condition:
+  unique_occurrence = skip replacement when multiple 
+  instances of searchst occur in a range around searchtst (in cond_intsq).
+  Return the replaced tekst.
+   ]#
+
+  var
+    posit: int = 0
+    stringfoundbo: bool = true
+    strippedst: string
+    continubo: bool = false
+    countit: int = 0
+    tekst: string = sourcetekst
+
+
+  while stringfoundbo:
+    countit += 1
+    #echo "countit = " & $countit
+    if searchst == "(":
+      if countit > 100: break
+    else:
+      if countit > 10000: break
+  
+    posit = find(tekst, searchst, posit)
+    if posit >= 0:
+      # echo "posit = " & $posit
+      # echo tekst
+      continubo = false
+      if conditionst == "unique_occurrence":
+        if countOccurencesInContext(tekst, searchst, 
+                                "around", cond_intsq[0], posit) <= 1:
+          continubo = true
+        else:
+          if posit + cond_intsq[0] < tekst.len - 1:
+            posit += cond_intsq[0]
+
+      elif conditionst == "":
+        continubo = true
+
+      if continubo:
+        if not stripextractbo:
+          tekst.delete(posit, posit + searchst.len - 1)
+        else:
+          strippedst = strip(searchst, true, true)
+          if posit > 0:
+            posit = find(tekst, strippedst, posit - 1)
+          else:
+            posit = find(tekst, strippedst, posit)
+          tekst.delete(posit, posit + strippedst.len - 1)
+
+        tekst.insert(insertst, posit)
+        posit += insertst.len
+
+    elif posit == -1:
+      stringfoundbo = false
+
+  result = tekst
+
+
+proc customReplace_old*(tekst:var string, searchst, insertst: string, stripextractbo: bool,
                   conditionst: string, cond_intsq:seq[int]): string =
 
   #[ 

@@ -44,7 +44,6 @@ whether
  though 
  unless
  during
- if 
  so 
 therefor
 despite
@@ -55,7 +54,6 @@ despite
 
 VERBS TO HANDLE
  be 
-being
 been 
  am 
  is 
@@ -66,7 +64,6 @@ been
  was 
  wasn't 
 have
-'ve 
  has 
  hasn't
  had 
@@ -94,10 +91,10 @@ coming
 came 
 become
 becomes 
+threaten
 stay
 keep
 kept 
-remain
 goes 
  go 
 going 
@@ -105,11 +102,12 @@ went
 gone 
  let 
  lets 
-find 
+ find 
  finds 
-found 
+ found 
 put 
-assume
+puts 
+sume
  lays 
  lay 
 laid 
@@ -139,14 +137,20 @@ get
 gets 
 got 
 gotten 
+forget 
+forgets 
+forgot 
+forgotten 
+beget
+begot
  enter 
  enters 
 serve 
 serves 
 build 
  builds 
- applies 
-apply 
+ applie
+apply
 stimulate 
 encourage 
 promote 
@@ -154,8 +158,6 @@ discourage
 realize 
 appear 
 appears 
- run 
- runs 
 running
  ran 
 shut
@@ -172,6 +174,7 @@ stood
  acts 
  reacts
  react 
+ enact
 boot 
 reboot 
 operate
@@ -180,8 +183,6 @@ activate
 discuss 
 alter 
  alters 
-change 
- changes 
 send
  sends 
  sent 
@@ -206,13 +207,13 @@ erase
 follow 
 follows 
 summarize 
- summarizes 
+summarizes 
 arrive 
- arrives 
-happen 
- happens 
+arrives 
+happen
+ happens
 suggest 
- suggests 
+suggests 
 holding
 hold 
  holds 
@@ -265,14 +266,9 @@ continue
 allow 
 allowed
  allows 
- changes 
-change 
-check 
 save 
  saves
  loads
-turn 
-turns 
 tains 
 tained
 seem 
@@ -286,6 +282,8 @@ written
 manage 
  manages 
 consider 
+considers
+considered
 seek 
  seeks 
 scan 
@@ -302,7 +300,10 @@ ferred
 fere 
 feres 
 fered
+fering
 fill 
+fills 
+filled
 helps
 helped
 repair
@@ -324,15 +325,15 @@ repair
  feel
  felt
 fer 
- concur 
- concurs 
+cur 
+curs 
+curred
  confirm 
  confirms 
  confirmed
  define
  thinks
  think
- thought
  fight 
  fights 
  fought
@@ -353,7 +354,7 @@ show
  knows 
  knew
  known
- believe
+ believ
 ize 
 izes
 ized
@@ -362,12 +363,13 @@ ises
 ised 
  doesn't
  didn't
- accept
+ accept 
  accepts
  accepted
-join
+join 
+joins
+joined
 explain
-break 
 breaks 
 broke
 broken
@@ -407,12 +409,9 @@ agreed
 mit 
 mits 
 mitted
-travel
 restore
  won't
 built
-occur 
-occurs 
 perform 
 performs 
 push 
@@ -441,7 +440,6 @@ reach
 struct 
 structs 
 structed
-handle
 render
 regard
 volve 
@@ -454,10 +452,13 @@ replace
  talk 
  talked 
  dictate
+learn 
 earn 
 earns 
 earned
- ask
+ ask 
+ asks 
+ asked
  surround
 pect 
 pects 
@@ -504,8 +505,9 @@ presses
 pressed
 controls
 controlled
-speak
-spoke
+speak 
+speaks
+spoke 
 grades
 graded
 beg 
@@ -577,6 +579,7 @@ tect
 tects 
 tected
 analyze
+analyse
 unlock
 directs
  marks
@@ -596,7 +599,7 @@ bode
  buys 
  bought 
  sell
- sold
+ sold 
 mend 
 mends 
 mended
@@ -606,7 +609,6 @@ pelled
 fend 
 fends 
 fended 
-rests 
 rested 
 adjust 
 adjusts 
@@ -640,6 +642,9 @@ absorbed
 invent 
 invents
 invented
+prevent 
+prevents
+prevented
 emerge 
 emerges
 emerged
@@ -685,7 +690,7 @@ ploy
 ploys 
 ployed 
 worked
-convene
+vene
 invite
 tend 
 tends
@@ -713,7 +718,7 @@ inherited
 plains 
 plain 
 plained
-merge
+merge 
 merges
 merged
 achieve 
@@ -727,24 +732,129 @@ taught
 learn
 destroy
 distinguish
+erode
+undermine
+listen
+ dig 
+ digs 
+ dug 
+checked
+hasten
+ensure
+ owe
+ burn
+embody 
+embodie
+coincide
+echoe
+belong 
+belongs
+belonging
 bury
 burie
+pursue
 tested
+linger
+fell 
+ pay
+ die
+ cleanse
+ purge
+contribute
+converge
+ hang 
+ hangs 
+ hung 
+resonate 
+diverge
+vibrate
+throw
+threw
+avoid 
+avoids
+entail
+vade
+struck
+ shoot
+underscor
+embrace 
+embraces 
+unite
+estimate
+possess 
+possesse
 accesses
-acknowlegde 
-acknowlegdes
-acknowlegded
+allude
+summon
+adopt 
+adopts
+adopted
+ imply 
+ implie
+trude
+plode
+ wage
+viewed
+turb 
+turbs 
+ solve
+ dissolve
+glide
+slide
+arrange 
+arranges
+commence
+integrate
+incarnate
+decide
+refute
+refine 
+refines
+dominate
+dorse
+diminish
+ hurt 
+ hurts
+abandon 
+abandons
+enslave 
+enslaves
+entrap 
+entraps
+connect 
+connects 
+adapt 
+adapts 
+strive
+strove
+ dare
+enrich 
+enriches
+advance 
+advances 
+advanced 
+originate
+prosecute
+simulate
+derive
+presses
+impress 
+express 
+depress 
+vive
+inhabit 
+inhabits
+progresses
+acknowledge 
+acknowledges
+acknowledged
+trate
 ated 
 bate
 fate
-gate
 hate
 iate
-sate
 uate
-ed 
-ed.
-ed,
 ify 
 ified 
 ifies 
@@ -752,6 +862,9 @@ ifying
 ening 
 ened 
 ing 
+ed 
+ed.
+ed,
 >----------------------------------<
 
 
@@ -770,6 +883,7 @@ neither
  both 
  than 
 instead
+ like 
 >----------------------------------<
 
 
@@ -796,6 +910,7 @@ against
  up 
  down 
  among
+throughout
 through
  for 
 in front of
@@ -809,7 +924,7 @@ beyond
 until 
  into 
 prior 
-above 
+above
 beneath 
 across 
  onto 
@@ -820,6 +935,7 @@ below
 throughout
  back 
  upon 
+ forth 
 >----------------------------------<
 
 
@@ -842,6 +958,8 @@ These
 Some 
  many 
 Many 
+ any 
+Any 
  such 
 Such 
  my 
@@ -910,13 +1028,15 @@ themselves
 something
 nothing
 body 
-one 
-ones 
+none 
+ one 
+ ones 
 >----------------------------------<
 
 
 
 AMBIGUOUS WORD-FUNCTIONS TO HANDLE
+being 
  to 
  present 
  need
@@ -926,11 +1046,9 @@ tains
 cate
 date
 eate
+gate
 late
-mate
 tate
-vate
-nate
 pate
 port 
 ports 
@@ -943,7 +1061,7 @@ point
 points 
 pointed 
  hit
- sounds 
+ sound
  shape
  sets 
  set 
@@ -957,7 +1075,7 @@ walk
 promise
 ject 
 jects 
-lock
+ lock
 install 
 installs
 count 
@@ -969,14 +1087,12 @@ play
 answer
 places
 fall
-fell 
  lie
 spawn
 work 
  works
 chase
- face
-order
+ order
 focus
 desire
  end 
@@ -996,7 +1112,8 @@ limited
 comment 
 comments 
 drew 
-rest 
+ rest 
+ rests 
 fect 
 fects 
 talks 
@@ -1024,8 +1141,8 @@ help
  hunt
 escape 
 escapes
-test 
-tests 
+ test 
+ tests 
 calls 
 call 
 start
@@ -1037,6 +1154,52 @@ formed
 store
 track
 attempt
+favor
+conduct 
+ thought
+ check 
+ checks 
+ force 
+ forces 
+dict 
+dicts 
+dicted
+approach
+step
+change 
+ changes 
+ guide
+verse 
+verses 
+probe
+probing
+travel
+test
+sacrifice
+trigger
+sect 
+sects 
+strike
+ shot 
+break 
+remain
+seed
+shift
+turn
+view 
+views 
+ harm 
+ tie 
+ ties 
+ tied 
+worship
+handle
+ run 
+ runs 
+ blame
+ cause
+conflict
+influence
 >----------------------------------<
 
 

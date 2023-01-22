@@ -242,6 +242,7 @@ proc myTest()=
 
 proc extractTextPartsFromHtml*(webaddresst:string = ""):string =
   #[ 
+  Deprecated; see handleTextPa...
   Based on the webaddress as input-parameter, the webpage is downloaded.
   Then the html is parsed and pieces of readable text (aot markup-codes)
   are extracted, concatenated and returned to procedure.
@@ -348,7 +349,8 @@ proc calculateWordFrequencies*(input_tekst:string, wordlengthit:int,
     wordsq = sentencest.split(" ")
     for wordst in wordsq:
       if len(wordst) >= wordlengthit:
-        allwordssq.add(wordst)
+        if not ("=" in wordst or ":" in wordst):
+          allwordssq.add(wordst)
 
   # echo allwordssq
   # echo "\p"
@@ -429,7 +431,7 @@ proc applyDefinitionFileToText(input_tekst, languagest: string,
         blocklineit += 1
         if line != blockseparatorst:   # block-separating string
 
-          # echo "line = " & line
+          #echo "line = " & line
           
           if blockphasest == "PUNCTUATION OF SENTENCES TO HANDLE":
             # if use_custom_replacebo:
@@ -598,11 +600,11 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest: string,
   Based on the webaddress as input-parameter, the webpage is downloaded.
   
   if typest is extract (old procedure): 
-  Then the html is parsed and pieces of readable text (aot most markup-codes)
+  Then the html is parsed and pieces of readable text (aoto most markup-codes)
   are extracted, concatenated and returned to procedure.
 
   if typest is replace:
-  Then the html is parsed and pieces of readable text (aot markup-codes)
+  Then the html is parsed and pieces of readable text (aoto markup-codes)
   are cut out, reformatted and pasted back into their original location.
   Thus a reformatted webpage arizes and is returned.
 
@@ -616,8 +618,7 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest: string,
   -when the starting-part of this tag is found (like <p), then the 
   ending-part of it is searched for (like </p>).
   -when both are found the element / string is handled; that is either: 
-  extracted and appended, or 
-  cut, replaced and put back.
+  extracted and appended, or cut, replaced and put back.
 
   ADAP HIS:
   -debug repetition of text-parts; repetition is caused by the website 
@@ -627,10 +628,13 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest: string,
   - removed evaluation for extract-only
 
   ADAP NOW:
+
+  ADAP FUT:
+  -add tags section and table
    ]#
 
 
-  # const debugbo = false
+  #var debugbo = false
 
   var
     client = newHttpClient()
@@ -665,12 +669,14 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest: string,
 
   if taglist == "paragraph-only":
     extractable_tagsq2 = @[
-                    @["paragraph", "<p", "</p>", ""]
+                    @["paragraph", "<p", "</p>", ""],
+                    @["paragcap", "<P", "</P>", ""]
                   ]
 
   if taglist == "paragraph-with-headings":
     extractable_tagsq2 = @[
                     @["paragraph", "<p", "</p>", ""],
+                    @["paragcap", "<P", "</P>", ""],
                     @["heading1", "<h1", "</h1>", "extract-only"],
                     @["heading2", "<h2", "</h2>", "extract-only"],
                     @["heading3", "<h3", "</h3>", "extract-only"],
@@ -683,17 +689,20 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest: string,
   elif taglist == "full-list":
     extractable_tagsq2 = @[
                     @["paragraph", "<p", "</p>", ""],
+                    @["paragcap", "<P", "</P>", ""],
                     @["unordered_list", "<ul", "</ul>", ""],
                     @["ordered_list", "<ol", "</ol>", ""],
                     @["description_list", "<dl", "</dl>", ""],
                     @["block_quote", "<blockquote", "</blockquote>", ""],
-                    @["font_html4", "<font", "</font>", ""]
+                    @["font_html4", "<font", "</font>", ""],
+                    @["table_data", "<td", "</td>", ""]
                   ]
 
 
   elif taglist == "full-list-with-headings":
     extractable_tagsq2 = @[
                     @["paragraph", "<p", "</p>", ""],
+                    @["paragcap", "<P", "</P>", ""],
                     @["heading1", "<h1", "</h1>", "extract-only"],
                     @["heading2", "<h2", "</h2>", "extract-only"],
                     @["heading3", "<h3", "</h3>", "extract-only"],
@@ -704,26 +713,31 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest: string,
                     @["ordered_list", "<ol", "</ol>", ""],
                     @["description_list", "<dl", "</dl>", ""],
                     @["block_quote", "<blockquote", "</blockquote>", ""] ,
-                    @["font_html4", "<font", "</font>", ""]
+                    @["font_html4", "<font", "</font>", ""],
+                    @["table_data", "<td", "</td>", ""]
                   ]
 
 
   elif taglist == "exotic-list":
     extractable_tagsq2 = @[
                     @["paragraph", "<p", "</p>", ""],
+                    @["paragcap", "<P", "</P>", ""],
                     @["unordered_list", "<ul", "</ul>", ""],
                     @["ordered_list", "<ol", "</ol>", ""],
                     @["description_list", "<dl", "</dl>", ""],
                     @["block_quote", "<blockquote", "</blockquote>", ""],
                     @["font_html4", "<font", "</font>", ""],
                     @["span-elem", "<span", "</span>", ""],
-                    @["div-element", "<div", "</div>", ""]
+                    @["div-element", "<div", "</div>", ""],
+                    @["section", "<section", "</section>", ""],
+                    @["table_data", "<td", "</td>", ""]
                   ]
 
 
   elif taglist == "exotic-list-with-headings":
     extractable_tagsq2 = @[
                     @["paragraph", "<p", "</p>", ""],
+                    @["paragcap", "<P", "</P>", ""],
                     @["heading1", "<h1", "</h1>", "extract-only"],
                     @["heading2", "<h2", "</h2>", "extract-only"],
                     @["heading3", "<h3", "</h3>", "extract-only"],
@@ -736,7 +750,9 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest: string,
                     @["block_quote", "<blockquote", "</blockquote>", ""] ,
                     @["font_html4", "<font", "</font>", ""],
                     @["span-elem", "<span", "</span>", ""],
-                    @["div-element", "<div", "</div>", ""]                    
+                    @["div-element", "<div", "</div>", ""],
+                    @["section", "<section", "</section>", ""],
+                    @["table_data", "<td", "</td>", ""]
                   ]
 
 
@@ -1149,7 +1165,7 @@ proc extractSentencesFromText(input_tekst, languagest:string,
     # make sure the contents-area is not seen as garbage
     stringsizeit = 15000
 
-  if tbo: echo sentencesq
+  #if tbo: echo sentencesq
 
   if open(deffile, def_filenamest):    # try to open the def-file
     try:
@@ -1177,15 +1193,14 @@ proc extractSentencesFromText(input_tekst, languagest:string,
             # check for block-header
             if line == "SIGNAL-WORDS TO HANDLE":
               processingbo = true
-              signal_strings_starting_pointit = deffile.getFilePos() + 1
+              signal_strings_starting_pointit = deffile.getFilePos()
             elif processingbo:
 
               if line != blockseparatorst:   # block-separating string; end of job
 
-                # echo "line = " & line
-                
                 if sentencest.contains(line):
-                  # echo line
+                  #echo "sentence =" & sentencest
+                  #echo "line = " &  line
                   if sentencest.len < stringsizeit:   # to skip long irrelevant lists
                     countit = count(sentencest, '.')
                     if countit == 0 or  countit > 1:
@@ -1245,6 +1260,317 @@ proc extractSentencesFromText(input_tekst, languagest:string,
     echo "Could not open file!"
 
   return summaryst
+
+
+
+# proc extractMatchesFromText_Old(input_tekst, languagest:string, 
+#               summaryfilest: string = "", generatecontentst: string,
+#               contextit: int = 120) :string =
+
+#   #[ 
+#   Process the input-text by extracting sentences that have a certain 
+#   search-string in them, so that a summary arises.
+
+#   The summary-definition-files (like summary_english.dat) are used.
+
+#   The search-strings originate no more from the language-files (like english.dat),
+#   specifically the category SIGNAL-WORDS TO HANDLE.
+
+
+#   ADAP HIS
+#   -prune and correct the code
+#   pseudocode
+#   -doorloop de signaalwoorden
+#       voor ieder sigwoord vervang door extra merkstreng
+#   doe zolang niet alle gevonden:
+#       zoek de eerstvolgende merkstreng = posmerk
+#           bereken de start vd uitsnede
+#               als posmerk > aantal contexttekens
+#                   uitsnee-start wordt (posmerk - aantal contexttekens)
+#               anders posmerk = 0
+#           bereken het einde vd uitsnede (posmerk + aantal contexttekens)
+
+#           doe tot geen overlap meer:        
+#               zoek de navolgende m-streng
+#               als (volgende posmerk - context) < uitsnede-einde dan
+#                   uitsnee-einde wordt v-posmerk + context
+#               anders 
+#                   geen overlap meer is waar
+#           voeg de uitsnede toe aan de reeks met uitsnedes
+
+#   ADAP NOW
+#   -algorithm with marking-string prependance has undesired results.
+
+
+#   ADAP FUT
+
+#   ]#
+
+
+
+#   var
+#     deffile: File
+#     phasetekst:string = input_tekst    
+#     blockseparatorst = ">----------------------------------<"
+#     processingbo: bool
+#     markingst: string = "~*~"
+#     allfoundbo: bool = false
+#     posit, cutstartit, cutendit, extendedposit: int
+#     overlapbo: bool
+#     inputtextlengthit: int
+#     summarysq: seq[string] = @[]
+#     summaryst, cutoutst: string
+
+
+#   log(phasetekst)
+#   log("---------------")
+#   if open(deffile, summaryfilest):    # try to open the def-file / summary-file
+#     try:
+#       # walk thru the signal-words and and for each sigword 
+#       # prepend in the input-text a marking string by doing a 
+#       # replacement.
+#       for line in deffile.lines:
+
+#         # check for block-header
+#         if line == "SIGNAL-WORDS TO HANDLE":
+#           processingbo = true
+#         elif processingbo:
+#           if line != blockseparatorst:   # block-separating string; end of job
+#             phasetekst = replace(phasetekst, line, markingst & line)
+#           else:
+#             # stop because end-of-signalwords
+#             break
+      
+#       log(phasetekst)
+
+
+#       inputtextlengthit = len(phasetekst)
+
+#       # Cut out all signal-words with certain context and add those 
+#       # cutouts to a sequence.
+#       posit = 0
+#       while not allfoundbo:
+
+#         # find the next marking string
+#         posit = find(phasetekst, markingst, posit)
+#         if posit >= 0:
+#           # retrieve cutout-boundaries
+#           if posit > contextit:
+#             cutstartit = posit - contextit
+#           else:
+#             cutstartit = 0
+#           if (posit + contextit) < inputtextlengthit:
+#             cutendit = posit + contextit
+#           else:
+#             cutendit = inputtextlengthit
+
+
+#           # Test if the context-area of the previous match overlaps with 
+#           # the context-area of the next match and if yes then extend the 
+#           # cutout. Start assuming that it does overlap.
+#           overlapbo = true
+#           while overlapbo:
+#             if posit < inputtextlengthit:
+#               extendedposit = posit + 1
+#               extendedposit = find(phasetekst, markingst, extendedposit)
+#               if (extendedposit - contextit) < cutendit and extendedposit >= 0:
+#                 cutendit = extendedposit + contextit
+#                 posit = extendedposit
+#               else:
+#                 overlapbo = false
+
+#           posit += 1
+#           cutoutst = phasetekst[cutstartit..cutendit]
+#           cutoutst = replace(cutoutst, markingst, "")
+#           # summarysq.add("<br>" & "Word-position: " & $posit & " ===============================")
+#           # summarysq.add("\p\p")
+#           summarysq.add(cutoutst)
+#         else:
+#           allfoundbo = true
+
+#       # concatenate extracted sentences to text
+#       summaryst = ""
+#       for cutout in summarysq:
+#         # summaryst &= cutout & "<br>"
+#         summaryst &= "\p" & cutout
+
+
+#     except IOError:
+#       echo "IO error!"
+    
+#     except RangeError:
+#       echo "\p\p+++++++ search-config not found +++++++++++\p"
+#       echo "You have probably entered a search-config that could not be found. \p" &
+#           "Re-examine you search-config. \p"
+#       let errob = getCurrentException()
+#       echo "\p******* Technical error-information ******* \p" 
+#       echo repr(errob) & "\p****End exception****\p"
+
+    
+#     except:
+#       let errob = getCurrentException()
+#       echo "\p******* Unanticipated error ******* \p" 
+#       echo repr(errob) & "\p****End exception****\p"
+        
+#     finally:
+#       close(deffile)
+#   else:
+#     echo "Could not open file!"
+
+#   return summaryst
+
+
+
+# proc extractMatchesFromText(input_tekst, languagest:string, 
+#               summaryfilest: string = "", generatecontentst: string,
+#               contextit: int = 120) :string =
+
+#   #[ 
+#   Process the input-text by extracting sentences that have a certain 
+#   search-string in them, so that a summary arises.
+
+#   The summary-definition-files (like summary_english.dat) are used.
+
+#   The search-strings originate no more from the language-files (like english.dat),
+#   specifically the category SIGNAL-WORDS TO HANDLE.
+
+
+#   ADAP HIS
+#   -prune and correct the code
+
+#   ADAP NOW
+  
+  
+#   ADAP FUT
+
+#   ]#
+
+
+
+#   var
+#     deffile: File
+#     phasetekst:string = input_tekst    
+#     blockseparatorst = ">----------------------------------<"
+#     processingbo: bool
+#     markingst: string = "~*~"
+#     allfoundbo: bool = false
+#     posit, cutstartit, cutendit, extendedposit: int
+#     overlapbo: bool
+#     inputtextlengthit: int
+#     summarysq: seq[string] = @[]
+#     summaryst, cutoutst: string
+#     sigwordsq: seq[string] = @[]
+#     sigwordst: string
+
+
+#   log(phasetekst)
+#   log("---------------")
+#   if open(deffile, summaryfilest):    # try to open the def-file / summary-file
+#     try:
+#       # walk thru the signal-words and and for each sigword 
+#       # prepend in the input-text a marking string by doing a 
+#       # replacement.
+#       for line in deffile.lines:
+
+#         # check for block-header
+#         if line == "SIGNAL-WORDS TO HANDLE":
+#           processingbo = true
+#         elif processingbo:
+#           if line != blockseparatorst:   # block-separating string; end of job
+#             sigwordsq.add(line)
+#           else:
+#             # stop because end-of-signalwords
+#             break
+      
+
+#       # ------------------------------------
+
+
+#       inputtextlengthit = len(phasetekst)
+#       posit = -1
+
+#       # Cut out all signal-words with certain context and add those 
+#       # cutouts to a sequence.
+#       while not allfoundbo:   # not all sigwords found yet
+
+#         smallestposit = bigassit
+
+#         # walk thru the sigwords and determine the first one of them (smallest position)
+#         for sigwordst in sigwordsq:
+#           thisoccurit = find(phasetekst, sigwordst, posit + 1)
+#           if thisoccurit > -1:    # found
+#             if thisoccurit < smallestposit:
+#               smallestposit = thisoccurit
+#               firstsigwordst = sigwordst
+#               log("found sigword")
+
+#         posit = smallestposit
+
+#         if posit >= 0:
+#           # retrieve cutout-boundaries
+#           if posit > contextit:
+#             cutstartit = posit - contextit
+#           else:
+#             cutstartit = 0
+#           if (posit + contextit) < inputtextlengthit:
+#             cutendit = posit + contextit
+#           else:
+#             cutendit = inputtextlengthit
+
+
+#           # Test if the context-area of the previous match overlaps with 
+#           # the context-area of the next match and if yes then extend the 
+#           # cutout. Start assuming that it does overlap.
+#           overlapbo = true
+#           while overlapbo:
+#             if posit < inputtextlengthit:
+#               extendedposit = posit + 1
+#               extendedposit = find(phasetekst, markingst, extendedposit)
+#               if (extendedposit - contextit) < cutendit and extendedposit >= 0:
+#                 cutendit = extendedposit + contextit
+#                 posit = extendedposit
+#               else:
+#                 overlapbo = false
+
+#           posit += 1
+#           cutoutst = phasetekst[cutstartit..cutendit]
+#           cutoutst = replace(cutoutst, markingst, "")
+#           # summarysq.add("<br>" & "Word-position: " & $posit & " ===============================")
+#           # summarysq.add("\p\p")
+#           summarysq.add(cutoutst)
+#         else:
+#           allfoundbo = true
+
+#       # concatenate extracted sentences to text
+#       summaryst = ""
+#       for cutout in summarysq:
+#         # summaryst &= cutout & "<br>"
+#         summaryst &= "\p" & cutout
+
+
+#     except IOError:
+#       echo "IO error!"
+    
+#     except RangeError:
+#       echo "\p\p+++++++ search-config not found +++++++++++\p"
+#       echo "You have probably entered a search-config that could not be found. \p" &
+#           "Re-examine you search-config. \p"
+#       let errob = getCurrentException()
+#       echo "\p******* Technical error-information ******* \p" 
+#       echo repr(errob) & "\p****End exception****\p"
+
+    
+#     except:
+#       let errob = getCurrentException()
+#       echo "\p******* Unanticipated error ******* \p" 
+#       echo repr(errob) & "\p****End exception****\p"
+        
+#     finally:
+#       close(deffile)
+#   else:
+#     echo "Could not open file!"
+
+#   return summaryst
 
 
 
@@ -1376,12 +1702,14 @@ when isMainModule:
   # echo handleTextPartsFromHtml("https://nl.wikipedia.org/wiki/Geschiedenis", "replace", "dutch")
   # echo new_handleTextPartsFromHtml("https://nl.wikipedia.org/wiki/Geschiedenis", "replace", "dutch")
 
-  var st: string = ""
-  let t0 = cpuTime()
-  st = handleTextPartsFromHtml("https://nl.wikipedia.org/wiki/Computer", "replace", "dutch", 
-          "paragraph-only", "summary_dutch.dat", "")
-  echo "Execution-time = " & $formatFloat(cpuTime() - t0, ffDecimal, precision = 3)
-  echo st.len
+  # ----------------
+  # var st: string = ""
+  # let t0 = cpuTime()
+  # st = handleTextPartsFromHtml("https://nl.wikipedia.org/wiki/Computer", "replace", "dutch", 
+  #         "paragraph-only", "summary_dutch.dat", "")
+  # echo "Execution-time = " & $formatFloat(cpuTime() - t0, ffDecimal, precision = 3)
+  # echo st.len
+  # ----------------
 
   # echo "hoi"
   # echo getTitleFromWebsite("https://nl.wikipedia.org/wiki/Geschiedenis")
@@ -1397,3 +1725,5 @@ when isMainModule:
   # echo getDataBetweenTags("<>a<>b<><>d<>", ">", "<", 5)
   # myTest()  
 
+  echo "***********************"
+  echo extractMatchesFromText(testtekst_eng, "", "summary_english_default.dat", "", 5)

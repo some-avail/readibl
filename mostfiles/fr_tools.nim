@@ -119,7 +119,7 @@ proc newlang*(englishtekst:string):string =
       try:
 
         # walk thru the lines of the file
-        echo "\n=====Begin processing===="
+        log("\n=====Begin processing====")
         for line in myfile.lines:
           # echo line
           lastlinest = line
@@ -133,8 +133,8 @@ proc newlang*(englishtekst:string):string =
                 translationsq = line.split("___")
                 # echo translationsq
                 if translationsq[0] == englishtekst:    # option found
-                  echo "------translation found------"
-                  echo translationsq
+                  log("------translation found------")
+                  log($translationsq)
                   translationfoundbo = true
                   transdatast = translationsq[1]
                   # elif typest == "description":
@@ -145,7 +145,7 @@ proc newlang*(englishtekst:string):string =
                   # exit loop when ready
                   break
 
-        echo "\p===End of processing====\p"
+        log("\p===End of processing====\p")
       
       except IOError:
         echo "IO error!"
@@ -172,7 +172,7 @@ proc doWork(x: int) =
   var n = x
   for i in 0..10000000:
     n += i
- 
+
 
 template timeStuff*(statement: untyped): string =
   let t0 = cpuTime()
