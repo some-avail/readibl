@@ -1,11 +1,13 @@
 Formatting-strings for parsing with Flashread.
 Language: english
-version: 1.5
+version: 1.6
 
+Special changes:
+- dot has now a space behind it.
 
 
 PUNCTUATION OF SENTENCES TO HANDLE
-.
+. 
 ?
 !
 >----------------------------------<
@@ -263,7 +265,7 @@ begin
 stop 
  stops 
 continue
-allow 
+ allow 
 allowed
  allows 
 save 
@@ -842,6 +844,11 @@ impress
 express 
 depress 
 vive
+voke
+semble 
+sembles
+weigh 
+weighs
 inhabit 
 inhabits
 progresses
@@ -977,7 +984,7 @@ Its
 Our 
 Your 
 Their 
-other
+ other
 Other
  each 
 Each

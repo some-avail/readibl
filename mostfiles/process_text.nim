@@ -46,6 +46,12 @@ import source_files
 import fr_tools
 
 
+type
+  AddressPart* = enum
+    addrBase
+    addrParent
+    addrGrandParent
+
 
 
 var debugbo: bool = false
@@ -540,6 +546,71 @@ proc applyDefinitionFileToText(input_tekst, languagest: string,
   return phasetekst
 
 
+proc getBaseFromWebAddress2(webaddresst: string, expandparentbo: bool = false): string = 
+#[ 
+  Non-expanded full base: http://www.x.nl/a/b/c/blah.html  becomes  http://www.x.nl
+  Expand to parent: http://www.x.nl/a/b/c/blah.html  becomes  http://www.x.nla/b/c
+ ]#
+
+  var 
+    addressq: seq[string]
+    basewebaddresst, expanded_addresst: string
+    tbo: bool = false
+    countit: int = 0
+
+  # firstly chop the address up on the slashes
+  addressq = webaddresst.split("/")
+  # if tbo: echo addressq
+
+  if not expandparentbo:
+    # then restore it for the first 3 parts
+    for partst in addressq:
+      countit += 1
+      if countit < 4:
+        basewebaddresst &= partst & "/"
+    basewebaddresst = basewebaddresst[0 .. len(basewebaddresst) - 2]
+    result = basewebaddresst
+  elif expandparentbo:
+    # then restore it for all but the last part
+    addressq.del(len(addressq) - 1)
+    for partst in addressq:
+      expanded_addresst &= partst & "/"
+    expanded_addresst = expanded_addresst[0 .. len(expanded_addresst) - 2]
+    result = expanded_addresst
+
+  
+
+
+proc convertWebLinksToAbsolute(childweblinkst, parentweblinkst: string): string = 
+  #[ 
+  Convert the relative child-weblink to absolute based on the given
+  parent-link and the relativity-type.
+   ]#
+
+  var
+    firstcharst, base_addresst, expanded_addresst: string
+
+  base_addresst = getBaseFromWebAddress2(parentweblinkst)
+  expanded_addresst = getBaseFromWebAddress2(parentweblinkst, true)
+
+  if childweblinkst.len > 1:
+    firstcharst = childweblinkst[0..1]
+
+    case firstcharst:
+    of "ht":    # allready absolute
+      result = childweblinkst
+    of "//":    # scheme-relative (current mode of http or https)
+      result = replace(childweblinkst, "//", "https://")
+    else:
+      case firstcharst[0..0]:
+      of "/":   # base-relative (abc.com)
+        result = base_addresst & childweblinkst
+      else:   # parent-relative (abc.com/something)
+        result = expanded_addresst & "/" & childweblinkst
+  else:
+    result = childweblinkst
+
+
 
 
 proc getBaseFromWebAddress(webaddresst: string): string = 
@@ -568,7 +639,130 @@ proc getBaseFromWebAddress(webaddresst: string): string =
 
 
 
-proc convertRelPathsToAbsolute(inputtekst, htmlbasepathst: string): string = 
+proc getPartFromWebAddress(webaddresst: string, addresspart: AddressPart): string = 
+#[ 
+  Non-expanded base: http://www.x.nl/a/b/c/blah.html  becomes  http://www.x.nl
+  Expand to parent: http://www.x.nl/a/b/c/blah.html  becomes  http://www.x.nl/a/b/c
+  Expand to grandparent: http://www.x.nl/a/b/c/blah.html  becomes  http://www.x.nl/a/b
+ ]#
+
+  var 
+    addressq: seq[string]
+    basewebaddresst, parent_addresst: string
+    tbo: bool = false
+    countit: int = 0
+
+  # firstly chop the address up on the slashes
+  addressq = webaddresst.split("/")
+  # if tbo: echo addressq
+
+  if addressq.len >= 4:
+
+    case addresspart:
+    of addrBase:
+      # then restore it for the first 3 parts
+      for partst in addressq:
+        countit += 1
+        if countit < 4:
+          basewebaddresst &= partst & "/"
+      basewebaddresst = basewebaddresst[0 .. len(basewebaddresst) - 2]
+      result = basewebaddresst
+    of addrParent:
+      # then restore it for all but the last part
+      addressq.del(len(addressq) - 1)
+      for partst in addressq:
+        parent_addresst &= partst & "/"
+      parent_addresst = parent_addresst[0 .. len(parent_addresst) - 2]
+      result = parent_addresst
+    of addrGrandParent:
+      if addressq.len == 4:
+        # then restore it for the first 3 parts
+        for partst in addressq:
+          countit += 1
+          if countit < 4:
+            basewebaddresst &= partst & "/"
+        basewebaddresst = basewebaddresst[0 .. len(basewebaddresst) - 2]
+        result = basewebaddresst
+      else:
+        # then restore it for all but the last two parts
+        addressq.del(len(addressq) - 1)
+        addressq.del(len(addressq) - 1)
+        for partst in addressq:
+          parent_addresst &= partst & "/"
+        parent_addresst = parent_addresst[0 .. len(parent_addresst) - 2]
+        result = parent_addresst
+  else:
+    result = ""      
+
+
+
+proc convertRelPathsToAbsolute(inputtekst, cur_addresst: string): string = 
+#[
+  Convert most relative paths to absolute (but see below)
+  
+  ADAP FUT:
+  -parent-relatives; harder because they dont have a default prefix
+]#
+
+  var intertekst, searchst, replacest: string
+  var basepathst, parentpathst, grandparentpathst: string
+  
+  basepathst = getPartFromWebAddress(cur_addresst, addrBase)
+  #parentpathst = getPartFromWebAddress(cur_addresst, addrParent)
+  grandparentpathst = getPartFromWebAddress(cur_addresst, addrGrandParent)
+
+  intertekst = input_tekst
+  
+  for attribst in ["href=", "src="]:
+  
+    # the double slash for scheme-relatives
+    searchst = attribst & "\"//"
+    replacest = attribst & "\"https://"
+    intertekst = replace(intertekst, searchst, replacest)
+  
+    # single slash for base-relatives
+    searchst = attribst & "\"/"
+    replacest = attribst & "\"" & basepathst & "/"
+    intertekst = replace(intertekst, searchst, replacest)
+  
+    # double dot for grand-parents
+    searchst = attribst & "\"../"
+    replacest = attribst & "\"" & grandparentpathst & "/"
+    intertekst = replace(intertekst, searchst, replacest)
+  
+  
+  return intertekst
+
+
+
+proc convertRelPathsToAbsolute_newer(inputtekst, htmlbasepathst: string): string = 
+#[
+  Convert most relative paths to absolute (but see below)
+  
+  ADAP FUT:
+  -parent-relatives; harder because they dont have a default prefix
+]#
+
+
+  var intertekst, searchst, replacest: string
+
+  for attribst in ["href=", "src="]:
+  
+    # the double slash for scheme-relatives
+    searchst = attribst & "\"//"
+    replacest = attribst & "\"https://"
+    intertekst = replace(inputtekst, searchst, replacest)
+  
+    # single slash for base-relatives
+    searchst = attribst & "\"/"
+    replacest = attribst & "\"" & htmlbasepathst & "/"
+    intertekst = replace(intertekst, searchst, replacest)
+  
+  
+  return intertekst
+
+
+proc convertRelPathsToAbsolute_old(inputtekst, htmlbasepathst: string): string = 
 
   var intertekst, searchst, replacest: string
 
@@ -764,7 +958,7 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest: string,
     basewebaddresst = getBaseFromWebAddress(webaddresst)
 
     # adjust paths so that resource-files can be loaded (like css and pics)
-    websitest = convertRelPathsToAbsolute(websitest, basewebaddresst)
+    websitest = convertRelPathsToAbsolute(websitest, webaddresst)
 
     log("charcount = " & $len(websitest))
 

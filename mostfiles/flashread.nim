@@ -86,7 +86,7 @@ var
 
 
 const 
-  versionfl:float = 0.931
+  versionfl:float = 0.932
   minimal_word_lengthit = 7
   appnamebriefst:string = "RD"
   appnamenormalst = "Readibl"

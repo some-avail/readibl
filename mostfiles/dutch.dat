@@ -1,11 +1,14 @@
 Formatting-strings for parsing with Flashread.
 Language: dutch
-version: 1.5
+version: 1.6
+
+Special changes:
+- dot has now a space behind it.
 
 
 
 PUNCTUATION OF SENTENCES TO HANDLE
-.
+. 
 ?
 !
 >----------------------------------<
