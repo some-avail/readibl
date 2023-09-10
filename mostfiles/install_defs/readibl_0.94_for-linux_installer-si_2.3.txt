@@ -1,0 +1,110 @@
+snel_installer definition-file for 
+si-version===2.3
+
+
+This file contains installation-information for:
+project-name===readibl 0.94 for-linux
+destination===readibl_packages
+def-version===1.0
+
+
+Project-specific remarks:
+
+Writes currently to a home-dir-path -see vars
+installer-exec: /media/OnsSpul/1klein/1joris/k1-onderwerpen/computer/Programmeren/nimtaal/jester/readibl/mostfiles/snel_installer_2.3
+===================================================
+
+
+
+VARIABLES TO SET
+comment: if needy update the below versions from x.y to your own version
+arguments---separator=#
+target=/home/bruik/toepassingen/readibl/readibl_packages/readibl_0.94
+archive=/home/bruik/toepassingen/readibl/readibl_packages/readibl_0.94.tar.gz
+dirbasename=readibl_0.94
+>----------------------------------<
+DIRECTORIES TO CREATE
+comment: from 2.3 onward all super-dirs are co-created
+arguments---none
+#target#/sourcecode
+#target#/public
+#target#/help_info
+>----------------------------------<
+TARGET-LOCATION AND SOURCE-FILES TO COPY
+comment
+arguments---linux_set_exe=1
+#target#
+.
+flashread
+>----------------------------------<
+TARGET-LOCATION AND SOURCE-FILES TO COPY
+comment: here stuff the starting-dir
+arguments---none
+#target#
+.
+LICENSE
+settings_flashread.conf
+dutch.dat
+english.dat
+german.dat
+language_template.dat
+summary_dutch_concise.dat
+summary_dutch_default.dat
+summary_english_computer.dat
+summary_english_concise.dat
+summary_english_custom01.dat
+summary_english_default.dat
+summary_english_empty.dat
+summary_english_historical.dat
+summary_english_years.dat
+flashread.html
+outer_html.html
+cacert.pem
+dutch_translations.tra
+>----------------------------------<
+TARGET-LOCATION AND SOURCE-FILES TO COPY
+your-comment-here
+arguments---none
+#target#/sourcecode
+.
+flashread.nim
+fr_tools.nim
+g_mine.nim
+g_options.nim
+jo_htmlgen.nim
+loadgui.nim
+process_text.nim
+source_files.nim
+stringstuff.nim
+webgui_def.nim
+>----------------------------------<
+TARGET-LOCATION AND SOURCE-FILES TO COPY
+your-comment-here
+arguments---none
+#target#/public
+./public
+flashread.css
+>----------------------------------<
+TARGET-LOCATION AND SOURCE-FILES TO COPY
+your-comment-here
+arguments---none
+#target#/help_info
+.
+help.txt
+what-is-new.txt
+>----------------------------------<
+TARGET-LOCATION AND SOURCE-FILES TO COPY
+your-comment-here
+arguments---none
+#target#/help_info
+..
+README.md
+>----------------------------------<
+EXECUTE SHELL-COMMANDS - IN ORDER
+comment: create a tar.gz-archive; -C changes dir to avoid absolute paths
+arguments---none
+tar cfz #archive# -C #target#/.. #dirbasename#
+>----------------------------------<
+#END-OF-BLOCKS
+
+

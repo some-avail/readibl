@@ -117,7 +117,7 @@ gelegd
  lig 
 ligt
 liggen
-gelegen
+gelegen 
  lag 
  brengt
 bracht
@@ -172,7 +172,7 @@ sloten
 riepen 
  riep 
  beroept
-  richt 
+ richt 
 richtte
 gericht
 richten
@@ -201,6 +201,8 @@ gegeven
  gaf 
 leiden
 leidt
+leidd
+geleid 
  volgen 
  volgen.
  volgen,
@@ -242,7 +244,6 @@ weten
 weet 
 wist
 noem
-stop
 starten
 zoeken
 zoekt
@@ -270,13 +271,9 @@ bruiken
 bruikt
 betekent
 betekenen
- kennen 
- kent 
- ken 
- gekend
- kijken
- kijk 
- kijkt
+kijken
+kijk 
+kijkt
  keek
  gekeken
  horen 
@@ -380,7 +377,7 @@ scheiden
 scheidt 
 scheidde 
 gescheiden
-raken 
+ raken 
 raakt 
 raakte
 geraakt 
@@ -452,6 +449,7 @@ geduid
 vatten
 gevat
 vat 
+vatte
 registreren
 vernietigen
 vernietigd
@@ -518,6 +516,7 @@ achten
  acht 
 geacht
 zorgt
+zorgde
 gezorgd
 schouwen
 schouwt
@@ -541,7 +540,7 @@ voegen
 voegt
 voegd
 meten
-meet
+meet 
 slaagt
 slaagd
 leren 
@@ -595,11 +594,38 @@ ving
 pakt
 treed
 treden
-trad
+trad 
+traden
+reken 
+rekent
+rekend
+rekenen
+plegen
+pleeg
+pleegt
+pleegd
+stopt
+kennen 
+kent 
+ ken 
+beken
+misken
+verken
+ kende
+ gekend
+wijten
 heers 
 heerst
 heersen
 schokt
+help
+hielp
+holpen
+vergroot
+werven
+werft
+wierf
+worv
 vermoed 
 vermoedt
 vermoedd
@@ -708,6 +734,7 @@ NOUN-REPLACERS TO HANDLE
  je 
  hij 
  wij 
+ we 
  jullie 
  zij 
  ze 
@@ -742,13 +769,16 @@ start
 vroeg
 raden 
 bied 
+claim
  zorgen
 delen
 antwoorden
 slagen 
+schets
 streek
 streken
 gebruik
+ stop
 pakken
 pak 
 igen

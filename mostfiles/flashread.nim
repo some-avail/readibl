@@ -65,6 +65,7 @@ import source_files
 import fr_tools
 import loadgui
 import times
+import g_mine
 
 
 
@@ -86,7 +87,7 @@ var
 
 
 const 
-  versionfl:float = 0.932
+  versionfl:float = 0.933
   minimal_word_lengthit = 7
   appnamebriefst:string = "RD"
   appnamenormalst = "Readibl"
@@ -115,7 +116,7 @@ var
   outervarob: Context = newContext()   # outer html insertions
   innerhtmlst:string
 
-outervarob["version"] = $versionfl
+outervarob["version"] = versionfl.formatFloat(ffDecimal, 3)
 outervarob["loadtime"] = newlang("Started: ") & $now()
 outervarob["pagetitle"] = appnamenormalst
 outervarob["namesuffix"] = newlang(appnamesuffikst)
@@ -308,8 +309,8 @@ routes:
 
           output_tekst = jump_to_end_step(@"text-language", @"summarize", @"taglist", 
                                         "", @"summarylist", @"generate_contents", )
-          statustekst = "Output number of characters:"
-          statusdatast = $len(output_tekst)
+          statustekst = "Output number of words:"
+          statusdatast = $countWords(output_tekst)
           innervarob["statustext"] = newlang(statustekst)
           innervarob["statusdata"] = statusdatast
           innervarob["pastedtext"] = past
@@ -340,8 +341,8 @@ routes:
           newinnerhtmlst = jump_to_end_step(@"text-language", @"summarize", 
                                 @"taglist", @"insite_reformating", 
                                 @"summarylist", @"generate_contents")
-          statustekst = "Output number of chickens:"
-          statusdatast = $len(newinnerhtmlst)
+          statustekst = "Output number of words:"
+          statusdatast = $countWords(newinnerhtmlst)
           innervarob["statustext"] = newlang(statustekst)
           innervarob["statusdata"] = statusdatast
           innervarob["pastedtext"] = past
@@ -369,8 +370,8 @@ routes:
                                           @"taglist", @"summarylist", @"generate_contents")
         # echo output_tekst
         
-        statustekst = "Output number of characters:"
-        statusdatast = $len(output_tekst)
+        statustekst = "Output number of words:"
+        statusdatast = $countWords(output_tekst)
         innervarob["statustext"] = newlang(statustekst)
         innervarob["statusdata"] = statusdatast
         innervarob["pastedtext"] = output_tekst
@@ -458,8 +459,8 @@ routes:
       # converted_tekst = replaceInPastedText(@"pasted_text", @"generate_contents")
       output_tekst = formatText(@"pasted_text", @"text-language", @"summarize", 
                                     @"summarylist", @"generate_contents")
-      statustekst = "Output number of characters:"
-      statusdatast = $len(output_tekst)
+      statustekst = "Output number of words:"
+      statusdatast = $countWords(output_tekst)
       innervarob["statustext"] = newlang(statustekst)
       innervarob["statusdata"] = statusdatast
 

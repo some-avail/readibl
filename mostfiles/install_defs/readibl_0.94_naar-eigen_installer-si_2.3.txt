@@ -1,0 +1,98 @@
+snel_installer definition-file for 
+si-version===2.3
+
+
+This file contains installation-information for:
+project-name===readibl 0.94 naar eigen
+destination===production_JB
+def-version===1.0
+
+
+Project-specific remarks:
+MANUALLY DO:
+-update version-vars in def
+-run install
+-rename laatste > laatste_x.(y-1)
+-rename prog_x.y > laatste
+
+Writes currently to a home-dir-path -see vars
+installer-exec: /media/OnsSpul/1klein/1joris/k1-onderwerpen/computer/Programmeren/nimtaal/jester/readibl/mostfiles/snel_installer_2.3
+===================================================
+
+
+
+VARIABLES TO SET
+comment: if needy update the below versions from x.y to your own version
+arguments---separator=#
+source=/home/bruik/toepassingen/readibl/readibl_packages/readibl_0.94
+target_parent=/home/bruik/toepassingen/readibl/readibl_eigen
+dirbasename=readibl_0.94
+target=/home/bruik/toepassingen/readibl/readibl_eigen/readibl_0.94
+config_dir=/home/bruik/toepassingen/readibl/readibl_eigen/laatste
+>----------------------------------<
+TARGET-LOCATION AND SOURCE-FILES TO COPY
+your-comment-here
+arguments---copy_branch=1,,sample_permissions=1
+#target_parent#
+#source#
+>----------------------------------<
+TARGET-LOCATION AND SOURCE-FILES TO COPY
+comment: non-exec config-files
+arguments---none
+#target#
+#config_dir#
+summary_english_custom01.dat
+>----------------------------------<
+TARGET-LOCATION AND SOURCE-FILES TO COPY
+comment: exec config-files
+arguments---linux_set_exe=1
+#target#
+#config_dir#
+flashread_sh
+restart_flashread_sh
+>----------------------------------<
+EDIT FILE (ADD, DELETE, REPLACE LINES)
+comment: enable the user-port
+arguments---none
+replacement
+#target#/settings_flashread.conf
+forward
+1
+port-number___5003
+on
+#port-number
+port-number
+end-of-edit-block-here
+>----------------------------------<
+EDIT FILE (ADD, DELETE, REPLACE LINES)
+comment: disable the developper-port
+arguments---none
+replacement
+#target#/settings_flashread.conf
+forward
+1
+port-number___5050
+on
+port-number
+#port-number
+end-of-edit-block-here
+>----------------------------------<
+EDIT FILE (ADD, DELETE, REPLACE LINES)
+comment: adjust interface-language
+arguments---none
+replacement
+#target#/settings_flashread.conf
+forward
+1
+interface-language
+on
+interface-language___english
+interface-language___dutch
+end-of-edit-block-here
+>----------------------------------<
+non-handled this time:
+??
+>----------------------------------<
+#END-OF-BLOCKS
+
+

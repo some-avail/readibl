@@ -1,0 +1,61 @@
+Formatting-strings for parsing with Flashread.
+Language: template
+version: 1.5
+
+
+
+PUNCTUATION OF SENTENCES TO HANDLE
+.
+?
+!
+>----------------------------------<
+
+
+PUNCTUATION OF SENTENCE-PARTS TO HANDLE
+, 
+: 
+)
+>----------------------------------<
+
+
+
+PRONOUNS TO HANDLE
+(
+>----------------------------------<
+
+
+
+VERBS TO HANDLE
+>----------------------------------<
+
+
+
+SIGNAL-WORDS TO HANDLE
+>----------------------------------<
+
+
+LINK-WORDS TO HANDLE
+>----------------------------------<
+
+
+
+PREPOSITIONS TO HANDLE
+>----------------------------------<
+
+
+
+NOUN-ANNOUNCERS TO HANDLE
+>----------------------------------<
+
+
+
+NOUN-REPLACERS TO HANDLE
+>----------------------------------<
+
+
+
+AMBIGUOUS WORD-FUNCTIONS TO HANDLE
+>----------------------------------<
+
+
+EINDE

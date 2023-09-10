@@ -65,7 +65,7 @@ been
  weren't
  was 
  wasn't 
-have
+have 
  has 
  hasn't
  had 
@@ -109,7 +109,8 @@ gone
  found 
 put 
 puts 
-sume
+sume 
+sumes
  lays 
  lay 
 laid 
@@ -126,7 +127,11 @@ fit
 match 
  matches 
  do 
+Do 
+Does 
 don't
+Don't 
+Doesn't 
  does 
  doesn't
  did 
@@ -135,10 +140,10 @@ don't
 make 
  makes 
  made
-get 
-gets 
-got 
-gotten 
+ get 
+ gets 
+ got 
+ gotten 
 forget 
 forgets 
 forgot 
@@ -177,6 +182,8 @@ stood
  reacts
  react 
  enact
+interacts 
+interact 
 boot 
 reboot 
 operate
@@ -217,7 +224,7 @@ happen
 suggest 
 suggests 
 holding
-hold 
+ hold 
  holds 
  held 
 retain 
@@ -241,7 +248,8 @@ duces
  uses 
  used 
 move 
- moves 
+moves 
+moved 
 add 
  adds 
 edit 
@@ -275,7 +283,7 @@ tains
 tained
 seem 
  seems 
-read 
+ read 
  reads 
 write 
 writes 
@@ -288,6 +296,7 @@ considers
 considered
 seek 
  seeks 
+sought
 scan 
  scans 
 comprise
@@ -334,10 +343,8 @@ curred
  confirms 
  confirmed
  define
- thinks
- think
- fight 
- fights 
+thinks
+think
  fought
  discuss 
  discusses
@@ -351,18 +358,12 @@ show
  meets
  meet 
  met 
- reveal
+reveal
  know 
  knows 
  knew
  known
  believ
-ize 
-izes
-ized
-ise 
-ises 
-ised 
  doesn't
  didn't
  accept 
@@ -438,7 +439,6 @@ flects
  cross 
  crosses 
  crossed 
-reach
 struct 
 structs 
 structed
@@ -564,7 +564,7 @@ posited
 combine
 raise
  rely 
- relie
+ relies
 plore
 assess 
 assesse
@@ -581,12 +581,12 @@ tect
 tects 
 tected
 analyze
-analyse
 unlock
 directs
  marks
 execute
-parse
+parse 
+parses 
 tract 
 tracts 
 tracted
@@ -637,7 +637,6 @@ shone
 drag 
 drags 
 wander
-spread
 absorb 
 absorbs
 absorbed
@@ -692,7 +691,7 @@ ploy
 ploys 
 ployed 
 worked
-vene
+intervene
 invite
 tend 
 tends
@@ -727,7 +726,7 @@ achieve
 achieves
 achieved
 convince
- invad
+ invade
 teach 
 teaches
 taught
@@ -758,7 +757,9 @@ pursue
 tested
 linger
 fell 
- pay
+pay 
+pays 
+paid
  die
  cleanse
  purge
@@ -843,23 +844,84 @@ presses
 impress 
 express 
 depress 
+arise
 vive
 voke
+flush 
+flushes
+discern 
+discerns 
+fail 
+fails 
+ compete 
+ competes
+manifest 
+manifests 
+mend 
+mends 
+mended 
 semble 
 sembles
+repeat
+amuse 
+amuses
+exert 
+exerts 
+confront 
+confronts
+cede 
+cedes 
+ceded
+finish
+worry
 weigh 
 weighs
+pick
+assure
+intercept 
+intercepts 
 inhabit 
 inhabits
 progresses
+underline
+engage
+engages
+engaged
+distort 
+distorts
+enlist 
+enlists 
+ grind
+miss 
+misses 
+ wake
+endanger 
+endangers 
+prosper 
+prospers 
+ backs
+ owns 
 acknowledge 
 acknowledges
 acknowledged
-trate
+strengthen
+thwart
+adhere
+ize 
+izes
+ized
+ise 
+ises 
+ised 
+igate
+erate
+orate
+ivate
+trate 
+trates
 ated 
 bate
 fate
-hate
 iate
 uate
 ify 
@@ -869,6 +931,8 @@ ifying
 ening 
 ened 
 ing 
+ing.
+ing,
 ed 
 ed.
 ed,
@@ -886,12 +950,18 @@ Or
 neither
  nor 
  either
+ as well
  as 
  both 
+Both 
  than 
 instead
  like 
+ but 
+ also 
+ not only
 >----------------------------------<
+
 
 
 PREPOSITIONS TO HANDLE
@@ -943,6 +1013,8 @@ throughout
  back 
  upon 
  forth 
+ amidst 
+In 
 >----------------------------------<
 
 
@@ -1029,8 +1101,8 @@ yourself
 himself
 itself
 herself
-ourselves
 yourselves
+ourselves
 themselves
 something
 nothing
@@ -1048,15 +1120,6 @@ being
  present 
  need
 claim
-tain 
-tains 
-cate
-date
-eate
-gate
-late
-tate
-pate
 port 
 ports 
  control 
@@ -1072,6 +1135,7 @@ pointed
  shape
  sets 
  set 
+reset
 setting 
 notic
  use 
@@ -1124,7 +1188,8 @@ drew
 fect 
 fects 
 talks 
-gain 
+ gain
+regain
 releas
 trace
 catch
@@ -1190,7 +1255,9 @@ strike
  shot 
 break 
 remain
+feature
 seed
+launch
 shift
 turn
 view 
@@ -1200,13 +1267,62 @@ views
  ties 
  tied 
 worship
-handle
+handle 
+handles 
  run 
  runs 
  blame
  cause
 conflict
-influence
+influenc
+flip
+left 
+measure 
+measures
+attack
+lift
+doubt
+award
+reward
+block
+flow
+ deal 
+ deals 
+encounter
+ own
+worries
+cern
+drift
+record
+mark 
+marks 
+request
+drive 
+drives 
+ fight 
+ fights 
+dump
+spread
+reach
+highlight
+vow 
+vows 
+ hope
+resolve
+address
+impact
+practice
+tain 
+tains 
+cate
+date
+eate
+gate
+late 
+lates
+tate
+pate
+hate
 >----------------------------------<
 
 

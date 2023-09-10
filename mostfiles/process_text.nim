@@ -396,7 +396,10 @@ proc applyDefinitionFileToText(input_tekst, languagest: string,
     use_custom_replacebo: bool = true
     deffilest:string
 
-
+  phasetekst = replace(phasetekst, ".<", ". <")
+  phasetekst = replace(phasetekst, ".\"", ". \"")
+  
+  
   if highlightbo == false:
     log("text coloring....")
     def_filenamest = languagest & ".dat"
