@@ -15,8 +15,10 @@ ADAP NOW
 
 import tables
 import webgui_def
-import process_text
 import fr_tools
+
+# no longer used
+# import process_text
 
 
 var versionfl = 0.5

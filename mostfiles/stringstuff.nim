@@ -95,14 +95,14 @@ proc old_customReplace(tekst:var string, searchst, insertst: string, stripextrac
       echo posit
 
       if not stripextractbo:
-        tekst.delete(posit, posit + searchst.len - 1)
+        tekst.delete(posit..posit + searchst.len - 1)
       else:
         strippedst = strip(searchst, true, true)
         if posit > 0:
           posit = find(tekst, strippedst, posit - 1)
         else:
           posit = find(tekst, strippedst, posit)
-        tekst.delete(posit, posit + strippedst.len - 1)
+        tekst.delete(posit..posit + strippedst.len - 1)
 
       tekst.insert(insertst, posit)
       posit += insertst.len - 1
@@ -166,14 +166,14 @@ proc customReplace*(sourcetekst: string, searchst, insertst: string, stripextrac
 
       if continubo:
         if not stripextractbo:
-          tekst.delete(posit, posit + searchst.len - 1)
+          tekst.delete(posit..posit + searchst.len - 1)
         else:
           strippedst = strip(searchst, true, true)
           if posit > 0:
             posit = find(tekst, strippedst, posit - 1)
           else:
             posit = find(tekst, strippedst, posit)
-          tekst.delete(posit, posit + strippedst.len - 1)
+          tekst.delete(posit..posit + strippedst.len - 1)
 
         tekst.insert(insertst, posit)
         posit += insertst.len
@@ -228,14 +228,14 @@ proc customReplace_old*(tekst:var string, searchst, insertst: string, stripextra
 
       if continubo:
         if not stripextractbo:
-          tekst.delete(posit, posit + searchst.len - 1)
+          tekst.delete(posit..posit + searchst.len - 1)
         else:
           strippedst = strip(searchst, true, true)
           if posit > 0:
             posit = find(tekst, strippedst, posit - 1)
           else:
             posit = find(tekst, strippedst, posit)
-          tekst.delete(posit, posit + strippedst.len - 1)
+          tekst.delete(posit..posit + strippedst.len - 1)
 
         tekst.insert(insertst, posit)
         posit += insertst.len - 1

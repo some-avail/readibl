@@ -63,10 +63,11 @@ import nimclipboard/libclipboard
 import moustachu
 import source_files
 import fr_tools
-import loadgui
 import times
 import g_mine
 
+# not called but does needed work once
+import loadgui
 
 
 # set debugbo to false when creating a release!
@@ -78,32 +79,12 @@ template log(messagest: string) =
     echo messagest
 
 
-var
-  statustekst, statusdatast:string
-  output_tekst:string
-  filepathst: string
-  newinnerhtmlst: string
-  filestatusmessagest: string
-
-
 const 
-  versionfl:float = 0.933
+  versionfl:float = 0.934
   minimal_word_lengthit = 7
   appnamebriefst:string = "RD"
   appnamenormalst = "Readibl"
   appnamesuffikst = "Text Reformatter"
-
-
-filepathst = "getappdir: " & getappdir() & " <br>" &
-          "getcurrentdir: " & getcurrentdir() & " <br>"
-
-
-filestatusmessagest = sourcefilestatust & interfacelanguagestatust
-# check if thru source_files.nim if all files are loaded successfully
-if sourcefilestatust != "":  
-  statustekst = filestatusmessagest  
-else:
-  statustekst = newlang("Press button to paste the content of the clipboard.")
 
 
 settings:
@@ -111,15 +92,32 @@ settings:
   port = Port(parseInt(readOptionFromFile("port-number", "value")))  # development
 
 
-var 
-  innervarob: Context = newContext()  # inner html insertions
-  outervarob: Context = newContext()   # outer html insertions
-  innerhtmlst:string
 
-outervarob["version"] = versionfl.formatFloat(ffDecimal, 3)
-outervarob["loadtime"] = newlang("Started: ") & $now()
-outervarob["pagetitle"] = appnamenormalst
-outervarob["namesuffix"] = newlang(appnamesuffikst)
+# var
+#   statustekst, statusdatast:string
+#   output_tekst:string
+#   filepathst: string
+#   newinnerhtmlst: string
+#   filestatusmessagest: string
+
+#   innervarob: Context = newContext()  # inner html insertions
+#   outervarob: Context = newContext()   # outer html insertions
+
+
+# filepathst = "getappdir: " & getappdir() & " <br>" &
+#           "getcurrentdir: " & getcurrentdir() & " <br>"
+
+# filestatusmessagest = sourcefilestatust & interfacelanguagestatust
+# # check if thru source_files.nim if all files are loaded successfully
+# if sourcefilestatust != "":  
+#   statustekst = filestatusmessagest  
+# else:
+#   statustekst = newlang("Press button to paste the content of the clipboard.")
+
+# outervarob["version"] = versionfl.formatFloat(ffDecimal, 3)
+# outervarob["loadtime"] = newlang("Started: ") & $now()
+# outervarob["pagetitle"] = appnamenormalst
+# outervarob["namesuffix"] = newlang(appnamesuffikst)
 
 
 
@@ -199,15 +197,19 @@ proc jump_to_end_step(languagest, preprocesst, taglist, typest, summaryfilest,
 
 
 
-proc showPage(custominnerhtmlst:string=""): string = 
-  # aangepaste innerhtml als parameter
-  if custominnerhtmlst == "":
-    innerhtmlst = render(textsourcefileta["flashread.html"] , innervarob)    
-  else:
-    innerhtmlst = custominnerhtmlst
+proc showPage(par_innervarob, par_outervarob: var Context, 
+                custominnerhtmlst:string=""): string = 
+  
+  var innerhtmlst:string
+  {.gcsafe.}:
+    if custominnerhtmlst == "":
+      innerhtmlst = render(textsourcefileta["flashread.html"], par_innervarob)    
+    else:
+      innerhtmlst = custominnerhtmlst
+    par_outervarob["flashread_form"] = innerhtmlst
 
-  outervarob["flashread_form"] = innerhtmlst
-  return render(textsourcefileta["outer_html.html"] , outervarob)
+    result = render(textsourcefileta["outer_html.html"], par_outervarob)
+
 
 
 
@@ -217,6 +219,33 @@ routes:
     resp "Hello user, to continue please type: http://localhost:5050/flashread-form"
 
   get "/flashread-form":
+
+    var
+      statustekst, statusdatast:string
+      output_tekst:string
+      filepathst: string
+      newinnerhtmlst: string
+      filestatusmessagest: string
+      innervarob: Context = newContext()  # inner html insertions
+      outervarob: Context = newContext()   # outer html insertions
+
+
+    filepathst = "getappdir: " & getappdir() & " <br>" &
+              "getcurrentdir: " & getcurrentdir() & " <br>"
+
+    filestatusmessagest = sourcefilestatust & interfacelanguagestatust
+    # check if thru source_files.nim if all files are loaded successfully
+    if sourcefilestatust != "":  
+      statustekst = filestatusmessagest  
+    else:
+      statustekst = newlang("Press button to paste the content of the clipboard.")
+
+    outervarob["version"] = versionfl.formatFloat(ffDecimal, 3)
+    outervarob["loadtime"] = newlang("Started: ") & $now()
+    outervarob["pagetitle"] = appnamenormalst
+    outervarob["namesuffix"] = newlang(appnamesuffikst)
+
+
     # load initial form
     innervarob["statustext"] = newlang(statustekst)
     innervarob["statusdata"] = ""
@@ -232,7 +261,8 @@ routes:
     innervarob["textbox-remark"] = newlang("Your item will be pasted here (text or web-link):")
     innervarob["newtab"] = "_self"
 
-    resp showPage()
+    resp showPage(innervarob, outervarob)
+
 
 
   # get "/flashread-form/@errorst":
@@ -254,14 +284,39 @@ routes:
 
   post "/flashread-form":
 
-    var clipob = clipboard_new(nil)
-    var past = $clipob.clipboard_text()
-    var converted_tekst: string
+    var
+      clipob = clipboard_new(nil)
+      past = $clipob.clipboard_text()
+      converted_tekst: string
+
+      statustekst, statusdatast:string
+      output_tekst:string
+      filepathst: string
+      newinnerhtmlst: string
+      filestatusmessagest: string
+      innervarob: Context = newContext()  # inner html insertions
+      outervarob: Context = newContext()   # outer html insertions
+
+
+    # filepathst = "getappdir: " & getappdir() & " <br>" &
+    #           "getcurrentdir: " & getcurrentdir() & " <br>"
+
+    # filestatusmessagest = sourcefilestatust & interfacelanguagestatust
+    # # check if thru source_files.nim if all files are loaded successfully
+    # if sourcefilestatust != "":  
+    #   statustekst = filestatusmessagest  
+    # else:
+    #   statustekst = newlang("Press button to paste the content of the clipboard.")
+
+    outervarob["version"] = versionfl.formatFloat(ffDecimal, 3)
+    outervarob["loadtime"] = newlang("Started: ") & $now()
+    outervarob["pagetitle"] = appnamenormalst
+    outervarob["namesuffix"] = newlang(appnamesuffikst)
+
 
     if past.len < 5:
       statustekst = """The clipboard is empty or holds a small string (<5); 
                 please copy a web-address or a bigger text!"""
-
 
       redirect("/flashread-form")
 
@@ -295,7 +350,8 @@ routes:
         elif @"newtab" == "newtab":
           innervarob["newtab"] = "_blank"
 
-        resp showPage()
+        # resp showPage()
+        resp showPage(innervarob, outervarob)
 
 
       elif @"jump_to_end" == "jump_to_end":
@@ -326,8 +382,8 @@ routes:
           innervarob["submit"] = newlang("Choose and run")
           innervarob["textbox-remark"] = newlang("Your item will be pasted here (text or web-link):")
 
-          resp showPage()
-
+          # resp showPage()
+          resp showPage(innervarob, outervarob)
 
         elif @"insite_reformating" == "insite_reformating":
           # output_tekst = jump_to_end_step(@"text-language", @"summarize")
@@ -358,8 +414,8 @@ routes:
           innervarob["submit"] = newlang("Choose and run")
           innervarob["textbox-remark"] = newlang("Your item will be pasted here (text or web-link):")
 
-          resp showPage(newinnerhtmlst)
-
+          # resp showPage(newinnerhtmlst)
+          resp showPage(innervarob, outervarob, newinnerhtmlst)
 
     elif request.params["orders"] == "transfer":
       # transfer the text or link from input to the right column
@@ -390,8 +446,9 @@ routes:
           innervarob["newtab"] = "_self"
         elif @"newtab" == "newtab":
           innervarob["newtab"] = "_blank"
-        resp showPage()
 
+        # resp showPage()
+        resp showPage(innervarob, outervarob)
 
       else:
         converted_tekst = replaceInPastedText(@"pasted_text", @"generate_contents")
@@ -416,8 +473,8 @@ routes:
         elif @"newtab" == "newtab":
           innervarob["newtab"] = "_blank"
 
-        resp showPage()
-
+        # resp showPage()
+        resp showPage(innervarob, outervarob)
 
 
     elif request.params["orders"] == "frequencies":
@@ -445,8 +502,8 @@ routes:
       elif @"newtab" == "newtab":
         innervarob["newtab"] = "_blank"
 
-      resp showPage()
-
+      # resp showPage()
+      resp showPage(innervarob, outervarob)
 
     if request.params["orders"] == "process_text":
 
@@ -477,5 +534,7 @@ routes:
       innervarob["submit"] = newlang("Choose and run")
       innervarob["textbox-remark"] = newlang("Your item will be pasted here (text or web-link):")
 
-      resp showPage()
+
+      # resp showPage()
+      resp showPage(innervarob, outervarob)      
 

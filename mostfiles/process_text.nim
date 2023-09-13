@@ -37,13 +37,15 @@ ADAP FUT
  ]#
 
 
-import strutils, times
-import os
+import strutils
 import httpClient
-import tables, algorithm, sequtils
+import tables, algorithm
 import stringstuff
 import source_files
-import fr_tools
+
+# no longer used:
+# import os, times, sequtils
+# import fr_tools
 
 
 type
@@ -527,7 +529,7 @@ proc applyDefinitionFileToText(input_tekst, languagest: string,
   except IOError:
     echo "IO error!"
   
-  except RangeError:
+  except RangeDefect:
     echo "\p\p+++++++ search-config not found +++++++++++\p"
     echo "You have probably entered a search-config that could not be found. \p" &
         "Re-examine you search-config. \p" &
@@ -1044,7 +1046,7 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest: string,
             # echo "================================================="
 
           elif typest == "replace":
-            websitest.delete(textstartit, textendit)
+            websitest.delete(textstartit..textendit)
             highlightedst = applyDefinitionFileToText(textpartst, languagest, true, summaryfilest)
             reformatedst = applyDefinitionFileToText(highlightedst, languagest, false)
             posit += len(reformatedst) - 2
@@ -1287,7 +1289,7 @@ proc handleTextPartsFromHtml_Old*(webaddresst, typest, languagest: string,
             # echo "================================================="
 
           elif typest == "replace":
-            websitest.delete(textstartit, textendit)
+            websitest.delete(textstartit..textendit)
             highlightedst = applyDefinitionFileToText(textpartst, languagest, true, summaryfilest)
             reformatedst = applyDefinitionFileToText(highlightedst, languagest, false)
             posit += len(reformatedst) - 2
@@ -1434,7 +1436,7 @@ proc extractSentencesFromText(input_tekst, languagest:string,
     except IOError:
       echo "IO error!"
     
-    except RangeError:
+    except RangeDefect:
       echo "\p\p+++++++ search-config not found +++++++++++\p"
       echo "You have probably entered a search-config that could not be found. \p" &
           "Re-examine you search-config. \p" &

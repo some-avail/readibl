@@ -46,7 +46,7 @@ proc loadTextSourceFiles() =
 
     for keyst in textsourcefilesq:
       if fileExists(keyst):
-        textsourcefileta.add(keyst, readFile(keyst))
+        textsourcefileta[keyst] = readFile(keyst)
       else:
         if faultsfoundbo:   # previous faults found
           sourcefilestatust &= keyst & "  "
