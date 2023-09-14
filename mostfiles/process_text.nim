@@ -65,7 +65,7 @@ template log(messagest: string) =
 
 
 const 
-  versionfl:float = 0.36
+  versionfl:float = 0.37
 
   input_tekst = "chimpansee noot mies een chimpansee is een leuk dier\pde chimpansee is het slimste dier naar het schijnt.\pmaar naast de chimpansee zijn er ook andere slimme \pdieren zoals de raaf, de dolfijn en de hond."
   tekst = "pietje staat. gister niet, maar toch. wat\pjantje. wimpie, onno\pkeesje.grietje,antje\pdirkje"
@@ -733,66 +733,16 @@ proc convertRelPathsToAbsolute(inputtekst, cur_addresst: string): string =
     # double dot for grand-parents
     searchst = attribst & "\"../"
     replacest = attribst & "\"" & grandparentpathst & "/"
-    intertekst = replace(intertekst, searchst, replacest)
-  
-  
-  return intertekst
-
-
-
-proc convertRelPathsToAbsolute_newer(inputtekst, htmlbasepathst: string): string = 
-#[
-  Convert most relative paths to absolute (but see below)
-  
-  ADAP FUT:
-  -parent-relatives; harder because they dont have a default prefix
-]#
-
-
-  var intertekst, searchst, replacest: string
-
-  for attribst in ["href=", "src="]:
-  
-    # the double slash for scheme-relatives
-    searchst = attribst & "\"//"
-    replacest = attribst & "\"https://"
-    intertekst = replace(inputtekst, searchst, replacest)
-  
-    # single slash for base-relatives
-    searchst = attribst & "\"/"
-    replacest = attribst & "\"" & htmlbasepathst & "/"
-    intertekst = replace(intertekst, searchst, replacest)
-  
+    intertekst = replace(intertekst, searchst, replacest)  
   
   return intertekst
 
-
-proc convertRelPathsToAbsolute_old(inputtekst, htmlbasepathst: string): string = 
-
-  var intertekst, searchst, replacest: string
-
-  # the double slash must not be replaced so put it on ice
-  searchst = "href=\"//"
-  replacest = "href=\"TEMPSTRING"
-  intertekst = replace(inputtekst, searchst, replacest)
-
-  # insert the web-address
-  searchst = "href=\"/"
-  replacest = "href=\"" & htmlbasepathst & "/"
-  intertekst = replace(intertekst, searchst, replacest)
-
-  # restore the double slash
-  searchst = "href=\"TEMPSTRING"
-  replacest = "href=\"//"
-  intertekst = replace(intertekst, searchst, replacest)
-
-  return intertekst
 
 
 
 proc handleTextPartsFromHtml*(webaddresst, typest, languagest: string,
           taglist:string = "paragraph-only", summaryfilest: string = "",
-          generatecontentst: string): string =
+          generatecontentst: string, abbreviationsq: seq[string] = @[]): string =
 
   #[ 
   This procedure is a forth-development of extractTextPartsFromHtml.
@@ -1025,6 +975,8 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest: string,
           # echo textstartit
           # echo textendit
           textpartst = websitest[textstartit .. textendit]
+          # de-dot abbreviations
+          textpartst = stripSymbolsFromList(textpartst, abbreviationsq, ".")
 
           # Below code is meant to create a contents-area
           # but also much garbage is being caught beside the contents..
@@ -1068,245 +1020,6 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest: string,
     echo "\p******* Unanticipated error ******* \p" 
     echo repr(errob) & "\p****End exception****\p"
 
-
-
-
-proc handleTextPartsFromHtml_Old*(webaddresst, typest, languagest: string,
-          taglist:string = "paragraph-only", summaryfilest: string = ""): string =
-
-  #[ 
-  This procedure is a forth-development of extractTextPartsFromHtml.
-  Based on the webaddress as input-parameter, the webpage is downloaded.
-  
-  if typest is extract (old procedure): 
-  Then the html is parsed and pieces of readable text (aot most markup-codes)
-  are extracted, concatenated and returned to procedure.
-
-  if typest is replace:
-  Then the html is parsed and pieces of readable text (aot markup-codes)
-  are cut out, reformatted and pasted back into their original location.
-  Thus a reformatted webpage arizes and is returned.
-
-  More precise flow:
-  the procedure is a loop which:
-  -searches for certain tags, and handles (extracts or replaces) the elements 
-  that go with it. These tags are placed in a sequence-variable that can be 
-  expanded when needed.
-  -cycles thru the tag-sequence seeking for the handlable tag that comes first, 
-  seeking from a certain position, and moving on.
-  -when the starting-part of this tag is found (like <p), then the 
-  ending-part of it is searched for (like </p>).
-  -when both are found the element / string is handled; that is either: 
-  extracted and appended, or 
-  cut, replaced and put back.
-
-  ADAP HIS:
-  -debug repetition of text-parts; repetition is caused by the website 
-  itself! That is the article is repeted for different show-cases.
-
-  ADAP NOW:
-
-   ]#
-
-
-  var
-    client = newHttpClient()
-    websitest: string
-    test:string
-    textpartst, textallst:string
-    substringcountit: int
-    posit, textstartit, textendit:int
-    allfoundbo: bool = false
-    proef:string
-    pos2it:int
-    reformatedst:string
-    highlightedst: string
-    tagstartst:string
-    thisoccurit, smallestposit:int
-    tagindexit:int
-    smallestindexit:int
-    curtagsq:seq[string]
-    curtagnamest, curtagstartst, curtagendst:string
-    outerloopit:int = 0
-    beginposit:int
-    nosimilartagbo:bool
-    tbo:bool = false   # enable or disable echo-statements for testing
-    extractable_tagsq2:seq[seq[string]]
-    bigassit = 100000000
-    basewebaddresst: string
-
-
-  if taglist == "paragraph-only":
-    extractable_tagsq2 = @[
-                    @["paragraph", "<p", "</p>", ""]
-                  ]
-
-  if taglist == "paragraph-with-headings":
-    extractable_tagsq2 = @[
-                    @["paragraph", "<p", "</p>", ""],
-                    @["heading1", "<h1", "</h1>", "extract-only"],
-                    @["heading2", "<h2", "</h2>", "extract-only"],
-                    @["heading3", "<h3", "</h3>", "extract-only"],
-                    @["heading4", "<h4", "</h4>", "extract-only"],
-                    @["heading5", "<h5", "</h5>", "extract-only"],
-                    @["heading6", "<h6", "</h6>", "extract-only"]
-                  ]
-
-
-  elif taglist == "full-list":
-    extractable_tagsq2 = @[
-                    @["paragraph", "<p", "</p>", ""],
-                    @["unordered_list", "<ul", "</ul>", ""],
-                    @["ordered_list", "<ol", "</ol>", ""],
-                    @["description_list", "<dl", "</dl>", ""],
-                    @["block_quote", "<blockquote", "</blockquote>", ""],
-                    @["font_html4", "<font", "</font>", ""]
-                  ]
-
-
-  elif taglist == "full-list-with-headings":
-    extractable_tagsq2 = @[
-                    @["paragraph", "<p", "</p>", ""],
-                    @["heading1", "<h1", "</h1>", "extract-only"],
-                    @["heading2", "<h2", "</h2>", "extract-only"],
-                    @["heading3", "<h3", "</h3>", "extract-only"],
-                    @["heading4", "<h4", "</h4>", "extract-only"],
-                    @["heading5", "<h5", "</h5>", "extract-only"],
-                    @["heading6", "<h6", "</h6>", "extract-only"],                    
-                    @["unordered_list", "<ul", "</ul>", ""],
-                    @["ordered_list", "<ol", "</ol>", ""],
-                    @["description_list", "<dl", "</dl>", ""],
-                    @["block_quote", "<blockquote", "</blockquote>", ""] ,
-                    @["font_html4", "<font", "</font>", ""]
-                  ]
-
-
-  elif taglist == "exotic-list":
-    extractable_tagsq2 = @[
-                    @["paragraph", "<p", "</p>", ""],
-                    @["unordered_list", "<ul", "</ul>", ""],
-                    @["ordered_list", "<ol", "</ol>", ""],
-                    @["description_list", "<dl", "</dl>", ""],
-                    @["block_quote", "<blockquote", "</blockquote>", ""],
-                    @["font_html4", "<font", "</font>", ""],
-                    @["div-element", "<div", "</div>", ""]
-                  ]
-
-
-  elif taglist == "exotic-list-with-headings":
-    extractable_tagsq2 = @[
-                    @["paragraph", "<p", "</p>", ""],
-                    @["heading1", "<h1", "</h1>", "extract-only"],
-                    @["heading2", "<h2", "</h2>", "extract-only"],
-                    @["heading3", "<h3", "</h3>", "extract-only"],
-                    @["heading4", "<h4", "</h4>", "extract-only"],
-                    @["heading5", "<h5", "</h5>", "extract-only"],
-                    @["heading6", "<h6", "</h6>", "extract-only"],                    
-                    @["unordered_list", "<ul", "</ul>", ""],
-                    @["ordered_list", "<ol", "</ol>", ""],
-                    @["description_list", "<dl", "</dl>", ""],
-                    @["block_quote", "<blockquote", "</blockquote>", ""] ,
-                    @["font_html4", "<font", "</font>", ""],
-                    @["div-element", "<div", "</div>", ""]                    
-                  ]
-
-
-
-  try:
-    # put website into string
-    websitest = client.getContent(webaddresst)
-
-    basewebaddresst = getBaseFromWebAddress(webaddresst)
-
-    # adjust paths so that resource-files can be loaded (like css and pics)
-    websitest = convertRelPathsToAbsolute(websitest, basewebaddresst)
-
-    if tbo: echo "charcount = " & $len(websitest)
-
-    # substringcountit = count(websitest, "<p>")
-    # echo "\ptagcount = " & $substringcountit
-
-    posit = -1
-
-    while not allfoundbo:   # not all tags found yet
-      outerloopit += 1
-      if tbo: echo "----------------\pouterloopit = " & $outerloopit
-
-      tagindexit = 0
-      smallestposit = bigassit
-      nosimilartagbo = false
-
-      # walk thru the tags and determine the first one of them (smallest position)
-      for tagsq in extractable_tagsq2:
-        if tbo: echo "tagindexit = " & $tagindexit
-        if (typest == "extract" and tagsq[3] == "extract-only") or tagsq[3] == "":
-          tagstartst = tagsq[1]
-          thisoccurit = find(websitest, tagstartst, posit + 1)
-          if thisoccurit > -1:    # found
-            if thisoccurit < smallestposit:
-              smallestposit = thisoccurit
-              # smallesttagst = tagnamest
-              smallestindexit = tagindexit
-              if tbo: echo "found tag"
-        tagindexit += 1
-
-      posit = smallestposit
-      curtagsq = extractable_tagsq2[smallestindexit]
-      curtagnamest = curtagsq[0]
-      curtagstartst = curtagsq[1]
-      curtagendst = curtagsq[2]
-      if tbo: echo curtagnamest
-      if tbo: echo "posit = " & $posit
-
-      if smallestposit != bigassit:   # at least one tag found
-        # test if it is not a similar tag, like <picture> for <p>
-        test = websitest[posit + len(curtagstartst) .. posit + len(curtagstartst)]
-        if tbo: echo test
-        if test == " " or test == ">":
-          nosimilartagbo = true
-          textstartit = posit
-      elif smallestposit == bigassit:
-        # no tags found anymore
-        allfoundbo = true
-        if tbo: echo "allfound = true"
-
-      if not allfoundbo and nosimilartagbo:
-        # search tag-end
-        pos2it = posit
-        pos2it = find(websitest, curtagendst, pos2it + 1)
-
-        if pos2it != -1:    # par. end found
-          textendit = pos2it + 4
-          if tbo: echo "pos2it= " & $pos2it
-          # echo textstartit
-          # echo textendit
-          textpartst = websitest[textstartit .. textendit]
-
-          if typest == "extract":
-            textallst &= textpartst
-            # echo "\p============processText=========================="
-            # echo textpartst
-            # echo "================================================="
-
-          elif typest == "replace":
-            websitest.delete(textstartit..textendit)
-            highlightedst = applyDefinitionFileToText(textpartst, languagest, true, summaryfilest)
-            reformatedst = applyDefinitionFileToText(highlightedst, languagest, false)
-            posit += len(reformatedst) - 2
-            websitest.insert(reformatedst, textstartit)
-
-        else:
-          echo "End-tag not found; tag unclosed"
-
-    if typest == "extract":
-      return textallst
-    elif typest == "replace":
-      return websitest
-
-  except:
-    let errob = getCurrentException()
-    echo "\p******* Unanticipated error ******* \p" 
-    echo repr(errob) & "\p****End exception****\p"
 
 
 
@@ -1826,19 +1539,6 @@ proc replaceInPastedText*(pastedtekst, generatecontentst: string): string =
     newtekst.insert(contentst, 0)
 
   result = newtekst
-
-
-
-proc replaceInPastedText_Old*(pastedtekst: string): string =
-  # to ensure correct conversion from text-format to html-format
-
-  var 
-    r1, r2: string
-
-  r1 = replace(pastedtekst, "\p\p\p", "<br><br><br>")
-  r2 = replace(r1, "\p\p", "<br><br>")
-  result = replace(r2, "\p", " ")
-
 
 
 

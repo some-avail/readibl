@@ -90,6 +90,19 @@ interface-language___english
 interface-language___dutch
 end-of-edit-block-here
 >----------------------------------<
+EDIT FILE (ADD, DELETE, REPLACE LINES)
+comment: adjust checkbox-settings
+arguments---none
+replacement
+#target#/settings_flashread.conf
+forward
+1
+fr_checkset1
+on
+false,,false,,false,,false,,false
+true,,false,,false,,false,,true
+end-of-edit-block-here
+>----------------------------------<
 non-handled this time:
 ??
 >----------------------------------<

@@ -28,6 +28,10 @@ template log(messagest: string) =
 
 
 
+proc sequenceFromValueList*(valuelist: string): seq[string] = 
+  result = split(valuelist, ",,")
+
+
 proc readOptionFromFile*(optnamest, typest: string):string =
   # Read from the settings-file based on the option-name either:
   # value, description or value-list

@@ -93,33 +93,6 @@ settings:
 
 
 
-# var
-#   statustekst, statusdatast:string
-#   output_tekst:string
-#   filepathst: string
-#   newinnerhtmlst: string
-#   filestatusmessagest: string
-
-#   innervarob: Context = newContext()  # inner html insertions
-#   outervarob: Context = newContext()   # outer html insertions
-
-
-# filepathst = "getappdir: " & getappdir() & " <br>" &
-#           "getcurrentdir: " & getcurrentdir() & " <br>"
-
-# filestatusmessagest = sourcefilestatust & interfacelanguagestatust
-# # check if thru source_files.nim if all files are loaded successfully
-# if sourcefilestatust != "":  
-#   statustekst = filestatusmessagest  
-# else:
-#   statustekst = newlang("Press button to paste the content of the clipboard.")
-
-# outervarob["version"] = versionfl.formatFloat(ffDecimal, 3)
-# outervarob["loadtime"] = newlang("Started: ") & $now()
-# outervarob["pagetitle"] = appnamenormalst
-# outervarob["namesuffix"] = newlang(appnamesuffikst)
-
-
 
 proc getWebTitle():string = 
   var 
@@ -175,19 +148,21 @@ proc jump_to_end_step(languagest, preprocesst, taglist, typest, summaryfilest,
 
   var 
     clipob = clipboard_new(nil)
-    past, inter_tekst, resulttekst:string
+    past, inter_tekst, resulttekst: string
+    abbreviationsq: seq[string]
 
   past = $clipob.clipboard_text()
+  abbreviationsq =  sequenceFromValueList(readOptionFromFile("abbreviations", "value-list"))
 
   if past[0 .. 3] == "http":   # pasted text is a link
     if typest == "":
       inter_tekst = handleTextPartsFromHtml(past, "extract", languagest, 
-                                    taglist, summaryfilest, gencontentst)
+                                    taglist, summaryfilest, gencontentst, abbreviationsq)
       result = formatText(inter_tekst, languagest, preprocesst, 
                             summaryfilest, gencontentst)
     elif typest == "insite_reformating":
       result = handleTextPartsFromHtml(past, "replace", languagest, 
-                                    taglist, summaryfilest, gencontentst)
+                                    taglist, summaryfilest, gencontentst, abbreviationsq)
 
   else:   # a text-block is pasted in this case
     inter_tekst = past
@@ -421,9 +396,10 @@ routes:
       # transfer the text or link from input to the right column
       # determine type of pasted_text (text or link)
       if @"pasted_text"[0..3] == "http":   # pasted text is a link
-
+        var abbreviationsq: seq[string]
+        abbreviationsq =  sequenceFromValueList(readOptionFromFile("abbreviations", "value-list"))
         output_tekst = handleTextPartsFromHtml(@"pasted_text", "extract", @"text-language", 
-                                          @"taglist", @"summarylist", @"generate_contents")
+                                          @"taglist", @"summarylist", @"generate_contents", abbreviationsq)
         # echo output_tekst
         
         statustekst = "Output number of words:"

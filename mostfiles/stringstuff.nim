@@ -13,12 +13,26 @@ template log(messagest: string) =
     echo messagest
 
 var
-  versionfl:float = 0.3
+  versionfl:float = 0.4
   starttekst, searchst, insertst: string
   mystripextractbo: bool
 
-proc getStrippedText*(inputtekst: string): string =
-  discard
+
+
+proc stripSymbolsFromList*(inputtekst: string, listsq: seq[string], symbolst: string): string =
+  #[ For all the words in the list that are present in inputtekst 
+      strip symbolst (like U.S. > US)
+  ]#
+
+  var 
+    tekst: string = inputtekst
+    strippedwordst: string
+
+  for wordst in listsq:
+    strippedwordst = wordst.replace(symbolst, "")
+    tekst = tekst.replace(wordst, strippedwordst)
+
+  result = tekst
 
 
 
@@ -66,52 +80,6 @@ proc countOccurencesInContext(stringst, subst, contexttypest:string,
   return cont_countit
 
 
-
-proc old_customReplace(tekst:var string, searchst, insertst: string, stripextractbo: bool,
-                  conditionst: string, cond_datasq:seq[string]): string =
-
-  #[ 
-  UNIT INFO
-  Replace in a text by searching the string searchst, and after finding 
-  inserting insertst as the new string. 
-  When stripextractbo = true then only extract the string without 
-  trailing spaces.
-  Perform the replacement only when conditionst is met, based the data
-  in cond_datasq.
-  Return the replaced tekst.
-
-  use strutil find, delete. and string.insert
-   ]#
-
-  var
-    posit: int = -1
-    stringfoundbo: bool = true
-    strippedst: string
-
-
-  while stringfoundbo:
-    posit = find(tekst, searchst, posit + 1)
-    if posit >= 0:
-      echo posit
-
-      if not stripextractbo:
-        tekst.delete(posit..posit + searchst.len - 1)
-      else:
-        strippedst = strip(searchst, true, true)
-        if posit > 0:
-          posit = find(tekst, strippedst, posit - 1)
-        else:
-          posit = find(tekst, strippedst, posit)
-        tekst.delete(posit..posit + strippedst.len - 1)
-
-      tekst.insert(insertst, posit)
-      posit += insertst.len - 1
-
-
-    elif posit == -1:
-      stringfoundbo = false
-
-  return tekst
 
 
 proc customReplace*(sourcetekst: string, searchst, insertst: string, stripextractbo: bool,
@@ -184,67 +152,6 @@ proc customReplace*(sourcetekst: string, searchst, insertst: string, stripextrac
   result = tekst
 
 
-proc customReplace_old*(tekst:var string, searchst, insertst: string, stripextractbo: bool,
-                  conditionst: string, cond_intsq:seq[int]): string =
-
-  #[ 
-  UNIT INFO
-  Replace in a text by searching the string searchst, and after finding 
-  inserting insertst as the new string. 
-  When stripextractbo = true then only extract the string without 
-  trailing spaces.
-  Perform the replacement only when conditionst is met, based on the data
-  in cond_datasq. 
-  Supported condition:
-  unique_occurrence = skip replacement when multiple 
-  instances of searchst occur in a range around searchtst (in cond_intsq).
-  Return the replaced tekst.
-   ]#
-
-  var
-    posit: int = -1
-    stringfoundbo: bool = true
-    strippedst: string
-    continubo: bool = false
-    countit: int = 0
-
-
-  while stringfoundbo:
-    # countit += 1
-    # echo "countit = " & $countit
-    # if countit > 5: break
-  
-    posit = find(tekst, searchst, posit + 1)
-    if posit >= 0:
-      # echo "posit = " & $posit
-      # echo tekst
-      continubo = false
-      if conditionst == "unique_occurrence":
-        if countOccurencesInContext(tekst, searchst, 
-                                "around", cond_intsq[0], posit) <= 1:
-          continubo = true
-      elif conditionst == "":
-        continubo = true
-
-      if continubo:
-        if not stripextractbo:
-          tekst.delete(posit..posit + searchst.len - 1)
-        else:
-          strippedst = strip(searchst, true, true)
-          if posit > 0:
-            posit = find(tekst, strippedst, posit - 1)
-          else:
-            posit = find(tekst, strippedst, posit)
-          tekst.delete(posit..posit + strippedst.len - 1)
-
-        tekst.insert(insertst, posit)
-        posit += insertst.len - 1
-
-    elif posit == -1:
-      stringfoundbo = false
-
-  result = tekst
-
 
 
 proc test_customReplace()=
@@ -312,5 +219,8 @@ proc test_countOccurencesInContext()=
 
 when isMainModule:
 
-  outer_test_customReplace()
+  # outer_test_customReplace()
   # test_countOccurencesInContext()
+  var strengst = "The dr. from the U.S. has arrived"
+  echo strengst
+  echo stripSymbolsFromList(strengst, @["dr.", "U.S."], ".")
