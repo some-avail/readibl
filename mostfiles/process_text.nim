@@ -65,7 +65,7 @@ template log(messagest: string) =
 
 
 const 
-  versionfl:float = 0.37
+  versionfl:float = 0.38
 
   input_tekst = "chimpansee noot mies een chimpansee is een leuk dier\pde chimpansee is het slimste dier naar het schijnt.\pmaar naast de chimpansee zijn er ook andere slimme \pdieren zoals de raaf, de dolfijn en de hond."
   tekst = "pietje staat. gister niet, maar toch. wat\pjantje. wimpie, onno\pkeesje.grietje,antje\pdirkje"
@@ -1042,9 +1042,7 @@ proc extractSentencesFromText(input_tekst, languagest:string,
   ADAP NOW
   
   ADAP FUT
-  -users may also use a custom-file for a specific subject 
-  (for example for a history-text or a political text), for which separate 
-  files must be reinstated, plus some selection-way.
+  
   ]#
 
 
@@ -1053,10 +1051,12 @@ proc extractSentencesFromText(input_tekst, languagest:string,
 
     blockseparatorst = ">----------------------------------<"
     lastline: string
-    phasetekst:string = input_tekst
+    phasetekst: string = input_tekst
     def_filenamest: string
-    sentencesq: seq[string] = phasetekst.split(". ")
+
+    part1sq, part2sq, part3sq, sentencesq: seq[string] = @[]
     sentencecountit: int = 0
+
     summarysq: seq[string] = @[]
     summaryst: string
     processingbo: bool
@@ -1068,8 +1068,23 @@ proc extractSentencesFromText(input_tekst, languagest:string,
     leftpartst, rightpartst: string
     stringsizeit:int
     linesq: seq[string] 
+    linecountit: int =0
 
   def_filenamest = summaryfilest
+
+
+  # Old approach - created to big chunks:
+  # sentencesq = phasetekst.split(". ")
+
+  # new approach - chopping in smaller chunks
+  part1sq = phasetekst.split(". ")
+  for text1st in part1sq:
+    part2sq = text1st.split(".</p>")
+    for text2st in part2sq:
+        part3sq = text2st.split("<br>")
+        for text3st in part3sq:
+          sentencesq.add(text3st)
+
 
   if generatecontentst == "":
     stringsizeit = 1500
@@ -1111,21 +1126,23 @@ proc extractSentencesFromText(input_tekst, languagest:string,
               if line != blockseparatorst:   # block-separating string; end of job
 
                 if sentencest.contains(line):
+                  linecountit += 1
                   #echo "sentence =" & sentencest
                   #echo "line = " &  line
-                  if sentencest.len < stringsizeit:   # to skip long irrelevant lists
+                  # if sentencest.len < stringsizeit:   # to skip long irrelevant lists
+                  if true:
                     countit = count(sentencest, '.')
                     if countit == 0 or  countit > 1:
-                      summarysq.add("<br>" & $sentencecountit & " ===============================" & "<br>")
-                      summarysq.add(sentencest)
+                      summarysq.add("<br>" & $sentencecountit & " ===============================" & "<br><br>")
+                      summarysq.add(sentencest & ".")
 
                     elif countit == 1:
-                      summarysq.add("<br>" &  $sentencecountit & " ===============================" & "<br>")
+                      summarysq.add("<br>" &  $sentencecountit & " ===============================" & "<br><br>")
                       linesq = sentencest.split('.')
                       leftpartst = linesq[0]
                       rightpartst = linesq[1]
-                      if leftpartst.contains(line): summarysq.add(leftpartst)
-                      if rightpartst.contains(line): summarysq.add(rightpartst)
+                      if leftpartst.contains(line): summarysq.add(leftpartst & ".")
+                      if rightpartst.contains(line): summarysq.add(rightpartst & ".")
 
 
                   # to prevent more adds for more extraction-words
@@ -1142,9 +1159,9 @@ proc extractSentencesFromText(input_tekst, languagest:string,
       if tbo: echo phasetekst
 
       # concatenate extracted sentences to text
-      summaryst = ""
+      summaryst = "Number of extractions: " & $linecountit & "<br><br>"
       for senst in summarysq:
-        summaryst &= strip(senst, true, true) & ". "
+        summaryst &= strip(senst, true, true)
 
     except IOError:
       echo "IO error!"
