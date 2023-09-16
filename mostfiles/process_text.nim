@@ -404,7 +404,7 @@ proc applyDefinitionFileToText(input_tekst, languagest: string,
   
   if highlightbo == false:
     log("text coloring....")
-    def_filenamest = languagest & ".dat"
+    def_filenamest = "parse_" & languagest & ".dat"
     deffilest = textsourcefileta[def_filenamest]
     blockheadersq = @[
         "PUNCTUATION OF SENTENCES TO HANDLE",

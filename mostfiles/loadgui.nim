@@ -31,13 +31,11 @@ proc loadTextLangsFromConfig() =
 # Load the processing-languages of the dropdown "dropdownsta" of 
 # webgui_def.nim from the config-file
 
-
   var
     valuelist: string
     sourcelangsq: seq[string]
     langvaluelistsq: seq[array[2, string]]
     tbo: bool = false
-
 
   # get the processing-languages from the config-file
   valuelist = readOptionFromFile("text-language", "value-list")
@@ -47,7 +45,7 @@ proc loadTextLangsFromConfig() =
 
   # generate the new valuelist
   for langst in sourcelangsq:
-    if fileExists(langst & ".dat"):
+    if fileExists("parse_" & langst & ".dat"):
       langvaluelistsq.add([langst, capitalizeAscii(langst)])
 
   if tbo: echo langvaluelistsq

@@ -48,7 +48,7 @@ effects
 task
 influence
 category
-classification 
+classif
  type 
 theor
 supposition
@@ -78,5 +78,7 @@ develop
 goal
 evidence
 proof
+question
+answer
 >----------------------------------<
 

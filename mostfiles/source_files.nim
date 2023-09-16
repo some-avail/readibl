@@ -10,6 +10,14 @@ import os
 import fr_tools
 
 
+
+type
+  DataFileType* = enum
+    datFileLanguage
+    datFileSummary
+    datFileAll
+
+
 var
   versionfl:float = 0.2
   textsourcefilesq: seq[string] = @["outer_html.html",
@@ -20,8 +28,10 @@ var
   faultsfoundbo: bool = false
 
 
-proc addLanguageFiles() =
-  # dynamicly add the language.dat files from the config-file
+proc addLanguageFilesToList() =
+  # Dynamicly add the language.dat files from the config-file 
+  # to the list textsourcefilesq
+
   var
     valuelist: string
     sourcelangsq:seq[string]
@@ -36,7 +46,8 @@ proc addLanguageFiles() =
 
   # generate the new valuelist
   for langst in sourcelangsq:
-    textsourcefilesq.add(langst & ".dat")
+    # textsourcefilesq.add(langst & ".dat")
+    textsourcefilesq.add("parse_" & langst & ".dat")
 
   if tbo: echo textsourcefilesq
 
@@ -61,8 +72,42 @@ proc loadTextSourceFiles() =
     echo repr(errob) & "\p****End exception****\p"
 
 
-addLanguageFiles()
+
+
+proc writeFilePatternToSeq*(filestartwithst: string): seq[string] = 
+
+#[ Write the files from pattern in the current dir to the sequence and
+ return that]#
+
+  var
+    filelisq: seq[string]
+    filenamest: string
+  
+
+  # walk thru the file-iterator and sequence the right file(names)
+  for kind, path in walkDir(getAppDir()):
+    if kind == pcFile:
+      filenamest = extractFileName(path)
+      if len(filenamest) > len(filestartwithst):
+        if filenamest[0..len(filestartwithst) - 1] == filestartwithst:
+          # log(filenamest)
+          filelisq.add(filenamest)
+
+  result = filelisq
+
+
+
+
+proc evaluateDataFiles*(filetypeu: DataFileType): string = 
+
+  result = "Nothing evaluated yet"
+
+
+
+addLanguageFilesToList()
 loadTextSourceFiles()
+
+
 
 when isMainModule:
   # echo textsourcefileta["dutch.dat"]

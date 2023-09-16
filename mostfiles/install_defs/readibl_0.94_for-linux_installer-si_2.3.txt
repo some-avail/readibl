@@ -44,9 +44,9 @@ arguments---none
 .
 LICENSE
 settings_flashread.conf
-dutch.dat
-english.dat
-german.dat
+parse_dutch.dat
+parse_english.dat
+parse_german.dat
 language_template.dat
 summary_dutch_concise.dat
 summary_dutch_default.dat

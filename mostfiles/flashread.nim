@@ -225,7 +225,7 @@ routes:
     innervarob["statustext"] = newlang(statustekst)
     innervarob["statusdata"] = ""
     innervarob["pastedtext"] = ""
-    innervarob["processedtext"] = filepathst
+    innervarob["processedtext"] = filepathst & "<br><br>" & evaluateDataFiles(datFileAll)
     innervarob["text_language"] = setDropDown("text-language", readOptionFromFile("text-language", "value"))
     innervarob["taglist"] = setDropDown("taglist", "paragraph-with-headings")
     innervarob["radiobuttons_1"] = setRadioButtons("orders","")
