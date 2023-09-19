@@ -1105,7 +1105,7 @@ proc extractSentencesFromText(input_tekst, languagest:string,
         # add the first sentences always to the summary
         if sentencecountit <= introductionit:
           if sentencest.len < stringsizeit:
-            summarysq.add(sentencest)
+            summarysq.add(sentencest & ". ")
         else:
           processingbo = false  # header not yet reached
 
@@ -1134,15 +1134,15 @@ proc extractSentencesFromText(input_tekst, languagest:string,
                     countit = count(sentencest, '.')
                     if countit == 0 or  countit > 1:
                       summarysq.add("<br>" & $sentencecountit & " ===============================" & "<br><br>")
-                      summarysq.add(sentencest & ".")
+                      summarysq.add(sentencest & ". ")
 
                     elif countit == 1:
                       summarysq.add("<br>" &  $sentencecountit & " ===============================" & "<br><br>")
                       linesq = sentencest.split('.')
                       leftpartst = linesq[0]
                       rightpartst = linesq[1]
-                      if leftpartst.contains(line): summarysq.add(leftpartst & ".")
-                      if rightpartst.contains(line): summarysq.add(rightpartst & ".")
+                      if leftpartst.contains(line): summarysq.add(leftpartst & ". ")
+                      if rightpartst.contains(line): summarysq.add(rightpartst & ". ")
 
 
                   # to prevent more adds for more extraction-words
@@ -1161,7 +1161,9 @@ proc extractSentencesFromText(input_tekst, languagest:string,
       # concatenate extracted sentences to text
       summaryst = "Number of extractions: " & $linecountit & "<br><br>"
       for senst in summarysq:
-        summaryst &= strip(senst, true, true)
+        # summaryst &= strip(senst, true, true)
+        summaryst &= senst
+
 
     except IOError:
       echo "IO error!"
