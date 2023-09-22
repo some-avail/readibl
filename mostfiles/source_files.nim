@@ -134,14 +134,11 @@ proc writeFilePatternToSeq*(filestartwithst: string): seq[string] =
 
 
 
-proc evaluateDataFiles*(filetypeu: DataFileType): string = 
+proc evaluateDataFiles*(verbosebo: bool = false): string = 
   #[
-  - gather the files
-  - move thru the lines 
-    - search the first / next cat-header
-      if not found then report
-      test the items until end-marker
-        report if no or empty items
+    Validate the file-sets parse_*.dat and summary_*.dat
+    Deviations / complaints are reported.
+    The result are show at startup.
     ]#
 
   var
@@ -159,8 +156,8 @@ proc evaluateDataFiles*(filetypeu: DataFileType): string =
   summary_filesq = writeFilePatternToSeq("summary_")
   all_filesq = concat(parse_lang_filesq, summary_filesq)
 
-  if filetypeu == datFileAll or filetypeu == datFileLanguage:
-    # parse_lang_filesq = writeFilePatternToSeq("parse_")
+  # write the eval to a table (file_reportta) of objects (FilePhase)
+  if true:
     for filest in all_filesq:
       phasecountit = 1
       # select correct phase-sequence
@@ -204,14 +201,12 @@ proc evaluateDataFiles*(filetypeu: DataFileType): string =
             itemcountit += 1
 
 
-  # echo file_reportta
-
+  # read the objects-table and create a basic html-report
   var 
     curfilest, formerfilest: string
     curphasest, formerphasest: string
     complaintst, endst, startst: string
     faultfoundbo: bool = false
-    verbosebo: bool = false
     skip_othersbo: bool = false
 
   startst = "<br>\p"

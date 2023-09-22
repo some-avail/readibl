@@ -5,7 +5,7 @@ si-version===2.3
 This file contains installation-information for:
 project-name===readibl 0.94 for-linux
 destination===readibl_packages
-def-version===1.0
+def-version===1.1
 
 
 Project-specific remarks:
@@ -17,7 +17,7 @@ installer-exec: /media/OnsSpul/1klein/1joris/k1-onderwerpen/computer/Programmere
 
 
 VARIABLES TO SET
-comment: if needy update the below versions from x.y to your own version
+comment: if needed update the below versions from x.y to your own version
 arguments---separator=#
 target=/home/bruik/toepassingen/readibl/readibl_packages/readibl_0.94
 archive=/home/bruik/toepassingen/readibl/readibl_packages/readibl_0.94.tar.gz
@@ -36,6 +36,7 @@ arguments---linux_set_exe=1
 #target#
 .
 flashread
+flashread_no_ssl
 >----------------------------------<
 TARGET-LOCATION AND SOURCE-FILES TO COPY
 comment: here stuff the starting-dir
@@ -56,6 +57,8 @@ summary_english_custom01.dat
 summary_english_default.dat
 summary_english_empty.dat
 summary_english_historical.dat
+summary_english_small.dat
+summary_english_tiny.dat
 summary_english_years.dat
 flashread.html
 outer_html.html

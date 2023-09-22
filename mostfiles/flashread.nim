@@ -80,7 +80,7 @@ template log(messagest: string) =
 
 
 const 
-  versionfl:float = 0.935
+  versionfl: float = 0.94
   minimal_word_lengthit = 7
   appnamebriefst:string = "RD"
   appnamenormalst = "Readibl"
@@ -225,7 +225,7 @@ routes:
     innervarob["statustext"] = newlang(statustekst)
     innervarob["statusdata"] = ""
     innervarob["pastedtext"] = ""
-    innervarob["processedtext"] = filepathst & "<br><br>" & evaluateDataFiles(datFileAll)
+    innervarob["processedtext"] = filepathst & "<br><br>" & evaluateDataFiles(false)
     innervarob["text_language"] = setDropDown("text-language", readOptionFromFile("text-language", "value"))
     innervarob["taglist"] = setDropDown("taglist", "paragraph-with-headings")
     innervarob["radiobuttons_1"] = setRadioButtons("orders","")

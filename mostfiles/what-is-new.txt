@@ -1,8 +1,24 @@
 Look at the commit-list for details:
 https://github.com/some-avail/readibl/commits/main
 
-
 Version-changes:
+
+
+Readibl 0.94:
+> features:
+-improved the summary and added two summary-files
+-replaced token-counting by word-counting(!)
+-added validation of data-files (.dat) which is shown at startup
+-de-dotting of abbreviations to avoid unwished line-breaks
+	(the abbreviations-list is in the settings-file)
+-'Parse_' prefixed to the lang.dat-files for better oversight
+	and handling of files
+> bugs:
+-fixed summary-issues
+-hopefully the windows-version will now run on all machines (oops)
+-fixed hanging-at-pronouns-bug
+
+
 
 Readibl 0.93:
 features:
