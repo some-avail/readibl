@@ -9,8 +9,12 @@
 
 [Go to the user-manual / wiki-section](https://github.com/some-avail/readibl/wiki)
 
+[See what is new / what-is-new.txt](what-is-new.txt)
+
+Now Readibl 0.94 for linux available, for windows coming soon.
 Readibl Text Reformatter is a program to format normal text or html, so that it is easier to read and process mentally. The program was previously called FlashRead.
 The program is written in the language Nim.
+
 
 
 #### Installation on linux
@@ -26,6 +30,7 @@ If the paths you see on the webpage dont match the location of the application, 
 #### Installation on windows
 - download latest windows-release (.zip)
 - unpack, place it somewhere in your user-folder, and run the executable "flashread".
+- start the app preferably from a terminal / powershell to view progress-info.
 - to access the local web-server you just started, type: 
 	http://localhost:5050/flashread-form
 

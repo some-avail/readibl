@@ -17,6 +17,8 @@ Readibl 0.94:
 -fixed summary-issues
 -hopefully the windows-version will now run on all machines (oops)
 -fixed hanging-at-pronouns-bug
+> technical:
+- upgraded to nim 2.0
 
 
 
