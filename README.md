@@ -9,7 +9,7 @@
 
 [Go to the user-manual / wiki-section](https://github.com/some-avail/readibl/wiki)
 
-[See what is new / what-is-new.txt](what-is-new.txt)
+[See what is new / what-is-new.txt](mostfiles/what-is-new.txt)
 
 Now Readibl 0.94 for linux available, for windows coming soon.
 Readibl Text Reformatter is a program to format normal text or html, so that it is easier to read and process mentally. The program was previously called FlashRead.
