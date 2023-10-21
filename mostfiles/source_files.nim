@@ -65,7 +65,7 @@ template withFile*(f, fn, mode, actions: untyped): untyped =
 
 
 proc addLanguageFilesToList() =
-  # Dynamicly add the language.dat files from the config-file 
+  # Dynamicly add the parse_language.dat files from the config-file 
   # to the list textsourcefilesq
 
   var

@@ -80,7 +80,7 @@ template log(messagest: string) =
 
 
 const 
-  versionfl: float = 0.94
+  versionfl: float = 0.9402
   minimal_word_lengthit = 7
   appnamebriefst:string = "RD"
   appnamenormalst = "Readibl"
@@ -215,7 +215,7 @@ routes:
     else:
       statustekst = newlang("Press button to paste the content of the clipboard.")
 
-    outervarob["version"] = versionfl.formatFloat(ffDecimal, 3)
+    outervarob["version"] = versionfl.formatFloat(ffDecimal, 4)
     outervarob["loadtime"] = newlang("Started: ") & $now()
     outervarob["pagetitle"] = appnamenormalst
     outervarob["namesuffix"] = newlang(appnamesuffikst)
@@ -283,7 +283,7 @@ routes:
     # else:
     #   statustekst = newlang("Press button to paste the content of the clipboard.")
 
-    outervarob["version"] = versionfl.formatFloat(ffDecimal, 3)
+    outervarob["version"] = versionfl.formatFloat(ffDecimal, 4)
     outervarob["loadtime"] = newlang("Started: ") & $now()
     outervarob["pagetitle"] = appnamenormalst
     outervarob["namesuffix"] = newlang(appnamesuffikst)

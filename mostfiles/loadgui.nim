@@ -10,6 +10,8 @@ import fr_tools
 import strutils
 import os
 import tables
+import algorithm
+
 
 const versionfl = 0.2
 
@@ -58,7 +60,7 @@ proc loadTextLangsFromConfig() =
 
 
 
-proc loadComboFromDir(combobokst, filenamepartst: string) =  
+proc loadComboFromDir_Old(combobokst, filenamepartst: string) =  
 # proc loadComboFromDir() =  
   # Load the combo/dropdown-definition named combobokst in "dropdownsta"
   # of webgui_def.nim with the file-names with namepart filenamepartst 
@@ -81,6 +83,41 @@ proc loadComboFromDir(combobokst, filenamepartst: string) =
           combovaluelistsq.add([filenamest, summary_namepartst])
           log(summary_namepartst)
 
+
+  # locate and reset the summaries from dropdownsta
+  log($dropdownsta[3])
+  dropdownsta[3][2] = combovaluelistsq
+  log($dropdownsta[3])
+
+
+proc loadComboFromDir(combobokst, filenamepartst: string) =  
+# proc loadComboFromDir() =  
+  # Load the combo/dropdown-definition named combobokst in "dropdownsta"
+  # of webgui_def.nim with the file-names with namepart filenamepartst 
+  # from the current directory
+
+  var
+    combovaluelistsq: seq[array[2, string]]
+    filenamest, fnamest: string
+    summary_namepartst: string
+    filenamesq: seq[string]
+
+
+  # walk thru the file-iterator and sequence the right file(names)
+  for kind, path in walkDir(getAppDir()):
+    if kind == pcFile:
+      filenamest = extractFileName(path)
+
+      if len(filenamest) > 8:
+        if filenamest[0..7] == filenamepartst:
+          log(filenamest)
+          filenamesq.add(filenamest)
+
+  filenamesq.sort()
+  for fnamest in filenamesq:
+    summary_namepartst = "*" & fnamest[7..len(fnamest) - 1]
+    combovaluelistsq.add([fnamest, summary_namepartst])
+    log(summary_namepartst)
 
   # locate and reset the summaries from dropdownsta
   log($dropdownsta[3])
