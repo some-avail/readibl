@@ -166,7 +166,7 @@ proc jump_to_end_step(languagest, preprocesst, taglist, typest, summaryfilest,
 
   else:   # a text-block is pasted in this case
     inter_tekst = past
-    resulttekst = replaceInPastedText(inter_tekst, gencontentst)
+    resulttekst = replaceInPastedText(inter_tekst, gencontentst, abbreviationsq)
     result = formatText(resulttekst, languagest, preprocesst, 
                                summaryfilest, gencontentst)
 
@@ -394,10 +394,12 @@ routes:
 
     elif request.params["orders"] == "transfer":
       # transfer the text or link from input to the right column
+      # but first prepare dedotting abbreviations
+      var abbreviationsq: seq[string]
+      abbreviationsq =  sequenceFromValueList(readOptionFromFile("abbreviations", "value-list"))
+
       # determine type of pasted_text (text or link)
       if @"pasted_text"[0..3] == "http":   # pasted text is a link
-        var abbreviationsq: seq[string]
-        abbreviationsq =  sequenceFromValueList(readOptionFromFile("abbreviations", "value-list"))
         output_tekst = handleTextPartsFromHtml(@"pasted_text", "extract", @"text-language", 
                                           @"taglist", @"summarylist", @"generate_contents", abbreviationsq)
         # echo output_tekst
@@ -427,8 +429,7 @@ routes:
         resp showPage(innervarob, outervarob)
 
       else:
-        converted_tekst = replaceInPastedText(@"pasted_text", @"generate_contents")
-
+        converted_tekst = replaceInPastedText(@"pasted_text", @"generate_contents", abbreviationsq)
         statustekst = "Text transferred to right column"
         innervarob["statustext"] = newlang(statustekst)
         innervarob["statusdata"] = ""

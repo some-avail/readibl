@@ -1529,15 +1529,21 @@ proc formatText*(input_tekst, languagest, preprocesst: string,
 
 
 
-proc replaceInPastedText*(pastedtekst, generatecontentst: string): string =
-  # To ensure correct conversion from text-format to html-format
+proc replaceInPastedText*(pastedtekst, generatecontentst: string, abbreviationsq: seq[string]): string =
+  #[ To ensure correct conversion of pasted text from text-format to html-format
+      Also:
+      -add experimental contents
+      -dedot abbreviations
+  ]#
 
   var 
     lengthit: int = 25
-    newtekst, contentst: string
+    intertekst, newtekst, contentst: string
 
+  # dedot abbreviations
+  intertekst = stripSymbolsFromList(pastedtekst, abbreviationsq, ".")
 
-  for linest in pastedtekst.splitlines:
+  for linest in intertekst.splitlines:
     if len(linest) < lengthit:
       if linest.len > 0:
         if not linest.endsWith("."):
