@@ -822,7 +822,7 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest: string,
                     @["paragcap", "<P", "</P>", ""]
                   ]
 
-  if taglist == "paragraph-with-headings":
+  elif taglist == "paragraph-with-headings":
     extractable_tagsq2 = @[
                     @["paragraph", "<p", "</p>", ""],
                     @["paragcap", "<P", "</P>", ""],
@@ -874,12 +874,15 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest: string,
                     @["unordered_list", "<ul", "</ul>", ""],
                     @["ordered_list", "<ol", "</ol>", ""],
                     @["description_list", "<dl", "</dl>", ""],
+                    # @["desc-terms", "<dt", "</dt>", ""],
+                    # @["desc-data", "<dd", "</dd>", ""],
                     @["block_quote", "<blockquote", "</blockquote>", ""],
                     @["font_html4", "<font", "</font>", ""],
                     @["span-elem", "<span", "</span>", ""],
                     @["div-element", "<div", "</div>", ""],
                     @["section", "<section", "</section>", ""],
-                    @["table_data", "<td", "</td>", ""]
+                    @["table_data", "<td", "</td>", ""],
+                    @["pre-tag", "<pre", "</pre>", ""]
                   ]
 
 
@@ -892,16 +895,35 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest: string,
                     @["heading3", "<h3", "</h3>", "extract-only"],
                     @["heading4", "<h4", "</h4>", "extract-only"],
                     @["heading5", "<h5", "</h5>", "extract-only"],
-                    @["heading6", "<h6", "</h6>", "extract-only"],                    
+                    @["heading6", "<h6", "</h6>", "extract-only"],
                     @["unordered_list", "<ul", "</ul>", ""],
                     @["ordered_list", "<ol", "</ol>", ""],
                     @["description_list", "<dl", "</dl>", ""],
-                    @["block_quote", "<blockquote", "</blockquote>", ""] ,
+                    # @["desc-terms", "<dt", "</dt>", ""],
+                    # @["desc-data", "<dd", "</dd>", ""],
+                    @["block_quote", "<blockquote", "</blockquote>", ""],
                     @["font_html4", "<font", "</font>", ""],
                     @["span-elem", "<span", "</span>", ""],
                     @["div-element", "<div", "</div>", ""],
                     @["section", "<section", "</section>", ""],
-                    @["table_data", "<td", "</td>", ""]
+                    @["table_data", "<td", "</td>", ""],
+                    @["pre-tag", "<pre", "</pre>", ""]
+                  ]
+
+  elif taglist == "body-tag-only":
+    extractable_tagsq2 = @[
+                    @["body", "<body", "</body>", ""]
+                  ]
+
+  elif taglist == "body-tag-with-headings":
+    extractable_tagsq2 = @[
+                    @["body", "<body", "</body>", ""],                    
+                    @["heading1", "<h1", "</h1>", "extract-only"],
+                    @["heading2", "<h2", "</h2>", "extract-only"],
+                    @["heading3", "<h3", "</h3>", "extract-only"],
+                    @["heading4", "<h4", "</h4>", "extract-only"],
+                    @["heading5", "<h5", "</h5>", "extract-only"],
+                    @["heading6", "<h6", "</h6>", "extract-only"]
                   ]
 
 

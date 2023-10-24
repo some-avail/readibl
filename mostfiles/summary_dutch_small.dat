@@ -1,0 +1,45 @@
+Extraction-strings for summarizing with Flashread.
+Language: dutch
+Summary-type: generic
+version: 1.2
+
+
+
+
+SIGNAL-WORDS TO HANDLE
+scenario
+theor
+hypothe
+aanname
+veronderstel
+oorzaak
+gevolg
+result
+conclu
+plannen 
+plan 
+doelstelling
+ doel 
+ doelen 
+agenda
+samenvatting
+uitkomst
+input
+invoer
+output
+uitvoer
+relat
+samenhang
+verband
+variabl
+vraag 
+ vragen 
+antwoord
+bewijzen
+bewijs
+aanwijzing
+aanduiding
+>----------------------------------<
+
+
+

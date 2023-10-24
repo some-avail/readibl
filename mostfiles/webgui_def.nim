@@ -60,12 +60,17 @@ var checkboxesta* = {
 # dropdowns or in html-lingo: selects
 #  -concerns single items aot sets
 #  -updated in loadgui.nim
-var dropdownsta* =  [("calledname", "somelabel",
-                                @[["first-value", "first shown value"], 
-                                ["second-value", "second shown value"]]),
+var dropdownsta* =    [("calledname", "somelabel",
+                                @[
+                                ["first-value", "first shown value"], 
+                                ["second-value", "second shown value"]
+                                ]
+                        ),
                         ("text-language", "Text-language:",
                                 @[["dutch", "Dutch"], 
-                                ["english", "English"]]),
+                                ["english", "English"]
+                                ]
+                        ),
                         ("taglist", "Pick taglist:",
                                 @[
                                 ["paragraph-only", "Paragraph only"], 
@@ -73,9 +78,16 @@ var dropdownsta* =  [("calledname", "somelabel",
                                 ["full-list", "Full list"],
                                 ["full-list-with-headings", "Full list with headings"],
                                 ["exotic-list", "Exotic list"],
-                                ["exotic-list-with-headings", "Exotic list with headings"]]),
+                                ["exotic-list-with-headings", "Exotic list with headings"],
+                                ["body-tag-only", "Body-tag only"],
+                                ["body-tag-with-headings", "Body-tag with headings"]
+                                ]
+                        ),
                         ("summarylist", "Highlighting/ summary = *:",
-                                @[["sumname", "summary_english_qual.dat"]])
+                                @[
+                                ["sumname", "summary_english_qual.dat"]
+                                ]
+                        )
                       ]
 
 

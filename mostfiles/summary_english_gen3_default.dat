@@ -1,0 +1,63 @@
+Extraction-strings for summarizing with Flashread.
+Language: english
+Summary-type: generic
+version: 1.3
+
+
+
+SIGNAL-WORDS TO HANDLE
+agenda
+analog
+answer
+argument
+assum
+barrier
+category
+caus
+chang
+classification 
+cluster
+conclu
+condition
+consequence
+definition
+determinant
+develop
+effect 
+evidence
+exchang
+goal
+hypothe
+influence
+input
+interact
+mechanism
+method
+modif
+obstacle
+outcome
+output
+plan 
+plans 
+premis 
+princip
+problem
+proof
+prove
+question
+ reason 
+relat
+result
+ rule
+scenario
+solution
+structur
+summar
+supposition
+task
+theor
+variabl
+>----------------------------------<
+
+
+

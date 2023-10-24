@@ -6,30 +6,30 @@ version: 1.3
 
 
 SIGNAL-WORDS TO HANDLE
-scenario
-theor
-hypothe
+agenda
+answer
 assum
 caus
-effect
-result
-consequence
 conclu
+consequence
+effect
+evidence
+goal
+hypothe
+input
+outcome
+output
 plan 
 plans 
-goal
-agenda
-summar
-outcome
-input
-output
-relat
-variabl
-question
-answer
-evidence
 proof
 prove
+question
+relat
+result
+scenario
+summar
+theor
+variabl
 >----------------------------------<
 
 

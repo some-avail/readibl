@@ -8,6 +8,7 @@ import strutils, sequtils
 import tables
 import os
 import fr_tools
+import algorithm
 
 
 type
@@ -257,6 +258,81 @@ proc evaluateDataFiles*(verbosebo: bool = false): string =
   result = reportst
 
 
+proc compareDataFiles(firstfilest, secfilest, formatst: string): string = 
+    #[Compare files (for now only summary-files) and return 3 sorted lists:
+    -equal words
+    -words in first not second
+    -words in second not first
+    ]#
+
+  var
+    firstsq, secsq, bothsq, onlyfirstsq, onlysecsq: seq[string]
+    blockphasebo: bool = false
+    startmarkerst = "SIGNAL-WORDS TO HANDLE"
+    endmarkerst = ">----------------------------------<"
+    filear: array[0..1, string] = [firstfilest, secfilest]
+    wordseqar: array[0..1, seq[string]] = [@[], @[]]
+    lineseptst, outputst: string
+    outputseqar: array[0..2, seq[string]]
+    passit: int = 0
+
+
+  # create sorted seqs from the files
+  for it in 0..1:
+    withFile(txt, filear[it], fmRead):
+      for linest in txt.lines:
+        if linest == startmarkerst:
+          blockphasebo = true
+        elif linest == endmarkerst:
+          blockphasebo = false
+        else:
+          if blockphasebo:
+            wordseqar[it].add(linest)
+    sort(wordseqar[it])
+    # echo wordseqar[it]
+
+
+  # compare the seqs; create comparison-lists
+  firstsq = wordseqar[0]
+  secsq = wordseqar[1]
+
+  for wordst in firstsq:
+    if wordst in secsq:
+      bothsq.add(wordst)
+    else:
+      onlyfirstsq.add(wordst)
+  for wordst in secsq:
+    if not (wordst in firstsq):
+      onlysecsq.add(wordst)
+
+
+  # report the results
+  if formatst == "text":
+    lineseptst = "\p"
+  elif formatst == "html":
+    lineseptst = "<br>"
+
+  outputseqar = [bothsq, onlyfirstsq, onlysecsq]
+
+  outputst = lineseptst & "---------------------------------------" & lineseptst
+  outputst &= "First file: " & firstfilest & lineseptst
+  outputst &= "Second file: " & secfilest & lineseptst
+  
+  for sq in outputseqar:
+    if passit == 0:
+      outputst &= lineseptst & "Words in both files:" & lineseptst
+    elif passit == 1:
+      outputst &= lineseptst & "Words only in FIRST file:" & lineseptst
+    elif passit == 2:
+      outputst &= lineseptst & "Words only in SECOND file:" & lineseptst
+
+    for wordst in outputseqar[passit]:
+      outputst &= wordst & lineseptst
+    passit += 1
+
+  result = outputst
+
+
 
 
 addLanguageFilesToList()
@@ -268,4 +344,8 @@ when isMainModule:
   # echo textsourcefileta["dutch.dat"]
   # echo sourcefilestatust
 
-  echo evaluateDataFiles(datFileAll)
+  # echo evaluateDataFiles(datFileAll)
+  echo compareDataFiles("summary_english_concise.dat", "summary_english_default.dat","text")
+
+
+

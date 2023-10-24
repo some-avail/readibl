@@ -166,6 +166,12 @@ liep
 sluiten
 sloot
 sloten
+openen
+opent
+geopend
+openbaren
+openbaart
+openbaard
  roep 
  roept
  roepen
@@ -219,6 +225,7 @@ houdt
 houden
 ziet
 zien 
+ zie 
  zag 
 zagen 
 gezien
@@ -498,7 +505,7 @@ grijpen
 grijpt
 grepen
 geraden
-wegen
+wegen 
 weegt
 woog
 wogen
@@ -512,7 +519,7 @@ daalt
 daald
 reizen
 reist
-gereisd
+reisd
 achten
  acht 
 geacht
@@ -549,7 +556,7 @@ leert
 leerd
 lezen 
 leest
-las 
+ las 
 lazen 
 schermt
 schermen
@@ -591,6 +598,9 @@ vangt
 lenen 
 leent 
 leend
+breiden
+breidt
+breidde
 ving
 pakt
 treed
@@ -609,6 +619,9 @@ pleeg
 pleegt
 pleegd
 stopt
+schaden
+schaadt
+schaad
 kennen 
 kent 
  ken 
@@ -617,6 +630,9 @@ misken
 verken
  kende
  gekend
+huren 
+huurt
+huurd
 wijten
 heers 
 heerst
@@ -709,6 +725,7 @@ PREPOSITIONS TO HANDLE
  vanaf 
  zonder 
  toe 
+ langs 
 >----------------------------------<
 
 
