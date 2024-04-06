@@ -65,6 +65,19 @@ template withFile*(f, fn, mode, actions: untyped): untyped =
     quit("cannot open: " & fn)
 
 
+
+proc allFilesExist*(filelisq: seq[string]): bool = 
+  # return true if all files in the listsequence do exist, otherwise false
+  var existingbo: bool = true
+  for filest in filelisq:
+    if not fileExists(filest):
+      existingbo = false
+      break
+
+  result = existingbo
+
+
+
 proc addLanguageFilesToList() =
   # Dynamicly add the parse_language.dat files from the config-file 
   # to the list textsourcefilesq
@@ -258,7 +271,7 @@ proc evaluateDataFiles*(verbosebo: bool = false): string =
   result = reportst
 
 
-proc compareDataFiles(firstfilest, secfilest, formatst: string): string = 
+proc compareDataFiles*(firstfilest, secfilest, formatst: string): string = 
     #[Compare files (for now only summary-files) and return 3 sorted lists:
     -equal words
     -words in first not second
@@ -345,7 +358,7 @@ when isMainModule:
   # echo sourcefilestatust
 
   # echo evaluateDataFiles(datFileAll)
-  echo compareDataFiles("summary_english_concise.dat", "summary_english_default.dat","text")
+  echo compareDataFiles("summary_english_gen4_large.dat", "summary_english_causation.dat","text")
 
 
 

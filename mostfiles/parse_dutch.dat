@@ -92,7 +92,7 @@ blijven
 bleven
 gaat
 gaan
- ging
+ging
 gegaan
 laat 
 laten
@@ -105,6 +105,7 @@ gevonden
  vond
  zet
 zetten
+zette
 gezet
  stel 
 stelt
@@ -125,7 +126,7 @@ brengen
 passen
 past
 doet 
-doen
+doen 
 doe 
 deden 
 deed 
@@ -139,7 +140,7 @@ haald
  dien 
 dient
 dienen
-gediend
+diend
 geldt
 gelden
  moedigt
@@ -172,6 +173,8 @@ geopend
 openbaren
 openbaart
 openbaard
+lukken
+lukt 
  roep 
  roept
  roepen
@@ -186,7 +189,6 @@ tracht
 poogt 
 probeer
 staan
-staat 
 stond
 betreft 
 handelt
@@ -204,7 +206,7 @@ leverd
 geef
 geven
 gegeven
- gaf 
+gaf 
 leiden
 leidt
 leidd
@@ -218,7 +220,9 @@ samenvatten
 samengevat
 gebeurd
 gebeurt 
-krijg
+krijgt
+krijgen
+krijg 
 kreeg
 kregen
 houdt
@@ -234,7 +238,9 @@ bedoelt
 bedoel 
  te 
  is 
+ is,
  was 
+ was,
  ben 
  waren 
  werd
@@ -259,12 +265,17 @@ kiest
 kiezen
 koos
 gekozen
+verliezen
+verliest
+verloor
+verloren
 bouwen
 bouwt
 denk 
 denkt
 denken
  gedacht 
+ dacht
  blijkt
  bleek 
  gebleken
@@ -281,11 +292,11 @@ betekenen
 kijken
 kijk 
 kijkt
- keek
- gekeken
+keek
+keken
  horen 
  hoorde
- hoort 
+hoort 
  gehoord
 zitten
 zit 
@@ -305,9 +316,9 @@ schreef
 schreven
 vertrekt
 vertrekken
-beloven
-belooft
-beloofd
+loven
+looft
+loofd
 hoopt
 hopen
 gehoopt
@@ -316,7 +327,7 @@ stak
 gestoken
 steunt
 steunen
-gesteund
+steund
 voelt
 voelen 
 gevoeld
@@ -331,7 +342,7 @@ nemen
 neem 
 neemt
 nam 
-genomen
+nomen
 dragen
 droeg
 draag
@@ -363,7 +374,7 @@ wonen
 woont
 begrijp
 begrepen
-deelt 
+deelt
 deelde 
 deeld 
 wijst 
@@ -380,6 +391,7 @@ biedt
 bieden
 bood 
 geboden
+boden 
 scheiden 
 scheidt 
 scheidde 
@@ -520,7 +532,7 @@ daald
 reizen
 reist
 reisd
-achten
+ achten
  acht 
 geacht
 zorgt
@@ -572,9 +584,6 @@ bereiken
 schiet
 schoot
 schoten
-waarschuwen
-waarschuwt
-waarschuwd
 koppelen
 koppelt
 koppeld
@@ -587,12 +596,16 @@ drukten
 win 
 wint 
 winnen
-won
+won 
+wonnen 
 strijk
 leunt
  leun 
 leunen
 leund
+gooit
+gooien
+gooid
 vangen
 vangt
 lenen 
@@ -601,8 +614,11 @@ leend
 breiden
 breidt
 breidde
-ving
 pakt
+peins
+peinzen
+vluchtt
+gevlucht
 treed
 treden
 trad 
@@ -630,27 +646,73 @@ misken
 verken
  kende
  gekend
+glijd
+gleed 
+gleden
+ontwikkel 
+ontwikkeld
+ontwikkelt
+ontwikkelen
+lokken 
+lokt
+stoken 
+stookt
 huren 
 huurt
 huurd
+ vaar 
+vaart 
+ varen 
+drijft
 wijten
+wijkt 
+beveelt
+bevelen
+beval
+bevolen 
+zamel 
+zamelt
+zamelen
+zameld
+herinner
+herinnert
+heten 
+heett
 heers 
 heerst
 heersen
+gebruiken 
+gebruikt
+lichtte
+lichten
+gelicht
 schokt
+vechten
+stribbel
+rennen 
+rent 
+rend
 help
 hielp
 holpen
 vergroot
+beslist 
+beslissen 
 werven
 werft
 wierf
 worv
+schuwen 
+schuwt
+schuwd
 vermoed 
 vermoedt
 vermoedd
 verplaatsen
 verplaatst
+orrelen 
+orrelt 
+geë
  opge
  afge
  aange
@@ -672,6 +734,23 @@ igt
 igd
 dde 
 dt 
+bde 
+bden 
+dde 
+fte 
+ften 
+vde 
+vden 
+gde 
+gden 
+kte 
+kten 
+mde 
+mden 
+pte 
+pten 
+wde 
+wden 
 >----------------------------------<
 
 
@@ -680,11 +759,11 @@ dt
 LINK-WORDS TO HANDLE
  en 
  of 
+Of 
+ en/of 
  ofwel 
  danwel
- noch
- tevens 
- ook 
+ noch 
  als 
  indien 
  hetzij 
@@ -726,11 +805,13 @@ PREPOSITIONS TO HANDLE
  zonder 
  toe 
  langs 
+ af 
 >----------------------------------<
 
 
 NOUN-ANNOUNCERS TO HANDLE
 De 
+Het 
  de 
  het 
  een 
@@ -786,19 +867,29 @@ stemmen
 merken
 leven 
 vragen
+drijven
 start
 vroeg
 raden 
+voer
 bied 
+licht
 claim
+leek
+leken
  zorgen
 delen
 antwoorden
+vluchten
+vlucht
 slagen 
 schets
+heet 
+namen 
 streek
 streken
-gebruik
+ staat 
+wijken
  stop
 pakken
 pak 
@@ -807,6 +898,7 @@ igen
 eren 
 eren.
 eren,
+tten 
  aansch
  opsch
  insch

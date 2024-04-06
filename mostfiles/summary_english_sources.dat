@@ -1,0 +1,48 @@
+Extraction-strings for summarizing with Flashread.
+Language: english
+Summary-type: generic
+version: 1.3
+
+-new set for extracting info-sources.
+
+
+
+SIGNAL-WORDS TO HANDLE
+according 
+According 
+ says
+ say
+ said
+ source
+ claim
+confirm
+affirm
+acknowledg
+news agency
+estimate
+uthor 
+uthors
+uthored 
+report
+announc
+refer
+Refer
+Dr 
+ist 
+ists
+who 
+whose 
+whom 
+>----------------------------------<
+
+
+
+optional words:
+
+
+possible false positives:
+show
+ by 
+By 
+
+

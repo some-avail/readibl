@@ -80,7 +80,7 @@ template log(messagest: string) =
 
 
 const 
-  versionfl: float = 0.9402
+  versionfl: float = 0.9403
   minimal_word_lengthit = 7
   appnamebriefst:string = "RD"
   appnamenormalst = "Readibl"
@@ -201,6 +201,8 @@ routes:
       filepathst: string
       newinnerhtmlst: string
       filestatusmessagest: string
+      compare_filesq: seq[string]
+
       innervarob: Context = newContext()  # inner html insertions
       outervarob: Context = newContext()   # outer html insertions
 
@@ -215,6 +217,8 @@ routes:
     else:
       statustekst = newlang("Press button to paste the content of the clipboard.")
 
+    compare_filesq = sequenceFromValueList(readOptionFromFile("files-to-compare", "value-list"))
+
     outervarob["version"] = versionfl.formatFloat(ffDecimal, 4)
     outervarob["loadtime"] = newlang("Started: ") & $now()
     outervarob["pagetitle"] = appnamenormalst
@@ -225,7 +229,12 @@ routes:
     innervarob["statustext"] = newlang(statustekst)
     innervarob["statusdata"] = ""
     innervarob["pastedtext"] = ""
-    innervarob["processedtext"] = filepathst & "<br><br>" & evaluateDataFiles(false)
+
+    if allFilesExist(compare_filesq):
+      innervarob["processedtext"] = filepathst & "<br><br>" & compareDataFiles(compare_filesq[0], compare_filesq[1], "html")
+    else:
+      innervarob["processedtext"] = filepathst & "<br><br>" & evaluateDataFiles(false)
+
     innervarob["text_language"] = setDropDown("text-language", readOptionFromFile("text-language", "value"))
     innervarob["taglist"] = setDropDown("taglist", "paragraph-with-headings")
     innervarob["radiobuttons_1"] = setRadioButtons("orders","")

@@ -10,6 +10,7 @@ PUNCTUATION OF SENTENCES TO HANDLE
 . 
 ?
 !
+."
 >----------------------------------<
 
 
@@ -98,14 +99,15 @@ stay
 keep
 kept 
 goes 
- go 
+go 
 going 
 went 
 gone 
+ tear
+ tore 
+ torn 
  let 
  lets 
- find 
- finds 
  found 
 put 
 puts 
@@ -158,6 +160,8 @@ build
  builds 
  applie
 apply
+comply 
+complies
 stimulate 
 encourage 
 promote 
@@ -253,7 +257,8 @@ moved
 add 
  adds 
 edit 
-receive
+receives
+receive 
 register 
 crease
 tach 
@@ -362,7 +367,7 @@ reveal
  knows 
  knew
  known
- believ
+believ
  doesn't
  didn't
  accept 
@@ -375,8 +380,8 @@ explain
 breaks 
 broke
 broken
-rise 
 rose 
+rises 
 risen 
  sit 
  sits 
@@ -509,6 +514,7 @@ controlled
 speak 
 speaks
 spoke 
+spoken
 grades
 graded
 beg 
@@ -801,6 +807,7 @@ turb
 turbs 
  solve
  dissolve
+ stuck 
 glide
 slide
 arrange 
@@ -837,12 +844,15 @@ advances
 advanced 
 originate
 prosecute
+ stem 
+ stems 
 simulate
 derive
 presses
 impress 
 express 
 depress 
+capture
 arise
 vive
 voke
@@ -850,6 +860,8 @@ flush
 flushes
 discern 
 discerns 
+ flee 
+ flees 
 fail 
 fails 
  compete 
@@ -872,21 +884,46 @@ confronts
 cede 
 cedes 
 ceded
+reside 
+resides 
 finish
+salvage
 worry
 weigh 
 weighs
+focuses
+weaken
+heal 
+heals
 pick
 assure
 intercept 
 intercepts 
+manufacture
+yield
 inhabit 
 inhabits
+ fund
 progresses
 underline
+encourage 
+encourages
+knock
+bother
+ceed
+cede
+expire
+cite 
+cites 
+diagnose
+ shake
+ shook 
+ shaken 
+boast
 engage
 engages
 engaged
+hire
 distort 
 distorts
 enlist 
@@ -897,10 +934,14 @@ misses
  wake
 endanger 
 endangers 
+backs 
+develop 
+develops 
 debunk
+suade
 prosper 
 prospers 
- backs
+bolster
  owns 
 acknowledge 
 acknowledges
@@ -914,22 +955,24 @@ ized
 ise 
 ises 
 ised 
+ulate
 igate
+inate
 erate
 orate
 ivate
+avate
 trate 
 trates
+brate
 ated 
 bate
-fate
 iate
 uate
 ify 
 ified 
 ifies 
 ifying
-en 
 ens 
 ening 
 ened 
@@ -1000,6 +1043,7 @@ inward
 outward
 around
 beyond
+ nearby 
  near 
 until 
  into 
@@ -1018,7 +1062,9 @@ throughout
  forth 
  amidst 
 In 
+ via 
 >----------------------------------<
+
 
 
 
@@ -1163,11 +1209,10 @@ places
 fall
  lie
 spawn
-work 
+ work 
  works
 chase
  order
-focus
 desire
  end 
  ends 
@@ -1231,11 +1276,12 @@ track
 attempt
 favor
 conduct 
+ducted 
  thought
  check 
  checks 
- force 
- forces 
+force 
+forces 
 dict 
 dicts 
 dicted
@@ -1278,6 +1324,7 @@ handles
  cause
 conflict
 influenc
+rise 
 flip
 left 
 measure 
@@ -1287,25 +1334,35 @@ lift
 doubt
 award
 reward
-block
 flow
  deal 
  deals 
+ dealt 
 encounter
  own
- face
 worries
+kick
 cern
 drift
 record
+ halt
 mark 
 marks 
+ grant
 transfer
+challenge
 request
 drive 
 drives 
+stick
  fight 
  fights 
+ bar 
+ bars 
+ find 
+ finds 
+waste
+paint
 dump
  cache 
  caches 
@@ -1313,10 +1370,19 @@ spread
 reach
 shield
 highlight
+ plot 
+ plots 
 vow 
 vows 
+frame
+hibit 
+hibits 
+ film
  hope
 resolve
+appeal
+reply 
+replies 
 address
 impact
 practice
@@ -1331,6 +1397,7 @@ lates
 tate
 pate
 hate
+fate
 >----------------------------------<
 
 

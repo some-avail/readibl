@@ -14,16 +14,20 @@ answer
 argument
 assum
 barrier
-category
 caus
+cancel
 chang
 classif
 cluster
 complete
 conclu
 condition
+conflict
 connect
 consequence
+continue
+decid
+decision
 definition
 determinant
 develop
@@ -46,6 +50,7 @@ important
 influence
 input
 interact
+ link
 mechanism
 method
 modif
@@ -55,6 +60,7 @@ obstacle
 outcome
 output
  part 
+pend
 plan 
 plans 
 premis 
@@ -71,6 +77,8 @@ scenario
 second 
 secondly
 solution
+start
+stop
 structur
 summar
 supposition

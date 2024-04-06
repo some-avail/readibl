@@ -1,0 +1,49 @@
+Extraction-strings for summarizing with Flashread.
+Language: english
+Summary-type: generic
+version: 1.3
+
+-new set for archeology
+concerning layers and dating
+optionally followed by items to be investigated
+
+
+
+SIGNAL-WORDS TO HANDLE
+layer
+fossil
+upper
+lower
+strata
+stratum
+stratif
+thick
+feet
+meter
+inch
+year 
+remain
+remnant
+trace
+artifact
+migrat
+excavat
+ found 
+find
+first
+dating
+ dated
+ date 
+ age 
+carbon
+ old
+year
+centur
+BCE
+ BC 
+ AD 
+>----------------------------------<
+
+
+
+
