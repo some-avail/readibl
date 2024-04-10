@@ -1,0 +1,74 @@
+Extraction-strings for summarizing with Flashread.
+Language: english
+Summary-type: generic
+version: 1.3
+
+-set for archeology-dating and times only
+optionally followed by items to be investigated
+
+
+
+SIGNAL-WORDS TO HANDLE
+first 
+ last 
+ early 
+ late 
+dating
+ dated
+ date 
+ old
+ time 
+year
+ week
+ month
+ day
+day 
+centur
+ age 
+BCE
+ BC 
+ AD 
+ before 
+ after 
+ during 
+ since 
+ when 
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+anuary
+ebruary
+March
+pril
+May
+June
+june
+July
+july
+ugustus
+eptember
+ctober
+ovember
+ecember
+>----------------------------------<
+

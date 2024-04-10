@@ -1,0 +1,38 @@
+Extraction-strings for summarizing with Flashread.
+Language: english
+Summary-type: generic
+version: 1.3
+
+-new set for extracting locational information.
+
+
+
+SIGNAL-WORDS TO HANDLE
+ at 
+ inside 
+ outside 
+ in front of 
+ in the 
+ from the 
+ into the 
+ out of the 
+ to the 
+ on the 
+ off the 
+ behind the 
+ locat
+ place
+Where 
+ where 
+ there
+>----------------------------------<
+
+
+Other optional words:
+
+
+possible false positives:
+ between the 
+
+probable FPs:
+ in 

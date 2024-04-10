@@ -1,0 +1,113 @@
+Extraction-strings for summarizing with Flashread.
+Language: dutch
+Summary-type: generic
+version: 1.2
+
+
+
+
+SIGNAL-WORDS TO HANDLE
+activiteit
+verwacht
+opvatting
+interpret
+waarschijnlijk
+vergelijk
+statisti
+voorkeur
+ wens
+werking
+steun
+prototype
+princip
+zend
+stuur
+sturen
+ontvang
+voorwaarde
+determinant
+altijd
+nooit
+overal
+nergens
+beginsel
+ regel 
+ regels 
+defini
+mechanisme
+proces
+methode
+systeem
+stelsel
+belang
+oorzaak
+gevolg
+ reden 
+ redenen
+argument
+consequentie
+input
+output
+element
+onderdeel
+onderdelen
+ deel 
+ delen 
+groep
+cluster
+ten slotte
+conclu
+relatie
+gerelateerd
+hindernis
+barri
+effecten
+effect 
+functie
+ taak 
+ taken 
+invloed
+categorie
+klasse
+theor
+veronderstelling
+verband 
+analoog
+hypothese
+aanname
+ stelling
+totaal 
+geheel 
+volledig
+samenvatting
+bewijs
+bewijzen
+aanwijzing
+gedachte
+idee
+scenario
+verloop
+essenti
+proble
+oplossing
+overeenkomst
+verschil
+verander
+variab
+wijzig
+uitkomst
+structuur
+interact
+uitwissel
+wisselwerk
+eerste
+tweede
+ derde
+ontwikkel
+ doel
+factor
+bijeenkomst
+>----------------------------------<
+
+
+

@@ -1,0 +1,87 @@
+Extraction-strings for summarizing with Flashread.
+Language: english
+Summary-type: generic
+version: 1.3
+
+-new set for extracting causational phrases.
+-added method-words below ooooooooooo
+
+
+
+SIGNAL-WORDS TO HANDLE
+agenda
+desire
+ want
+ use
+meaning
+function
+requir
+purpose
+caus
+Caus
+consequence
+interest
+effect 
+effects
+result
+goal
+need
+influence
+plan 
+plans 
+problem
+ reason
+Reasons 
+associated
+ link
+connect
+bind
+bound
+relat
+interact
+exchang
+communicat
+co-operat
+cooperat
+deal
+conflict
+break
+differ
+barrier
+symbol
+Why 
+Why?
+ why 
+ why?
+expla
+Expla
+ooooooooooooooooooooooooooooooooo
+How 
+How?
+ how 
+ way 
+ method 
+ approach 
+ order 
+ step
+ phase
+ make
+ made
+ generate
+ produce 
+ manufacture
+ form
+ shape
+ create
+>----------------------------------<
+
+
+
+optional words:
+
+
+possible false positives:
+
+
+
+

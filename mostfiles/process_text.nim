@@ -65,7 +65,7 @@ template log(messagest: string) =
 
 
 const 
-  versionfl:float = 0.38
+  versionfl:float = 0.385
 
   input_tekst = "chimpansee noot mies een chimpansee is een leuk dier\pde chimpansee is het slimste dier naar het schijnt.\pmaar naast de chimpansee zijn er ook andere slimme \pdieren zoals de raaf, de dolfijn en de hond."
   tekst = "pietje staat. gister niet, maar toch. wat\pjantje. wimpie, onno\pkeesje.grietje,antje\pdirkje"
@@ -379,12 +379,32 @@ proc calculateWordFrequencies*(input_tekst:string, wordlengthit:int,
 proc applyDefinitionFileToText(input_tekst, languagest: string, 
                     highlightbo: bool, summaryfilest: string = ""): string =
 
-  # Is now used in 2 cases / passes with separate arguments:
-  # - signal-words-based hightlighting using the file 'summary_language_qualifier.dat'
-  #     > so you get for example: 'summary_english_concise.dat'
-  # - grammar-based text-coloring using the file 'language.dat'
-  #     > reads from preloaded textfilestring from module source_files
-  
+  #[
+  Is now used in 2 cases / passes with separate arguments:
+  - signal-words-based hightlighting using the file 'summary_language_qualifier.dat'
+    - so you get for example: 'summary_english_concise.dat'
+    - no pre-loading with summaries
+    - you can read multiple summaries from a file (future)
+
+  - grammar-based text-coloring using the file 'language.dat'
+    - reads from preloaded textfilestring from module source_files
+      (to increase performance)
+
+
+  ADAP NOW
+  - possiblize the reading of multiple summary-files giving multiple colorings
+    v- use a file with a list of summaries
+    - probe existence and contents of the list-file
+    - concatenate the summaries into one temporary file resulting
+      in multiple signalword-sections
+      - read the summary-list between the demarcation-lines
+    - apply coloring on basis of the section-count / phase-count and add a new var for it
+
+
+  ADAP FUT
+  - since only custom-replace is used, the old replace can be removed.
+  ]#
+
 
   var 
     blockheadersq: seq[string]
@@ -397,6 +417,7 @@ proc applyDefinitionFileToText(input_tekst, languagest: string,
     def_filenamest:string
     use_custom_replacebo: bool = true
     deffilest:string
+    phasecountit: int = 0
 
   phasetekst = replace(phasetekst, ".<", ". <")
   phasetekst = replace(phasetekst, ".\"", ". \"")
@@ -419,11 +440,15 @@ proc applyDefinitionFileToText(input_tekst, languagest: string,
   elif highlightbo == true:
     log("==============================")
     log("highlighting...")
-    def_filenamest = summaryfilest
+
+    if createConcatSummaryFile():
+      def_filenamest = "data_files/summary_concatenated.dat"
+    else:
+      def_filenamest = summaryfilest
+
     log(def_filenamest)
     deffilest = readFile(def_filenamest)
     blockheadersq = @["SIGNAL-WORDS TO HANDLE"]
-    use_custom_replacebo = true
 
 
   try:
@@ -436,6 +461,8 @@ proc applyDefinitionFileToText(input_tekst, languagest: string,
       if line in blockheadersq:
         blockphasest = line
         echo blockphasest
+        # for multiple signal-blocks:
+        phasecountit += 1
         blocklineit = 0
       elif blockphasest != "":
 
@@ -469,11 +496,28 @@ proc applyDefinitionFileToText(input_tekst, languagest: string,
             # else:
             #   phasetekst = replace(phasetekst, line, "<span style=color:magenta>" & line & "</span>")
           elif blockphasest == "SIGNAL-WORDS TO HANDLE":
-            # if use_custom_replacebo:
-            phasetekst = customReplace(phasetekst, line, "<span style=background-color:#ffd280>" & line & "</span>",
-                                    true, "", @[])
-            # else:
-            #   phasetekst = replace(phasetekst, line, "<span style=background-color:#ffd280>" & line & "</span>")
+            case phasecountit:
+            of 1:
+              phasetekst = customReplace(phasetekst, line, "<span style=background-color:#ffd280>" & line & "</span>",
+                                      true, "", @[])
+            of 2:
+              phasetekst = customReplace(phasetekst, line, "<span style=background-color:#8efd7f>" & line & "</span>",
+                                      true, "", @[])
+            # #8efd7f----#ccfeb9
+            of 3:
+              phasetekst = customReplace(phasetekst, line, "<span style=background-color:#9eedfd>" & line & "</span>",
+                                      true, "", @[])
+            of 4:
+              phasetekst = customReplace(phasetekst, line, "<span style=background-color:#facccc>" & line & "</span>",
+                                      true, "", @[])
+            of 5:
+              phasetekst = customReplace(phasetekst, line, "<span style=background-color:#f5a9fe>" & line & "</span>",
+                                      true, "", @[])
+            else:
+              phasetekst = customReplace(phasetekst, line, "<span style=background-color:#c8c8c8>" & line & "</span>",
+                                      true, "", @[])
+              #---#d6d6d6---#c2c2c2
+
           elif blockphasest == "LINK-WORDS TO HANDLE":
             # if use_custom_replacebo:
             phasetekst = customReplace(phasetekst, line, "<span style=color:red>" & line & "</span>",
@@ -1055,7 +1099,11 @@ proc extractSentencesFromText(input_tekst, languagest:string,
   The summary-definition-files (like summary_english.dat) are used.
 
   The search-strings originate no more from the language-files (like english.dat),
-  specifically the category SIGNAL-WORDS TO HANDLE.
+  as in older versions of Readibl / flashread.
+  (specifically the category SIGNAL-WORDS TO HANDLE).
+
+  Arguments:
+  - input_tekst; expected format??
 
 
   ADAP HIS
@@ -1064,7 +1112,11 @@ proc extractSentencesFromText(input_tekst, languagest:string,
   ADAP NOW
   
   ADAP FUT
-  
+  - to possiblize multiple summary-files:
+    - read the desired sum-files from lists/multi-summary-list.txt
+    - combine the sum-files into one temporary file with only
+      one section.
+    - use the temp-file to do the extraction
   ]#
 
 

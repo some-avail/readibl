@@ -98,8 +98,8 @@ threaten
 stay
 keep
 kept 
-goes 
-go 
+ goes 
+ go 
 going 
 went 
 gone 
@@ -124,7 +124,7 @@ taken
 bring 
  brings 
 brought 
-fit 
+ fit 
  fits 
 match 
  matches 
@@ -228,9 +228,9 @@ happen
 suggest 
 suggests 
 holding
- hold 
- holds 
- held 
+hold 
+holds 
+held 
 retain 
  retains 
 mean 
@@ -1362,6 +1362,8 @@ stick
  find 
  finds 
 waste
+ face 
+ faces 
 paint
 dump
  cache 

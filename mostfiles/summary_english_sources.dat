@@ -18,6 +18,7 @@ According
 confirm
 affirm
 acknowledg
+conclude
 news agency
 estimate
 uthor 
@@ -25,14 +26,13 @@ uthors
 uthored 
 report
 announc
-refer
+ refer
 Refer
 Dr 
-ist 
-ists
 who 
 whose 
 whom 
+ by 
 >----------------------------------<
 
 
@@ -42,7 +42,8 @@ optional words:
 
 possible false positives:
 show
- by 
 By 
+ist 
+ists
 
 

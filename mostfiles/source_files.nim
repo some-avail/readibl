@@ -31,7 +31,7 @@ type
 
 
 var
-  versionfl:float = 0.2
+  versionfl:float = 0.25
   textsourcefilesq: seq[string] = @["outer_html.html",
                                   "flashread.html"]
 
@@ -54,6 +54,17 @@ var
 
 
 
+var debugbo: bool = false
+#var debugbo: bool = true
+
+
+template l1(messagest: string) =
+  # replacement for echo that is only evaluated when debugbo = true
+  if debugbo: 
+    echo messagest
+
+
+
 template withFile*(f, fn, mode, actions: untyped): untyped =
   var f: File
   if open(f, fn, mode):
@@ -66,15 +77,84 @@ template withFile*(f, fn, mode, actions: untyped): untyped =
 
 
 
+
+
 proc allFilesExist*(filelisq: seq[string]): bool = 
   # return true if all files in the listsequence do exist, otherwise false
   var existingbo: bool = true
   for filest in filelisq:
     if not fileExists(filest):
       existingbo = false
+      if filest.len == 0:
+        echo "File cannot be an empty string!"
+      else:
+        echo "File not found: " & filest
       break
 
   result = existingbo
+
+
+
+
+proc getSeqFromFileSection*(filepathst, startlinest, endlinest: string): seq[string] =
+
+  #[
+  Retrieve the lines between the startline and endline (not including), and
+  put them into a sequence.
+  ]#
+
+  var
+    filest: string
+    sectionsq: seq[string] = @[]
+    in_sectionbo: bool = false
+
+  if fileExists(filepathst):
+    l1("**********************************")
+    l1(filepathst)
+    filest = readFile(filepathst)
+    for linest in filest.splitlines:
+
+      l1(linest)
+
+      if linest == startlinest:
+        in_sectionbo = true
+      elif linest == endlinest:
+        in_sectionbo = false
+      else:
+        if in_sectionbo:
+          sectionsq.add(linest)
+          
+          l1("added: " & linest)
+
+
+  result = sectionsq
+
+
+
+
+proc createConcatSummaryFile*(): bool = 
+  # concatenate the summaries from a list-file (if present) into one new, overwritable file
+
+  var 
+    summary_createdbo: bool = false
+    listfilenamest: string = "data_files/list-of-summaries.lst"
+    concat_filenamest: string = "data_files/summary_concatenated.dat"
+    summarylisq: seq[string]
+    sum_filest, concat_filest : string
+
+  # read the sum-list-file
+  summarylisq = getSeqFromFileSection(listfilenamest, ">>>SUMMARIES<<<", ">----------------------------------<")
+  if summarylisq.len > 0:
+    if allFilesExist(summarylisq):
+      # concatenate the summaries to one new file
+      for sum_file_namest in summarylisq:
+        sum_filest = readFile(sum_file_namest)
+        concat_filest = concat_filest & sum_filest
+      writeFile(concat_filenamest, concat_filest)
+      summary_createdbo = true
+
+  result = summary_createdbo
+
 
 
 
@@ -152,7 +232,7 @@ proc evaluateDataFiles*(verbosebo: bool = false): string =
   #[
     Validate the file-sets parse_*.dat and summary_*.dat
     Deviations / complaints are reported.
-    The result are show at startup.
+    The results are show at startup.
     ]#
 
   var
@@ -169,6 +249,7 @@ proc evaluateDataFiles*(verbosebo: bool = false): string =
   parse_lang_filesq = writeFilePatternToSeq("parse_")
   summary_filesq = writeFilePatternToSeq("summary_")
   all_filesq = concat(parse_lang_filesq, summary_filesq)
+  all_filesq.sort()
 
   # write the eval to a table (file_reportta) of objects (FilePhase)
   if true:
@@ -358,7 +439,9 @@ when isMainModule:
   # echo sourcefilestatust
 
   # echo evaluateDataFiles(datFileAll)
-  echo compareDataFiles("summary_english_gen4_large.dat", "summary_english_causation.dat","text")
+  #echo compareDataFiles("summary_english_gen4_large.dat", "summary_english_causation.dat","text")
 
-
+  var filepathst: string = "/media/OnsSpul/1klein/1joris/k1-onderwerpen/computer/Programmeren/nimtaal/jester/readibl/mostfiles/data_files/list-of-summaries.lst"
+  #echo getSeqFromFileSection(filepathst, ">>>SUMMARIES<<<", ">----------------------------------<")
+  echo createConcatSummaryFile()
 
