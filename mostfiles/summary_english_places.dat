@@ -13,19 +13,41 @@ SIGNAL-WORDS TO HANDLE
  outside 
  in front of 
  in the 
+ in a 
  from the 
  into the 
  out of the 
- to the 
  on the 
  off the 
  behind the 
+ near 
  locat
  place
 Where 
  where 
- there
+ north
+ south
+ west
+ east
+North
+South
+West
+East
+ region 
+ county 
+ County
+island 
+land 
+shire
+ area 
+ site 
+ city 
+City
+ centre
+ center
+ central 
 >----------------------------------<
+
 
 
 Other optional words:
@@ -33,6 +55,8 @@ Other optional words:
 
 possible false positives:
  between the 
+ there 
+to the 
 
 probable FPs:
  in 

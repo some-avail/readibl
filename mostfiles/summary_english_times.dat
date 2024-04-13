@@ -16,23 +16,22 @@ first
 dating
  dated
  date 
- old
  time 
 year
  week
  month
  day
 day 
+day,
 centur
  age 
 BCE
- BC 
+ BC
  AD 
  before 
  after 
  during 
  since 
- when 
 180
 181
 182
@@ -60,7 +59,7 @@ anuary
 ebruary
 March
 pril
-May
+May 
 June
 june
 July
@@ -72,3 +71,12 @@ ovember
 ecember
 >----------------------------------<
 
+
+
+
+possible false positives:
+ when 
+ old
+ 
+ 
+ 

@@ -80,7 +80,7 @@ template log(messagest: string) =
 
 
 const 
-  versionfl: float = 0.9404
+  versionfl: float = 0.9405
   minimal_word_lengthit = 7
   appnamebriefst:string = "RD"
   appnamenormalst = "Readibl"
@@ -350,7 +350,11 @@ routes:
           output_tekst = jump_to_end_step(@"text-language", @"summarize", @"taglist", 
                                         "", @"summarylist", @"generate_contents", )
           statustekst = "Output number of words:"
-          statusdatast = $countWords(output_tekst)
+          if createCombinedSummaryFile("testing"):
+            statusdatast = $countWords(output_tekst) & " --- " & "Using a combined summary.."
+          else:
+            statusdatast = $countWords(output_tekst)
+
           innervarob["statustext"] = newlang(statustekst)
           innervarob["statusdata"] = statusdatast
           innervarob["pastedtext"] = past

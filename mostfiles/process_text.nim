@@ -441,7 +441,7 @@ proc applyDefinitionFileToText(input_tekst, languagest: string,
     log("==============================")
     log("highlighting...")
 
-    if createConcatSummaryFile():
+    if createCombinedSummaryFile("concatenate"):
       def_filenamest = "data_files/summary_concatenated.dat"
     else:
       def_filenamest = summaryfilest
@@ -497,22 +497,28 @@ proc applyDefinitionFileToText(input_tekst, languagest: string,
             #   phasetekst = replace(phasetekst, line, "<span style=color:magenta>" & line & "</span>")
           elif blockphasest == "SIGNAL-WORDS TO HANDLE":
             case phasecountit:
+            # oker
             of 1:
               phasetekst = customReplace(phasetekst, line, "<span style=background-color:#ffd280>" & line & "</span>",
                                       true, "", @[])
+            # green
             of 2:
               phasetekst = customReplace(phasetekst, line, "<span style=background-color:#8efd7f>" & line & "</span>",
                                       true, "", @[])
             # #8efd7f----#ccfeb9
+            # blueish
             of 3:
               phasetekst = customReplace(phasetekst, line, "<span style=background-color:#9eedfd>" & line & "</span>",
                                       true, "", @[])
+            # reddish - #f1a0a0 - #facccc
             of 4:
-              phasetekst = customReplace(phasetekst, line, "<span style=background-color:#facccc>" & line & "</span>",
+              phasetekst = customReplace(phasetekst, line, "<span style=background-color:#f1a0a0>" & line & "</span>",
                                       true, "", @[])
+            # lila - #e476f1 - #f5a9fe
             of 5:
-              phasetekst = customReplace(phasetekst, line, "<span style=background-color:#f5a9fe>" & line & "</span>",
+              phasetekst = customReplace(phasetekst, line, "<span style=background-color:#e476f1>" & line & "</span>",
                                       true, "", @[])
+            # grey
             else:
               phasetekst = customReplace(phasetekst, line, "<span style=background-color:#c8c8c8>" & line & "</span>",
                                       true, "", @[])
@@ -1145,6 +1151,13 @@ proc extractSentencesFromText(input_tekst, languagest:string,
     linecountit: int =0
 
   def_filenamest = summaryfilest
+
+
+  if createCombinedSummaryFile("aggregate"):
+    def_filenamest = "data_files/summary_aggregated.dat"
+  else:
+    def_filenamest = summaryfilest
+
 
 
   # Old approach - created to big chunks:

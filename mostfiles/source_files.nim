@@ -108,9 +108,12 @@ proc getSeqFromFileSection*(filepathst, startlinest, endlinest: string): seq[str
     sectionsq: seq[string] = @[]
     in_sectionbo: bool = false
 
+  l1(getAppDir())
+  l1(getCurrentDir())
+  l1("filepathst" & " = " & filepathst)
+
   if fileExists(filepathst):
     l1("**********************************")
-    l1(filepathst)
     filest = readFile(filepathst)
     for linest in filest.splitlines:
 
@@ -132,25 +135,50 @@ proc getSeqFromFileSection*(filepathst, startlinest, endlinest: string): seq[str
 
 
 
-proc createConcatSummaryFile*(): bool = 
-  # concatenate the summaries from a list-file (if present) into one new, overwritable file
+proc createCombinedSummaryFile*(combinationtypest: string): bool = 
+
+  #[
+   combine (concatenate or aggregate) the summaries from a list-file (if present) into 
+   one new, overwritable file for use in multi-summary highlightings and extractions.
+   combinationtypest: concatenate, aggregate or testing
+
+    "combinationtypest = testing" means that only is checked if conditions are met.
+  ]#
 
   var 
     summary_createdbo: bool = false
     listfilenamest: string = "data_files/list-of-summaries.lst"
     concat_filenamest: string = "data_files/summary_concatenated.dat"
-    summarylisq: seq[string]
-    sum_filest, concat_filest : string
+    aggreg_filenamest: string = "data_files/summary_aggregated.dat"
+    summarylisq, wordlisq: seq[string]
+    sum_filest, concat_filest, aggreg_filest : string
 
   # read the sum-list-file
   summarylisq = getSeqFromFileSection(listfilenamest, ">>>SUMMARIES<<<", ">----------------------------------<")
   if summarylisq.len > 0:
     if allFilesExist(summarylisq):
       # concatenate the summaries to one new file
-      for sum_file_namest in summarylisq:
-        sum_filest = readFile(sum_file_namest)
-        concat_filest = concat_filest & sum_filest
-      writeFile(concat_filenamest, concat_filest)
+      if combinationtypest == "concatenate":
+        for sum_file_namest in summarylisq:
+          sum_filest = readFile(sum_file_namest)
+          concat_filest = concat_filest & sum_filest
+        writeFile(concat_filenamest, concat_filest)
+      elif combinationtypest == "aggregate":
+        let fileob = open(aggreg_filenamest, fmWrite)
+        fileob.writeLine("SIGNAL-WORDS TO HANDLE")
+
+        for sum_file_namest in summarylisq:
+          # extract the relevant section
+          wordlisq = getSeqFromFileSection(sum_file_namest, "SIGNAL-WORDS TO HANDLE", ">----------------------------------<")
+          # add items to new file
+          for linest in wordlisq:
+            fileob.writeLine(linest)
+
+        fileob.writeLine(">----------------------------------<")
+        fileob.close()
+      elif combinationtypest == "testing":
+        discard
+
       summary_createdbo = true
 
   result = summary_createdbo
@@ -441,7 +469,9 @@ when isMainModule:
   # echo evaluateDataFiles(datFileAll)
   #echo compareDataFiles("summary_english_gen4_large.dat", "summary_english_causation.dat","text")
 
-  var filepathst: string = "/media/OnsSpul/1klein/1joris/k1-onderwerpen/computer/Programmeren/nimtaal/jester/readibl/mostfiles/data_files/list-of-summaries.lst"
+  #var filepathst: string = "/media/OnsSpul/1klein/1joris/k1-onderwerpen/computer/Programmeren/nimtaal/jester/readibl/mostfiles/data_files/list-of-summaries.lst"
   #echo getSeqFromFileSection(filepathst, ">>>SUMMARIES<<<", ">----------------------------------<")
-  echo createConcatSummaryFile()
+  #echo createCombinedSummaryFile("concatenate")
+  echo createCombinedSummaryFile("aggregate")
+  #echo getSeqFromFileSection("summary_english_computer.dat", "SIGNAL-WORDS TO HANDLE", ">----------------------------------<")
 
