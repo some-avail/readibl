@@ -248,101 +248,6 @@ proc myTest()=
 
 
 
-proc extractTextPartsFromHtml*(webaddresst:string = ""):string =
-  #[ 
-  Deprecated; see handleTextPa...
-  Based on the webaddress as input-parameter, the webpage is downloaded.
-  Then the html is parsed and pieces of readable text (aot markup-codes)
-  are extracted, concatenated and returned to procedure.
-   ]#
-
-  var
-    client = newHttpClient()
-    websitest, test:string
-    textpartsq:seq[string] = @[]
-    textpartst, textallst:string
-    substringcountit: int
-    substringpossq: seq[int]
-    posit, textstartit, textendit:int
-    foundbo:bool = false
-    allfoundbo: bool = false
-    proef:string
-    tellit:int
-    pos2it:int
-
-  const
-    allowedtagsar=["a", "abbr", "b", "br", "em", "ins", "main", "mark", "q", "small", "span", "strong", "time", "wbr"]
-
-  try:
-
-    websitest = client.getContent(webaddresst)
-    echo "charcount = " & $len(websitest)
-
-    substringcountit = count(websitest, "<p>")
-    echo "\ptagcount = " & $substringcountit
-
-    posit = -1
-    tellit = 0
-
-    while not allfoundbo:
-      while not foundbo: # no paragraph-start found yet
-        tellit += 1
-        # echo tellit
-        posit = find(websitest, "<p", posit + 1)
-        # echo posit
-        # proef = websitest[posit .. posit + 5]
-        # # echo proef
-        test = websitest[posit + 2 .. posit + 2]
-        # echo test & "---"
-
-        if posit != -1:
-          if test == " " or test == ">":   # <p with our without atrributes; search for >
-            textstartit = posit      
-            foundbo = true
-            # proef = websitest[posit .. posit + 5]
-            # echo proef
-            # echo "posit=" & $posit
-            # echo test
-            # echo "found"
-        else:
-          # no paragraphs found anymore
-          foundbo = true
-          allfoundbo = true
-          echo "allfound = true"
-
-        # if tellit == 1000:
-        #   foundbo = true
-        #   allfoundbo = true
-        #   echo "tellit= " & $tellit
-
-      foundbo = false
-      if not allfoundbo:
-        # search paragraph-end
-        pos2it = posit
-        pos2it = find(websitest, "</p>", pos2it + 1)
-
-        if pos2it != -1:
-          textendit = pos2it + 4
-          echo "pos2it= " & $pos2it
-          # echo textstartit
-          # echo textendit
-          textpartst = websitest[textstartit .. textendit]
-          textallst &= textpartst
-          # echo "\p============processText=========================="
-          # echo textpartst
-          # echo "================================================="
-        else:
-          echo "Tag </p> not found; paragraph unclosed"
-
-    return textallst
-
-  except:
-    let errob = getCurrentException()
-    echo "\p******* Unanticipated error ******* \p" 
-    echo repr(errob) & "\p****End exception****\p"
-
-
-
 proc calculateWordFrequencies*(input_tekst:string, wordlengthit:int,
                             useHtmlBreaksbo:bool):string = 
 
@@ -377,7 +282,8 @@ proc calculateWordFrequencies*(input_tekst:string, wordlengthit:int,
 
 
 proc applyDefinitionFileToText(input_tekst, languagest: string, 
-                    highlightbo: bool, summaryfilest: string = ""): string =
+                    highlightbo: bool, summaryfilest: string = "",
+                    use_multi_summarybo: bool = false): string =
 
   #[
   Is now used in 2 cases / passes with separate arguments:
@@ -441,8 +347,11 @@ proc applyDefinitionFileToText(input_tekst, languagest: string,
     log("==============================")
     log("highlighting...")
 
-    if createCombinedSummaryFile("concatenate"):
-      def_filenamest = "data_files/summary_concatenated.dat"
+    if use_multi_summarybo:
+      if createCombinedSummaryFile("concatenate"):
+        def_filenamest = "data_files/summary_concatenated.dat"
+      else:
+        def_filenamest = summaryfilest
     else:
       def_filenamest = summaryfilest
 
@@ -792,7 +701,8 @@ proc convertRelPathsToAbsolute(inputtekst, cur_addresst: string): string =
 
 proc handleTextPartsFromHtml*(webaddresst, typest, languagest: string,
           taglist:string = "paragraph-only", summaryfilest: string = "",
-          generatecontentst: string, abbreviationsq: seq[string] = @[]): string =
+          generatecontentst: string, abbreviationsq: seq[string] = @[], 
+          use_multi_summarybo: bool): string =
 
   #[ 
   This procedure is a forth-development of extractTextPartsFromHtml.
@@ -830,6 +740,8 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest: string,
 
   ADAP FUT:
   -add tags section and table
+  -is there a simpler way to do this?
+
    ]#
 
 
@@ -1071,7 +983,7 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest: string,
 
           elif typest == "replace":
             websitest.delete(textstartit..textendit)
-            highlightedst = applyDefinitionFileToText(textpartst, languagest, true, summaryfilest)
+            highlightedst = applyDefinitionFileToText(textpartst, languagest, true, summaryfilest, use_multi_summarybo)
             reformatedst = applyDefinitionFileToText(highlightedst, languagest, false)
             posit += len(reformatedst) - 2
             websitest.insert(reformatedst, textstartit)
@@ -1096,7 +1008,8 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest: string,
 
 
 proc extractSentencesFromText(input_tekst, languagest:string, 
-              summaryfilest: string = "", generatecontentst: string) :string =
+              summaryfilest: string = "", generatecontentst: string, 
+              use_multi_summarybo: bool) :string =
 
   #[ 
   Process the input-text by extracting sentences that have a certain 
@@ -1114,15 +1027,15 @@ proc extractSentencesFromText(input_tekst, languagest:string,
 
   ADAP HIS
   -prune and correct the code
-
-  ADAP NOW
-  
-  ADAP FUT
   - to possiblize multiple summary-files:
     - read the desired sum-files from lists/multi-summary-list.txt
     - combine the sum-files into one temporary file with only
       one section.
     - use the temp-file to do the extraction
+
+  ADAP NOW
+  
+  ADAP FUT
   ]#
 
 
@@ -1152,9 +1065,11 @@ proc extractSentencesFromText(input_tekst, languagest:string,
 
   def_filenamest = summaryfilest
 
-
-  if createCombinedSummaryFile("aggregate"):
-    def_filenamest = "data_files/summary_aggregated.dat"
+  if use_multi_summarybo:
+    if createCombinedSummaryFile("aggregate"):
+      def_filenamest = "data_files/summary_aggregated.dat"
+    else:
+      def_filenamest = summaryfilest  
   else:
     def_filenamest = summaryfilest
 
@@ -1593,7 +1508,8 @@ proc extractSentencesFromText(input_tekst, languagest:string,
 
 
 proc formatText*(input_tekst, languagest, preprocesst: string, 
-          summaryfilest: string = "", generatecontentst: string):string =
+          summaryfilest: string = "", generatecontentst: string, 
+          use_multi_summarybo: bool):string =
   
   # To apply html-formatting (coloring and highlighting), 
   # possibly after summarization
@@ -1606,12 +1522,12 @@ proc formatText*(input_tekst, languagest, preprocesst: string,
 
   if preprocesst == "summarize":
     r2 = extractSentencesFromText(r1, languagest, summaryfilest, 
-                                    generatecontentst)
-    r3 = applyDefinitionFileToText(r2, languagest, true, summaryfilest)
+                                    generatecontentst, use_multi_summarybo)
+    r3 = applyDefinitionFileToText(r2, languagest, true, summaryfilest, use_multi_summarybo)
     result = applyDefinitionFileToText(r3, languagest, false)
 
   else:   # no summary requested
-    r2 = applyDefinitionFileToText(r1, languagest, true, summaryfilest)
+    r2 = applyDefinitionFileToText(r1, languagest, true, summaryfilest, use_multi_summarybo)
     result = applyDefinitionFileToText(r2, languagest, false)
 
 

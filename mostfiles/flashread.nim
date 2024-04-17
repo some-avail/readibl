@@ -80,7 +80,7 @@ template log(messagest: string) =
 
 
 const 
-  versionfl: float = 0.9405
+  versionfl: float = 0.9406
   minimal_word_lengthit = 7
   appnamebriefst:string = "RD"
   appnamenormalst = "Readibl"
@@ -142,7 +142,7 @@ proc getWebTitle():string =
 
 
 proc jump_to_end_step(languagest, preprocesst, taglist, typest, summaryfilest,
-                          gencontentst: string): string =
+                          gencontentst: string, use_multi_summarybo: bool): string =
   # Skip the gradual steps from the radio-buttons and go to processing immediately
   # typest determines if text-extraction or insite text-replacement is done
 
@@ -156,19 +156,15 @@ proc jump_to_end_step(languagest, preprocesst, taglist, typest, summaryfilest,
 
   if past[0 .. 3] == "http":   # pasted text is a link
     if typest == "":
-      inter_tekst = handleTextPartsFromHtml(past, "extract", languagest, 
-                                    taglist, summaryfilest, gencontentst, abbreviationsq)
-      result = formatText(inter_tekst, languagest, preprocesst, 
-                            summaryfilest, gencontentst)
+      inter_tekst = handleTextPartsFromHtml(past, "extract", languagest, taglist, summaryfilest, gencontentst, abbreviationsq, use_multi_summarybo)
+      result = formatText(inter_tekst, languagest, preprocesst, summaryfilest, gencontentst, use_multi_summarybo)
     elif typest == "insite_reformating":
-      result = handleTextPartsFromHtml(past, "replace", languagest, 
-                                    taglist, summaryfilest, gencontentst, abbreviationsq)
+      result = handleTextPartsFromHtml(past, "replace", languagest, taglist, summaryfilest, gencontentst, abbreviationsq, use_multi_summarybo)
 
   else:   # a text-block is pasted in this case
     inter_tekst = past
     resulttekst = replaceInPastedText(inter_tekst, gencontentst, abbreviationsq)
-    result = formatText(resulttekst, languagest, preprocesst, 
-                               summaryfilest, gencontentst)
+    result = formatText(resulttekst, languagest, preprocesst, summaryfilest, gencontentst, use_multi_summarybo)
 
 
 
@@ -202,6 +198,7 @@ routes:
       newinnerhtmlst: string
       filestatusmessagest: string
       compare_filesq: seq[string]
+      use_multi_summarybo: bool = false
 
       innervarob: Context = newContext()  # inner html insertions
       outervarob: Context = newContext()   # outer html insertions
@@ -239,6 +236,8 @@ routes:
     innervarob["taglist"] = setDropDown("taglist", "paragraph-with-headings")
     innervarob["radiobuttons_1"] = setRadioButtons("orders","")
     innervarob["summarylist"] = setDropDown("summarylist", readOptionFromFile("summary-file", "value"))
+    innervarob["checkbox_multisum"] = setCheckBoxSet("fr_checkset2", @["default"])
+
     innervarob["urltext"] = ""
     innervarob["checkboxes_1"] = setCheckBoxSet("fr_checkset1", @["default"])
     innervarob["submit"] = newlang("Choose and run")
@@ -280,6 +279,7 @@ routes:
       filestatusmessagest: string
       innervarob: Context = newContext()  # inner html insertions
       outervarob: Context = newContext()   # outer html insertions
+      use_multi_summarybo: bool = false
 
 
     # filepathst = "getappdir: " & getappdir() & " <br>" &
@@ -322,6 +322,7 @@ routes:
         innervarob["text_language"] = setDropDown("text-language", @"text-language")
         innervarob["taglist"] = setDropDown("taglist", @"taglist")
         innervarob["summarylist"] = setDropDown("summarylist", @"summarylist")
+        innervarob["checkbox_multisum"] = setCheckBoxSet("fr_checkset2", @[@"multisum"])
 
         innervarob["radiobuttons_1"] = setRadioButtons("orders", "transfer")
         innervarob["urltext"] = ""
@@ -347,11 +348,17 @@ routes:
             innervarob["newtab"] = "_blank"
             outervarob["pagetitle"] = getWebTitle()
 
-          output_tekst = jump_to_end_step(@"text-language", @"summarize", @"taglist", 
-                                        "", @"summarylist", @"generate_contents", )
+          if @"multisum" == "multisum":
+            if createCombinedSummaryFile("testing") == true:
+              use_multi_summarybo = true
+          output_tekst = jump_to_end_step(@"text-language", @"summarize", @"taglist", "", @"summarylist", @"generate_contents", use_multi_summarybo)
+
           statustekst = "Output number of words:"
-          if createCombinedSummaryFile("testing"):
-            statusdatast = $countWords(output_tekst) & " --- " & "Using a combined summary.."
+          if @"multisum" == "multisum":
+            if createCombinedSummaryFile("testing"):
+              statusdatast = $countWords(output_tekst) & " --- " & "Using a combined summary.."
+            else:
+              statusdatast = $countWords(output_tekst)  & " --- " & "Could not use multi-summary-list (invalid)"
           else:
             statusdatast = $countWords(output_tekst)
 
@@ -362,7 +369,7 @@ routes:
           innervarob["text_language"] = setDropDown("text-language", @"text-language")
           innervarob["taglist"] = setDropDown("taglist", @"taglist")
           innervarob["summarylist"] = setDropDown("summarylist", @"summarylist")
-
+          innervarob["checkbox_multisum"] = setCheckBoxSet("fr_checkset2", @[@"multisum"])
           innervarob["radiobuttons_1"] = setRadioButtons("orders", "pasteclip")
           innervarob["urltext"] = ""
           innervarob["checkboxes_1"] = setCheckBoxSet("fr_checkset1", @[@"jump_to_end", @"summarize", 
@@ -382,11 +389,28 @@ routes:
             innervarob["newtab"] = "_blank"
             outervarob["pagetitle"] = getWebTitle()
 
-          newinnerhtmlst = jump_to_end_step(@"text-language", @"summarize", 
-                                @"taglist", @"insite_reformating", 
-                                @"summarylist", @"generate_contents")
+
+          if @"multisum" == "multisum":
+            if createCombinedSummaryFile("testing") == true:
+              use_multi_summarybo = true
+          newinnerhtmlst = jump_to_end_step(@"text-language", @"summarize", @"taglist", 
+                                        @"insite_reformating", @"summarylist", @"generate_contents", use_multi_summarybo)
+
           statustekst = "Output number of words:"
-          statusdatast = $countWords(newinnerhtmlst)
+          if @"multisum" == "multisum":
+            if createCombinedSummaryFile("testing"):
+              statusdatast = $countWords(newinnerhtmlst) & " --- " & "Using a combined summary.."
+            else:
+              statusdatast = $countWords(newinnerhtmlst)  & " --- " & "Could not use multi-summary-list (invalid)"
+          else:
+            statusdatast = $countWords(newinnerhtmlst)
+
+          #newinnerhtmlst = jump_to_end_step(@"text-language", @"summarize", 
+          #                      @"taglist", @"insite_reformating", 
+          #                      @"summarylist", @"generate_contents")
+          #statustekst = "Output number of words:"
+          #statusdatast = $countWords(newinnerhtmlst)
+
           innervarob["statustext"] = newlang(statustekst)
           innervarob["statusdata"] = statusdatast
           innervarob["pastedtext"] = past
@@ -394,7 +418,7 @@ routes:
           innervarob["text_language"] = setDropDown("text-language", @"text-language")
           innervarob["taglist"] = setDropDown("taglist", @"taglist")
           innervarob["summarylist"] = setDropDown("summarylist", @"summarylist")
-
+          innervarob["checkbox_multisum"] = setCheckBoxSet("fr_checkset2", @[@"multisum"])
           innervarob["radiobuttons_1"] = setRadioButtons("orders", "pasteclip")
           innervarob["urltext"] = ""
           innervarob["checkboxes_1"] = setCheckBoxSet("fr_checkset1", @[@"jump_to_end", @"summarize", 
@@ -413,8 +437,9 @@ routes:
 
       # determine type of pasted_text (text or link)
       if @"pasted_text"[0..3] == "http":   # pasted text is a link
+
         output_tekst = handleTextPartsFromHtml(@"pasted_text", "extract", @"text-language", 
-                                          @"taglist", @"summarylist", @"generate_contents", abbreviationsq)
+                                          @"taglist", @"summarylist", @"generate_contents", abbreviationsq, use_multi_summarybo)
         # echo output_tekst
         
         statustekst = "Output number of words:"
@@ -426,7 +451,7 @@ routes:
         innervarob["text_language"] = setDropDown("text-language", @"text-language")
         innervarob["taglist"] = setDropDown("taglist", @"taglist")
         innervarob["summarylist"] = setDropDown("summarylist", @"summarylist")
-
+        innervarob["checkbox_multisum"] = setCheckBoxSet("fr_checkset2", @[@"multisum"])
         innervarob["radiobuttons_1"] = setRadioButtons("orders", "frequencies")
         innervarob["urltext"] = @"pasted_text"
         innervarob["checkboxes_1"] = setCheckBoxSet("fr_checkset1", @[@"jump_to_end", @"summarize", 
@@ -451,7 +476,7 @@ routes:
         innervarob["text_language"] = setDropDown("text-language", @"text-language")
         innervarob["taglist"] = setDropDown("taglist", @"taglist")    
         innervarob["summarylist"] = setDropDown("summarylist", @"summarylist")
-
+        innervarob["checkbox_multisum"] = setCheckBoxSet("fr_checkset2", @[@"multisum"])
         innervarob["radiobuttons_1"] = setRadioButtons("orders", "frequencies")
         innervarob["urltext"] = ""
         innervarob["checkboxes_1"] = setCheckBoxSet("fr_checkset1", @[@"jump_to_end", @"summarize", 
@@ -480,7 +505,7 @@ routes:
       innervarob["text_language"] = setDropDown("text-language", @"text-language")
       innervarob["taglist"] = setDropDown("taglist", @"taglist")
       innervarob["summarylist"] = setDropDown("summarylist", @"summarylist")
-
+      innervarob["checkbox_multisum"] = setCheckBoxSet("fr_checkset2", @[@"multisum"])
       innervarob["radiobuttons_1"] = setRadioButtons("orders", "process_text")
       innervarob["urltext"] = @"url_text"
       innervarob["checkboxes_1"] = setCheckBoxSet("fr_checkset1", @[@"jump_to_end", @"summarize", 
@@ -503,9 +528,22 @@ routes:
         innervarob["newtab"] = "_blank"
         outervarob["pagetitle"] = getWebTitle()
 
-      # converted_tekst = replaceInPastedText(@"pasted_text", @"generate_contents")
+      if @"multisum" == "multisum":
+        if createCombinedSummaryFile("testing") == true:
+          use_multi_summarybo = true
+
       output_tekst = formatText(@"pasted_text", @"text-language", @"summarize", 
-                                    @"summarylist", @"generate_contents")
+                                    @"summarylist", @"generate_contents", use_multi_summarybo)
+
+      statustekst = "Output number of words:"
+      if @"multisum" == "multisum":
+        if createCombinedSummaryFile("testing"):
+          statusdatast = $countWords(output_tekst) & " --- " & "Using a combined summary.."
+        else:
+          statusdatast = $countWords(output_tekst)  & " --- " & "Could not use multi-summary-list (invalid)"
+      else:
+        statusdatast = $countWords(output_tekst)
+
       statustekst = "Output number of words:"
       statusdatast = $countWords(output_tekst)
       innervarob["statustext"] = newlang(statustekst)
@@ -516,7 +554,7 @@ routes:
       innervarob["text_language"] = setDropDown("text-language", @"text-language")
       innervarob["taglist"] = setDropDown("taglist", @"taglist")
       innervarob["summarylist"] = setDropDown("summarylist", @"summarylist")
-
+      innervarob["checkbox_multisum"] = setCheckBoxSet("fr_checkset2", @[@"multisum"])
       innervarob["radiobuttons_1"] = setRadioButtons("orders", "pasteclip")
       innervarob["urltext"] = @"url_text"
       innervarob["checkboxes_1"] = setCheckBoxSet("fr_checkset1", @[@"jump_to_end", @"summarize", 

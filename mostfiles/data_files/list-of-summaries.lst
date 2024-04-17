@@ -1,0 +1,28 @@
+You can enter a list of summaries below.
+It will be used as a batch-operation 
+so that multiple summaries are used, in which 
+a different color is used for every summary.
+
+
+
+
+>>>SUMMARIES<<<
+>----------------------------------<
+
+summary_english_gen2_small.dat
+summary_english_sources.dat
+summary_english_places.dat
+summary_english_times.dat
+
+
+OTHER POSSIBLE BATCHES
+summary_english_places.dat
+summary_english_times.dat
+
+summary_english_gen3_default.dat
+summary_english_sources.dat
+summary_english_places.dat
+summary_english_times.dat
+summary_english_computer.dat
+summary_english_causation.dat
+

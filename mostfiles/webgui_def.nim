@@ -52,7 +52,8 @@ var checkboxesta* = {
                         ("summarize", "Summarize (extract certain sentences)", false),
                         ("generate_contents","Generate contents (experimental)", false),
                         ("insite_reformating","Perform in-site reformating", false),
-                        ("newtab", "Open result in new tab", false)]
+                        ("newtab", "Open result in new tab", false)],
+      "fr_checkset2": @[("multisum", "Use multi-summary file", false)]
                       }.toTable
 
 
