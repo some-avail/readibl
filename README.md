@@ -1,7 +1,6 @@
 ## Readibl Text Reformatter
 
-![wikipedia_flower.png](screenshots/wikipedia_flower.png)
-
+![CNN_article_journalism_highlighting_2024.png](screenshots/CNN_article_journalism_highlighting_2024.png)
 
 [See below for more screenshots](#more-screenshots)
 
@@ -63,6 +62,20 @@ Created by Joris Bollen.
 
 
 <a name="more-screenshots">More screenshots:</a>
+
+Multi-color journalistic highlighting in dark mode (thanks to firefox add-on Dark Reader):
+![CNN_journalism_highlighting_night-mode_2024.png](screenshots/CNN_journalism_highlighting_night-mode_2024.png)
+
+Summarization example (1 of 2) with 3 extractions based a single summary-file:
+![wiki_flower_summarized_1of2_2024.png](screenshots/wiki_flower_summarized_1of2_2024.png)
+
+Summarization example (2 of 2) showing the extractions:
+![wiki_flower_summarized_2of2_2024.png](screenshots/wiki_flower_summarized_2of2_2024.png)
+
+Another multi-coloring example:
+![wikipedia_flower_2024.png](screenshots/wikipedia_flower_2024.png)
+
+*Some older stepped examples:*
 
 Before application of readible reformatting:
 ![before_readible.png](screenshots/before_readible.png)
