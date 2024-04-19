@@ -1,5 +1,9 @@
 Readibl Text Reformatter is a program to format normal text or html, so that it is easier to read and process mentally. The program was previously called FlashRead. The program is written in the language Nim.
 
+Web-links:
+https://github.com/some-avail/readibl
+https://github.com/some-avail/readibl/wiki
+
 
 Installation on linux:
     -download latest linux-release (tar.gz).

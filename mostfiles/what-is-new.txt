@@ -4,6 +4,34 @@ https://github.com/some-avail/readibl/commits/main
 Version-changes:
 
 
+Readibl 0.95:
+-added multi-summary facility;
+	-enable the new multi-summary checkbox
+	-set the multiple summaries in the file: data_files/list-of-summaries.lst
+	-you get up to six colors from each listed summary when they are used for their signal-words.
+	-you can also perform an extraction in which the coloring is also applied.
+
+-added some new exotic tags
+-summary-combo-list is now sorted
+-data-file-validation is now sorted
+-added summary-comparison (SC);
+	- SC can be activated by entering the two summary-names in the options-file (settings_flashread.conf)
+	- reload Readibl and the diffs are shown in the startup-screen
+	- resetting the file-names to dummy-names will restore the generic data-file-validation on startup
+
+-some added /changed summary-files:
+	summary_english_causation.dat
+	summary_english_places.dat
+	summary_english_sources.dat
+	summary_english_times.dat
+	summary_english_archeology.dat
+	summary_dutch_gen1_tiny.dat
+	summary_dutch_gen2_small.dat
+	summary_dutch_gen3_default.dat
+	summary_dutch_gen4_large.dat
+
+
+
 Readibl 0.94:
 > features:
 -improved the summary and added two summary-files
