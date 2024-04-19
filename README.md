@@ -10,7 +10,8 @@
 
 [See what is new / what-is-new.txt](mostfiles/what-is-new.txt)
 
-Now Readibl 0.94 for linux available, for windows coming soon.
+
+Now Readibl 0.94 is available, 0.95 is forthcoming.
 Readibl Text Reformatter is a program to format normal text or html, so that it is easier to read and process mentally. The program was previously called FlashRead.
 The program is written in the language Nim.
 
@@ -36,24 +37,32 @@ If the paths you see on the webpage dont match the location of the application, 
 
 #### Usage
 Then you get the user-interface in the browser. From there on you can use the clipboard-contents to either reformat a copied text, or use a copied web-address to process and reformat. Experiment with the switches.
-In the config-file "settings_flashread.conf" you can do the following:
+In the config-file "settings_flashread.conf" you can change things like:
 - the port-number can be adjusted
 - interface-language can be set (besides english there is only dutch for now, but you can make you own language-file *translations.tra).
 - possible processing text-languages; only english.dat en dutch.dat exist for now, but you can make your own.
+
+Further info on settings: see the wiki.
 
 
 #### Installation by building (for developers)
 Developer with knowledge of nim can download the code and do the following:
 - install external components:
-	- nimclipboard-lib:
-		> on linux mint 19 you need to install folowing packages:
-		> libx11-xcb-dev and/or xcb
-		> in either one of those exists xbc.h, which is needed.
-	- moustachu
+	- nimclipboard library:
+		> found at: https://github.com/genotrance/nimclipboard
+		> follow the instructions
+	- moustachu library:
+		> found at: https://github.com/fenekku/moustachu
+		> Nim 1.6 follow instructions
+		> Nim 2.x follow the workaround given in the issues-section.
 	- jester
+		> found at: https://github.com/dom96/jester
+		> run: nimble install jester
 
+
+Go to the folder: mostfiles.
 Run the command:
-nim c -d:ssl -r flashread.nim
+nim c -r -d:ssl --threads:off -d:release flashread.nim
 
 which will compile the code to an executable, which will then be executed. The running program then acts as a local  web-server, which can be invoked from a web-browser, by typing:
 http://localhost:5050/flashread-form
@@ -63,7 +72,8 @@ Created by Joris Bollen.
 
 <a name="more-screenshots">More screenshots:</a>
 
-Multi-color journalistic highlighting in dark mode (thanks to firefox add-on Dark Reader):
+Multi-color journalistic highlighting effect in dark mode (thanks to firefox add-on Dark Reader).
+The summary / highlighting-order is generic, sources, places and times:
 ![CNN_journalism_highlighting_night-mode_2024.png](screenshots/CNN_journalism_highlighting_night-mode_2024.png)
 
 Summarization example (1 of 2) with 3 extractions based a single summary-file:
