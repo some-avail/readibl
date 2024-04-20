@@ -3,23 +3,35 @@ Readibl Text Reformatter is a program to format normal text or html, so that it 
 Web-links:
 https://github.com/some-avail/readibl
 https://github.com/some-avail/readibl/wiki
+----------------------------------------------------------------------
 
+INSTALLATION ON LINUX
 
-Installation on linux:
-    -download latest linux-release (tar.gz).
-    -unpack, place it somewhere in your user-folder, and run the executable "flashread".
-    -to access the local web-server you just started, type: http://localhost:5050/flashread-form
-    -the portnumber can be changed in the configuration-file: settings_flashread.conf
+Download latest linux-release (tar.gz).
 
-If the paths you see on the webpage dont match the location of the application, adjust and run the linux-script flashread_sh. If the app is started from the dir where the application resides, path-problems can be avoided.
+Just unpack, place it somewhere in your user-folder.
+I prefer to start the app from a terminal, so that the programs status-info can be viewed.
+So to run the executable "flashread" firstly open a terminal, then go to the readibl-folder and enter:
+./flashread
 
+To access the web-server you just started, click on or type in your browser: http://localhost:5050/flashread-form
 
-Installation on windows
+If the app is started from a folder where the application does NOT reside (like so: path/to/readibl/flashread), path-problems will occur. This may apply when you want to start the app together with the OS-startup. In that case you need to adjust and start up from flashread_sh (like so: path/to/readibl/flashread_sh)
+But if you use flashread_sh, then update it with the path of you readibl-dir.
+
+For the changes see mostfiles/what-is-new.txt
+
+The portnumber can be changed in the configuration-file: settings_flashread.conf
+
+-------------------------------------------------------------------
+
+INSTALLATION ON WINDOWS
+
     -download latest windows-release (.zip)
-    -unpack, place it somewhere in your user-folder, and run the executable "flashread".
+    -unpack, place it somewhere in your user-folder, and run the executable "flashread.exe".
     -to access the local web-server you just started, type: http://localhost:5050/flashread-form
 
-
+--------------------------------------------------------------------
 Usage
 Then you get the user-interface in the browser. From there on you can use the clipboard-contents to either reformat a copied text, or use a copied web-address to process and reformat. Experiment with the switches. In the config-file "settings_flashread.conf" you can do the following:
 

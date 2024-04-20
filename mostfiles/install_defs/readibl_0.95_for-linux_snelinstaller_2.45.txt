@@ -37,6 +37,7 @@ arguments---linux_set_exe=1
 #target#
 .
 flashread
+flashread_sh
 >----------------------------------<
 TARGET-LOCATION AND SOURCE-FILES TO COPY
 comment: here stuff the starting-dir

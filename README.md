@@ -19,12 +19,15 @@ The program is written in the language Nim.
 
 #### Installation on linux
 - download latest linux-release (tar.gz).
-- unpack, place it somewhere in your user-folder, and run the executable "flashread".
+- unpack, place it somewhere in your user-folder.
+- open a terminal and go to your Readibl-directory.
+- run the executable "flashread" by entering: ./flashread
 - to access the local web-server you just started, type: 
 	http://localhost:5050/flashread-form
 - the portnumber can now be changed in the configuration-file: settings_flashread.conf
+- see also in the readibl-folder: help_info/help.txt
 
-If the paths you see on the webpage dont match the location of the application, adjust and run the linux-script flashread_sh. If the app is started from the dir where the application resides, path-problems can be avoided.
+If the app is started from a dir where the application does NOT reside, path-problems will occur. In that case  adjust and run the linux-script flashread_sh. 
 
 
 #### Installation on windows
