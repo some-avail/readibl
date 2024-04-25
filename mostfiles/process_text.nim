@@ -1058,14 +1058,14 @@ proc extractSentencesFromText(input_tekst, languagest:string,
     stringsizeit:int
     linesq: seq[string] 
     linecountit: int =0
-    first_multi_summaryboolst: string
+    single_multi_summaryboolst: string
 
-  first_multi_summaryboolst = readOptionFromFile("first-multi-summary", "value")
+  single_multi_summaryboolst = readOptionFromFile("single-multi-summary", "value")
 
   def_filenamest = summaryfilest 
 
   if use_multi_summarybo:
-    if first_multi_summaryboolst == "false":
+    if single_multi_summaryboolst == "false":
       if createCombinedSummaryFile("aggregate"):
         def_filenamest = "data_files/summary_aggregated.dat"
 

@@ -140,15 +140,16 @@ proc createCombinedSummaryFile*(combinationtypest: string): bool =
   #[
    combine (concatenate or aggregate) the summaries from a list-file (if present) into 
    one new, overwritable file for use in multi-summary highlightings and extractions.
-   combinationtypest: concatenate, aggregate or testing
+   combinationtypest: concatenate, aggregate, first or testing
 
     "combinationtypest = testing" means that only is checked if conditions are met.
   
-  ADAP FUT
+  ADAP HIS
   -add an combinationstype "first" to only use the first summary for extraction
   (but all for highlighting)
-
+    but this option is NOT used because not the first but the selected summary is used now.
   ]#
+
 
   var 
     summary_createdbo: bool = false
