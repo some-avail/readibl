@@ -9,37 +9,45 @@ optionally followed by items to be investigated
 
 
 SIGNAL-WORDS TO HANDLE
-first 
- last 
- early 
- late 
-dating
- dated
- date 
- time 
-year
- week
- month
- day
-day 
-day,
-centur
- age 
+eerst
+ laatst 
+ vroeg
+ late
+datering
+dateer
+ datum 
+ tijdens
+tijd
+jaar 
+jaren
+ week 
+ weken 
+ maand
+ dag
+dag
+dag,
+eeuw
+ tijd 
 BCE
  BC
  AD 
- after 
- during 
- since 
-anuary
-ebruary
-March
-pril
-May 
-June
-june
-July
-july
+ na  
+ tijdens 
+ gedurende  
+ sinds 
+ vanaf  
+anuarie
+ebruarie
+Maart
+maart
+April
+april
+Mei 
+ mei 
+Juni 
+juni
+Juli
+juli
 ugustus
 eptember
 ctober
@@ -78,6 +86,7 @@ ecember
 200
 201
 202
+
 >----------------------------------<
 
 

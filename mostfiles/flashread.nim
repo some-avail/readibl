@@ -80,7 +80,7 @@ template log(messagest: string) =
 
 
 const 
-  versionfl: float = 0.95
+  versionfl: float = 0.9503
   minimal_word_lengthit = 7
   appnamebriefst:string = "RD"
   appnamenormalst = "Readibl"
@@ -533,7 +533,7 @@ routes:
           use_multi_summarybo = true
 
       output_tekst = formatText(@"pasted_text", @"text-language", @"summarize", 
-                                    @"summarylist", @"generate_contents", use_multi_summarybo)
+                              @"summarylist", @"generate_contents", use_multi_summarybo)
 
       statustekst = "Output number of words:"
       if @"multisum" == "multisum":

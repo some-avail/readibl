@@ -1,0 +1,57 @@
+Extraction-strings for summarizing with Flashread.
+Language: dutch
+Summary-type: generic
+version: 1.3
+
+-new set for extracting locational information.
+
+
+
+SIGNAL-WORDS TO HANDLE
+ in de 
+ in het 
+ in een 
+ binnen 
+ buiten 
+ achter 
+ vanuit  
+ naar  
+ vanaf 
+ bij 
+ locat
+ plaats 
+Waar 
+, waar 
+ noord
+ zuid
+ west
+ oost
+Noord
+Zuid
+West
+Oost
+ regio 
+ streek
+land 
+ land
+ gewest
+ gebied
+ terrein
+ stad 
+ steden 
+ centrum 
+ bezoek
+>----------------------------------<
+
+
+
+Other optional words:
+
+
+possible false positives:
+ between the 
+ there 
+to the 
+
+probable FPs:
+ in 

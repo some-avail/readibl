@@ -42,10 +42,11 @@ import httpClient
 import tables, algorithm
 import stringstuff
 import source_files
+import fr_tools
+
 
 # no longer used:
 # import os, times, sequtils
-# import fr_tools
 
 
 type
@@ -65,7 +66,7 @@ template log(messagest: string) =
 
 
 const 
-  versionfl:float = 0.385
+  versionfl:float = 0.39
 
   input_tekst = "chimpansee noot mies een chimpansee is een leuk dier\pde chimpansee is het slimste dier naar het schijnt.\pmaar naast de chimpansee zijn er ook andere slimme \pdieren zoals de raaf, de dolfijn en de hond."
   tekst = "pietje staat. gister niet, maar toch. wat\pjantje. wimpie, onno\pkeesje.grietje,antje\pdirkje"
@@ -408,30 +409,25 @@ proc applyDefinitionFileToText(input_tekst, languagest: string,
             case phasecountit:
             # oker
             of 1:
-              phasetekst = customReplace(phasetekst, line, "<span style=background-color:#ffd280>" & line & "</span>",
-                                      true, "", @[])
+              phasetekst = customReplace(phasetekst, line, "<span style=background-color:#ffd280>" & line & "</span>", true, "", @[])
             # green
             of 2:
-              phasetekst = customReplace(phasetekst, line, "<span style=background-color:#8efd7f>" & line & "</span>",
-                                      true, "", @[])
+              phasetekst = customReplace(phasetekst, line, "<span style=background-color:#8efd7f>" & line & "</span>", true, "", @[])
             # #8efd7f----#ccfeb9
             # blueish
             of 3:
-              phasetekst = customReplace(phasetekst, line, "<span style=background-color:#9eedfd>" & line & "</span>",
-                                      true, "", @[])
+              phasetekst = customReplace(phasetekst, line, "<span style=background-color:#9eedfd>" & line & "</span>", true, "", @[])
             # reddish - #f1a0a0 - #facccc
             of 4:
-              phasetekst = customReplace(phasetekst, line, "<span style=background-color:#f1a0a0>" & line & "</span>",
-                                      true, "", @[])
+              phasetekst = customReplace(phasetekst, line, "<span style=background-color:#f1a0a0>" & line & "</span>", true, "", @[])
             # lila - #e476f1 - #f5a9fe
             of 5:
-              phasetekst = customReplace(phasetekst, line, "<span style=background-color:#e476f1>" & line & "</span>",
-                                      true, "", @[])
+              phasetekst = customReplace(phasetekst, line, "<span style=background-color:#e476f1>" & line & "</span>", true, "", @[])
             # grey
             else:
-              phasetekst = customReplace(phasetekst, line, "<span style=background-color:#c8c8c8>" & line & "</span>",
-                                      true, "", @[])
-              #---#d6d6d6---#c2c2c2
+              phasetekst = customReplace(phasetekst, line, "<span style=background-color:#a1a0a1>" & line & "</span>", true, "", @[])
+
+              #---#d6d6d6---#c2c2c2----#a1a0a1---#c8c8c8>
 
           elif blockphasest == "LINK-WORDS TO HANDLE":
             # if use_custom_replacebo:
@@ -1062,17 +1058,16 @@ proc extractSentencesFromText(input_tekst, languagest:string,
     stringsizeit:int
     linesq: seq[string] 
     linecountit: int =0
+    first_multi_summaryboolst: string
 
-  def_filenamest = summaryfilest
+  first_multi_summaryboolst = readOptionFromFile("first-multi-summary", "value")
+
+  def_filenamest = summaryfilest 
 
   if use_multi_summarybo:
-    if createCombinedSummaryFile("aggregate"):
-      def_filenamest = "data_files/summary_aggregated.dat"
-    else:
-      def_filenamest = summaryfilest  
-  else:
-    def_filenamest = summaryfilest
-
+    if first_multi_summaryboolst == "false":
+      if createCombinedSummaryFile("aggregate"):
+        def_filenamest = "data_files/summary_aggregated.dat"
 
 
   # Old approach - created to big chunks:
@@ -1109,6 +1104,7 @@ proc extractSentencesFromText(input_tekst, languagest:string,
           if sentencest.len < stringsizeit:
             summarysq.add(sentencest & ". ")
         else:
+          # beyond the introduction only extracted sentences are added
           processingbo = false  # header not yet reached
 
           if signal_strings_starting_pointit > 0:
@@ -1196,314 +1192,194 @@ proc extractSentencesFromText(input_tekst, languagest:string,
 
 
 
-# proc extractMatchesFromText_Old(input_tekst, languagest:string, 
-#               summaryfilest: string = "", generatecontentst: string,
-#               contextit: int = 120) :string =
 
-#   #[ 
-#   Process the input-text by extracting sentences that have a certain 
-#   search-string in them, so that a summary arises.
+proc extractSentencesFromText_Old(input_tekst, languagest:string, 
+              summaryfilest: string = "", generatecontentst: string, 
+              use_multi_summarybo: bool) :string =
 
-#   The summary-definition-files (like summary_english.dat) are used.
+  #[ 
+  Process the input-text by extracting sentences that have a certain 
+  search-string in them, so that a summary arises.
 
-#   The search-strings originate no more from the language-files (like english.dat),
-#   specifically the category SIGNAL-WORDS TO HANDLE.
+  The summary-definition-files (like summary_english.dat) are used.
 
+  The search-strings originate no more from the language-files (like english.dat),
+  as in older versions of Readibl / flashread.
+  (specifically the category SIGNAL-WORDS TO HANDLE).
 
-#   ADAP HIS
-#   -prune and correct the code
-#   pseudocode
-#   -doorloop de signaalwoorden
-#       voor ieder sigwoord vervang door extra merkstreng
-#   doe zolang niet alle gevonden:
-#       zoek de eerstvolgende merkstreng = posmerk
-#           bereken de start vd uitsnede
-#               als posmerk > aantal contexttekens
-#                   uitsnee-start wordt (posmerk - aantal contexttekens)
-#               anders posmerk = 0
-#           bereken het einde vd uitsnede (posmerk + aantal contexttekens)
-
-#           doe tot geen overlap meer:        
-#               zoek de navolgende m-streng
-#               als (volgende posmerk - context) < uitsnede-einde dan
-#                   uitsnee-einde wordt v-posmerk + context
-#               anders 
-#                   geen overlap meer is waar
-#           voeg de uitsnede toe aan de reeks met uitsnedes
-
-#   ADAP NOW
-#   -algorithm with marking-string prependance has undesired results.
+  Arguments:
+  - input_tekst; expected format??
 
 
-#   ADAP FUT
+  ADAP HIS
+  -prune and correct the code
+  - to possiblize multiple summary-files:
+    - read the desired sum-files from lists/multi-summary-list.txt
+    - combine the sum-files into one temporary file with only
+      one section.
+    - use the temp-file to do the extraction
 
-#   ]#
-
-
-
-#   var
-#     deffile: File
-#     phasetekst:string = input_tekst    
-#     blockseparatorst = ">----------------------------------<"
-#     processingbo: bool
-#     markingst: string = "~*~"
-#     allfoundbo: bool = false
-#     posit, cutstartit, cutendit, extendedposit: int
-#     overlapbo: bool
-#     inputtextlengthit: int
-#     summarysq: seq[string] = @[]
-#     summaryst, cutoutst: string
-
-
-#   log(phasetekst)
-#   log("---------------")
-#   if open(deffile, summaryfilest):    # try to open the def-file / summary-file
-#     try:
-#       # walk thru the signal-words and and for each sigword 
-#       # prepend in the input-text a marking string by doing a 
-#       # replacement.
-#       for line in deffile.lines:
-
-#         # check for block-header
-#         if line == "SIGNAL-WORDS TO HANDLE":
-#           processingbo = true
-#         elif processingbo:
-#           if line != blockseparatorst:   # block-separating string; end of job
-#             phasetekst = replace(phasetekst, line, markingst & line)
-#           else:
-#             # stop because end-of-signalwords
-#             break
-      
-#       log(phasetekst)
-
-
-#       inputtextlengthit = len(phasetekst)
-
-#       # Cut out all signal-words with certain context and add those 
-#       # cutouts to a sequence.
-#       posit = 0
-#       while not allfoundbo:
-
-#         # find the next marking string
-#         posit = find(phasetekst, markingst, posit)
-#         if posit >= 0:
-#           # retrieve cutout-boundaries
-#           if posit > contextit:
-#             cutstartit = posit - contextit
-#           else:
-#             cutstartit = 0
-#           if (posit + contextit) < inputtextlengthit:
-#             cutendit = posit + contextit
-#           else:
-#             cutendit = inputtextlengthit
-
-
-#           # Test if the context-area of the previous match overlaps with 
-#           # the context-area of the next match and if yes then extend the 
-#           # cutout. Start assuming that it does overlap.
-#           overlapbo = true
-#           while overlapbo:
-#             if posit < inputtextlengthit:
-#               extendedposit = posit + 1
-#               extendedposit = find(phasetekst, markingst, extendedposit)
-#               if (extendedposit - contextit) < cutendit and extendedposit >= 0:
-#                 cutendit = extendedposit + contextit
-#                 posit = extendedposit
-#               else:
-#                 overlapbo = false
-
-#           posit += 1
-#           cutoutst = phasetekst[cutstartit..cutendit]
-#           cutoutst = replace(cutoutst, markingst, "")
-#           # summarysq.add("<br>" & "Word-position: " & $posit & " ===============================")
-#           # summarysq.add("\p\p")
-#           summarysq.add(cutoutst)
-#         else:
-#           allfoundbo = true
-
-#       # concatenate extracted sentences to text
-#       summaryst = ""
-#       for cutout in summarysq:
-#         # summaryst &= cutout & "<br>"
-#         summaryst &= "\p" & cutout
-
-
-#     except IOError:
-#       echo "IO error!"
-    
-#     except RangeError:
-#       echo "\p\p+++++++ search-config not found +++++++++++\p"
-#       echo "You have probably entered a search-config that could not be found. \p" &
-#           "Re-examine you search-config. \p"
-#       let errob = getCurrentException()
-#       echo "\p******* Technical error-information ******* \p" 
-#       echo repr(errob) & "\p****End exception****\p"
-
-    
-#     except:
-#       let errob = getCurrentException()
-#       echo "\p******* Unanticipated error ******* \p" 
-#       echo repr(errob) & "\p****End exception****\p"
-        
-#     finally:
-#       close(deffile)
-#   else:
-#     echo "Could not open file!"
-
-#   return summaryst
-
-
-
-# proc extractMatchesFromText(input_tekst, languagest:string, 
-#               summaryfilest: string = "", generatecontentst: string,
-#               contextit: int = 120) :string =
-
-#   #[ 
-#   Process the input-text by extracting sentences that have a certain 
-#   search-string in them, so that a summary arises.
-
-#   The summary-definition-files (like summary_english.dat) are used.
-
-#   The search-strings originate no more from the language-files (like english.dat),
-#   specifically the category SIGNAL-WORDS TO HANDLE.
-
-
-#   ADAP HIS
-#   -prune and correct the code
-
-#   ADAP NOW
+  ADAP NOW
   
-  
-#   ADAP FUT
-
-#   ]#
+  ADAP FUT
+  ]#
 
 
+  var 
+    deffile: File
 
-#   var
-#     deffile: File
-#     phasetekst:string = input_tekst    
-#     blockseparatorst = ">----------------------------------<"
-#     processingbo: bool
-#     markingst: string = "~*~"
-#     allfoundbo: bool = false
-#     posit, cutstartit, cutendit, extendedposit: int
-#     overlapbo: bool
-#     inputtextlengthit: int
-#     summarysq: seq[string] = @[]
-#     summaryst, cutoutst: string
-#     sigwordsq: seq[string] = @[]
-#     sigwordst: string
+    blockseparatorst = ">----------------------------------<"
+    lastline: string
+    phasetekst: string = input_tekst
+    def_filenamest: string
 
+    part1sq, part2sq, part3sq, sentencesq: seq[string] = @[]
+    sentencecountit: int = 0
 
-#   log(phasetekst)
-#   log("---------------")
-#   if open(deffile, summaryfilest):    # try to open the def-file / summary-file
-#     try:
-#       # walk thru the signal-words and and for each sigword 
-#       # prepend in the input-text a marking string by doing a 
-#       # replacement.
-#       for line in deffile.lines:
-
-#         # check for block-header
-#         if line == "SIGNAL-WORDS TO HANDLE":
-#           processingbo = true
-#         elif processingbo:
-#           if line != blockseparatorst:   # block-separating string; end of job
-#             sigwordsq.add(line)
-#           else:
-#             # stop because end-of-signalwords
-#             break
-      
-
-#       # ------------------------------------
+    summarysq: seq[string] = @[]
+    summaryst: string
+    processingbo: bool
+    # the number of lines always added from the introduction
+    introductionit: int = 4
+    signal_strings_starting_pointit:int64 = 0
+    tbo = false
+    countit: int
+    leftpartst, rightpartst: string
+    stringsizeit:int
+    linesq: seq[string] 
+    linecountit: int =0
 
 
-#       inputtextlengthit = len(phasetekst)
-#       posit = -1
-
-#       # Cut out all signal-words with certain context and add those 
-#       # cutouts to a sequence.
-#       while not allfoundbo:   # not all sigwords found yet
-
-#         smallestposit = bigassit
-
-#         # walk thru the sigwords and determine the first one of them (smallest position)
-#         for sigwordst in sigwordsq:
-#           thisoccurit = find(phasetekst, sigwordst, posit + 1)
-#           if thisoccurit > -1:    # found
-#             if thisoccurit < smallestposit:
-#               smallestposit = thisoccurit
-#               firstsigwordst = sigwordst
-#               log("found sigword")
-
-#         posit = smallestposit
-
-#         if posit >= 0:
-#           # retrieve cutout-boundaries
-#           if posit > contextit:
-#             cutstartit = posit - contextit
-#           else:
-#             cutstartit = 0
-#           if (posit + contextit) < inputtextlengthit:
-#             cutendit = posit + contextit
-#           else:
-#             cutendit = inputtextlengthit
+  if use_multi_summarybo:
+    if createCombinedSummaryFile("aggregate"):
+      def_filenamest = "data_files/summary_aggregated.dat"
+    else:
+      def_filenamest = summaryfilest  
+  else:
+    def_filenamest = summaryfilest
 
 
-#           # Test if the context-area of the previous match overlaps with 
-#           # the context-area of the next match and if yes then extend the 
-#           # cutout. Start assuming that it does overlap.
-#           overlapbo = true
-#           while overlapbo:
-#             if posit < inputtextlengthit:
-#               extendedposit = posit + 1
-#               extendedposit = find(phasetekst, markingst, extendedposit)
-#               if (extendedposit - contextit) < cutendit and extendedposit >= 0:
-#                 cutendit = extendedposit + contextit
-#                 posit = extendedposit
-#               else:
-#                 overlapbo = false
 
-#           posit += 1
-#           cutoutst = phasetekst[cutstartit..cutendit]
-#           cutoutst = replace(cutoutst, markingst, "")
-#           # summarysq.add("<br>" & "Word-position: " & $posit & " ===============================")
-#           # summarysq.add("\p\p")
-#           summarysq.add(cutoutst)
-#         else:
-#           allfoundbo = true
+  # Old approach - created to big chunks:
+  # sentencesq = phasetekst.split(". ")
 
-#       # concatenate extracted sentences to text
-#       summaryst = ""
-#       for cutout in summarysq:
-#         # summaryst &= cutout & "<br>"
-#         summaryst &= "\p" & cutout
+  # new approach - chopping in smaller chunks
+  part1sq = phasetekst.split(". ")
+  for text1st in part1sq:
+    part2sq = text1st.split(".</p>")
+    for text2st in part2sq:
+        part3sq = text2st.split("<br>")
+        for text3st in part3sq:
+          sentencesq.add(text3st)
 
 
-#     except IOError:
-#       echo "IO error!"
-    
-#     except RangeError:
-#       echo "\p\p+++++++ search-config not found +++++++++++\p"
-#       echo "You have probably entered a search-config that could not be found. \p" &
-#           "Re-examine you search-config. \p"
-#       let errob = getCurrentException()
-#       echo "\p******* Technical error-information ******* \p" 
-#       echo repr(errob) & "\p****End exception****\p"
+  if generatecontentst == "":
+    stringsizeit = 1500
+  else:
+    # make sure the contents-area is not seen as garbage
+    stringsizeit = 15000
 
-    
-#     except:
-#       let errob = getCurrentException()
-#       echo "\p******* Unanticipated error ******* \p" 
-#       echo repr(errob) & "\p****End exception****\p"
+  #if tbo: echo sentencesq
+
+  if open(deffile, def_filenamest):    # try to open the def-file
+    try:
+
+      if tbo: echo "\n=====Begin extraction===="
+
+      # walk thru the sentences of the input-text
+      for sentencest in sentencesq:
+        if tbo: echo sentencest
+        # add the first sentences always to the summary
+        if sentencecountit <= introductionit:
+          if sentencest.len < stringsizeit:
+            summarysq.add(sentencest & ". ")
+        else:
+          # beyond the introduction only extracted sentences are added
+          processingbo = false  # header not yet reached
+
+          if signal_strings_starting_pointit > 0:
+            deffile.setFilePos(signal_strings_starting_pointit)
+            processingbo = true
+
+          # -----------walk thru the lines of the def-file------------
+          for line in deffile.lines:
+            lastline = line
+
+            # check for block-header
+            if line == "SIGNAL-WORDS TO HANDLE":
+              processingbo = true
+              signal_strings_starting_pointit = deffile.getFilePos()
+            elif processingbo:
+
+              if line != blockseparatorst:   # block-separating string; end of job
+
+                if sentencest.contains(line):
+                  linecountit += 1
+                  #echo "sentence =" & sentencest
+                  #echo "line = " &  line
+                  # if sentencest.len < stringsizeit:   # to skip long irrelevant lists
+                  if true:
+                    countit = count(sentencest, '.')
+                    if countit == 0 or  countit > 1:
+                      summarysq.add("<br>" & $sentencecountit & " ===============================" & "<br><br>")
+                      summarysq.add(sentencest & ". ")
+
+                    elif countit == 1:
+                      summarysq.add("<br>" &  $sentencecountit & " ===============================" & "<br><br>")
+                      linesq = sentencest.split('.')
+                      leftpartst = linesq[0]
+                      rightpartst = linesq[1]
+                      if leftpartst.contains(line): summarysq.add(leftpartst & ". ")
+                      if rightpartst.contains(line): summarysq.add(rightpartst & ". ")
+
+
+                  # to prevent more adds for more extraction-words
+                  break
+              else:
+                # stop because end-of-signalwords
+                break
+
+        sentencecountit += 1
         
-#     finally:
-#       close(deffile)
-#   else:
-#     echo "Could not open file!"
 
-#   return summaryst
+      if tbo: echo "===End of extraction ===="
+
+      if tbo: echo phasetekst
+
+      # concatenate extracted sentences to text
+      summaryst = "Number of extractions: " & $linecountit & "<br><br>"
+      for senst in summarysq:
+        # summaryst &= strip(senst, true, true)
+        summaryst &= senst
+
+
+    except IOError:
+      echo "IO error!"
+    
+    except RangeDefect:
+      echo "\p\p+++++++ search-config not found +++++++++++\p"
+      echo "You have probably entered a search-config that could not be found. \p" &
+          "Re-examine you search-config. \p" &
+          "The problem originated probably in the above EDIT FILE-block"
+      let errob = getCurrentException()
+      echo "\p******* Technical error-information ******* \p" 
+      echo "Last def-file-line read: " & lastline & "\p"
+      echo repr(errob) & "\p****End exception****\p"
+
+    
+    except:
+      let errob = getCurrentException()
+      echo "\p******* Unanticipated error ******* \p" 
+      echo "Last def-file-line read: " & lastline & "\p"
+      echo repr(errob) & "\p****End exception****\p"
+        
+    finally:
+      close(deffile)
+  else:
+    echo "Could not open file!"
+
+  return summaryst
+
 
 
 
@@ -1533,34 +1409,60 @@ proc formatText*(input_tekst, languagest, preprocesst: string,
 
 
 proc replaceInPastedText*(pastedtekst, generatecontentst: string, abbreviationsq: seq[string]): string =
-  #[ To ensure correct conversion of pasted text from text-format to html-format
-      Also:
-      -add experimental contents
-      -dedot abbreviations
-  ]#
+  #[ 
+  To ensure correct conversion of pasted text from text-format to html-format
+  Also:
+  -add experimental contents
+  -dedot abbreviations
+
+  issues:
+  -standard " " or "<br>" for most lines
+  -only short lines can become headers / content
+
+  ADAP HIS
+  -re-added line-feeds
+  ADAP FUT
+  -add links and anchors to content for jumping
+
+    ]#
+
 
   var 
-    lengthit: int = 25
+    lengthit: int = 75
+
     intertekst, newtekst, contentst: string
+
 
   # dedot abbreviations
   intertekst = stripSymbolsFromList(pastedtekst, abbreviationsq, ".")
 
+  # splitlines splits the text on the line-feeds
   for linest in intertekst.splitlines:
+    # as basis for header-extraction; small lines are treated as headers
     if len(linest) < lengthit:
       if linest.len > 0:
         if not linest.endsWith("."):
           if generatecontentst != "":
-            contentst.add(linest & "<br>")
-          newtekst.add("<b>" & linest & "</b><br>")
+            contentst.add("<i>" & linest & "</i><br>\n")
+          newtekst.add("<b>" & linest & "</b><br>\n")
         else:
-          newtekst.add(linest & "<br><br>")
-
-    elif len(linest) > lengthit:
-      if linest.endsWith("."):
-        newtekst.add(linest & "<br><br>")
+          # line is considered end of paragraph
+          newtekst.add(linest & "<br><br>\n")
       else:
+        # do or dont show empty lines (dont)
+        #newtekst.add(linest & "<br><br>\n")
+        discard
+
+    # long lines are treated normally
+    else:
+      # line with end-dot are considered paragraphs
+      if linest.endsWith("."):
+        newtekst.add(linest & "<br><br>\n")
+      else:
+        # standard lines only get a space (needed for pdf-clippings)
+        #newtekst.add(linest & "<br>\n")
         newtekst.add(linest & " ")
+
 
   contentst.add("<br>---------------------------------------------------<br><br>")
   if generatecontentst != "":

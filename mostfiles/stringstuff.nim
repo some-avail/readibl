@@ -20,8 +20,9 @@ var
 
 
 proc stripSymbolsFromList*(inputtekst: string, listsq: seq[string], symbolst: string): string =
-  #[ For all the words in the list that are present in inputtekst 
-      strip symbolst (like U.S. > US)
+  #[ 
+  For all the words in the list that are present in inputtekst 
+  strip symbolst (like U.S. > US)
   ]#
 
   var 

@@ -31,11 +31,17 @@ If the app is started from a dir where the application does NOT reside, path-pro
 
 
 #### Installation on windows
-- download latest windows-release (.zip)
-- unpack, place it somewhere in your user-folder, and run the executable "flashread".
-- start the app preferably from a terminal / powershell to view progress-info.
-- to access the local web-server you just started, type: 
-	http://localhost:5050/flashread-form
+Download latest windows-release (.zip)
+
+Just unpack, place it somewhere in your user-folder, and run the executable "flashread.exe".
+This can be done either by double-clicking or (even better) in a terminal / powershell. In powershell, go to the readibl-dir, put in .\flashread.exe and press enter.
+To access the web-server you just started, type in your browser: http://localhost:5050/flashread-form
+
+To have readible/flashread always available in your browser you can adjust windows to start the program on windows-startup:
+- create a shortcut of the executable and name it like: to_flashread.exe
+- move the shortcut to a folder like (substitute your username and check location):
+C:\Users\YourUserName\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
+
 
 
 #### Usage

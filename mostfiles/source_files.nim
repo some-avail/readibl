@@ -143,6 +143,11 @@ proc createCombinedSummaryFile*(combinationtypest: string): bool =
    combinationtypest: concatenate, aggregate or testing
 
     "combinationtypest = testing" means that only is checked if conditions are met.
+  
+  ADAP FUT
+  -add an combinationstype "first" to only use the first summary for extraction
+  (but all for highlighting)
+
   ]#
 
   var 
@@ -150,8 +155,9 @@ proc createCombinedSummaryFile*(combinationtypest: string): bool =
     listfilenamest: string = "data_files/list-of-summaries.lst"
     concat_filenamest: string = "data_files/summary_concatenated.dat"
     aggreg_filenamest: string = "data_files/summary_aggregated.dat"
+    first_filenamest: string = "data_files/summary_first.dat"
     summarylisq, wordlisq: seq[string]
-    sum_filest, concat_filest, aggreg_filest : string
+    sum_filest, concat_filest, aggreg_filest, first_filest : string
 
   # read the sum-list-file
   summarylisq = getSeqFromFileSection(listfilenamest, ">>>SUMMARIES<<<", ">----------------------------------<")
@@ -163,6 +169,9 @@ proc createCombinedSummaryFile*(combinationtypest: string): bool =
           sum_filest = readFile(sum_file_namest)
           concat_filest = concat_filest & sum_filest
         writeFile(concat_filenamest, concat_filest)
+      if combinationtypest == "first":
+        first_filest = readFile(summarylisq[0])
+        writeFile(first_filenamest, first_filest)
       elif combinationtypest == "aggregate":
         let fileob = open(aggreg_filenamest, fmWrite)
         fileob.writeLine("SIGNAL-WORDS TO HANDLE")
@@ -176,6 +185,7 @@ proc createCombinedSummaryFile*(combinationtypest: string): bool =
 
         fileob.writeLine(">----------------------------------<")
         fileob.close()
+
       elif combinationtypest == "testing":
         discard
 
@@ -472,6 +482,7 @@ when isMainModule:
   #var filepathst: string = "/media/OnsSpul/1klein/1joris/k1-onderwerpen/computer/Programmeren/nimtaal/jester/readibl/mostfiles/data_files/list-of-summaries.lst"
   #echo getSeqFromFileSection(filepathst, ">>>SUMMARIES<<<", ">----------------------------------<")
   #echo createCombinedSummaryFile("concatenate")
-  echo createCombinedSummaryFile("aggregate")
+  #echo createCombinedSummaryFile("aggregate")
+  echo createCombinedSummaryFile("first")
   #echo getSeqFromFileSection("summary_english_computer.dat", "SIGNAL-WORDS TO HANDLE", ">----------------------------------<")
 
