@@ -3,6 +3,12 @@ https://github.com/some-avail/readibl/commits/main
 
 Version-changes:
 
+Readible 0.9504:
+-added executable for older debian linux-systems.
+	-if normal exec fails use the executable for older debian-linux-systems: ./flashread_older
+-added an option single-multi (true default) which means:
+	use the singular selected summary for extraction but the multiple summaries for highlighting.
+
 
 Readibl 0.95:
 -added multi-summary facility;
@@ -10,7 +16,6 @@ Readibl 0.95:
 	-set the multiple summaries in the file: data_files/list-of-summaries.lst
 	-you get up to six colors from each listed summary when they are used for their signal-words.
 	-you can also perform an extraction in which the coloring is also applied.
-
 -added some new exotic tags
 -summary-combo-list is now sorted
 -data-file-validation is now sorted
@@ -18,7 +23,6 @@ Readibl 0.95:
 	- SC can be activated by entering the two summary-names in the options-file (settings_flashread.conf)
 	- reload Readibl and the diffs are shown in the startup-screen
 	- resetting the file-names to dummy-names will restore the generic data-file-validation on startup
-
 -some added /changed summary-files:
 	summary_english_causation.dat
 	summary_english_places.dat

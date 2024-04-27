@@ -22,6 +22,7 @@ The program is written in the language Nim.
 - unpack, place it somewhere in your user-folder.
 - open a terminal and go to your Readibl-directory.
 - run the executable "flashread" by entering: ./flashread
+- if it fails try the executable for older debian linux-systems: ./flashread_older
 - to access the local web-server you just started, type: 
 	http://localhost:5050/flashread-form
 - the portnumber can now be changed in the configuration-file: settings_flashread.conf
@@ -60,6 +61,7 @@ Developer with knowledge of nim can download the code and do the following:
 	- nimclipboard library:
 		> found at: https://github.com/genotrance/nimclipboard
 		> follow the instructions
+		> on older debian-derivatives you must install libx11-xcb-dev to compile with this library.
 	- moustachu library:
 		> found at: https://github.com/fenekku/moustachu
 		> Nim 1.6 follow instructions

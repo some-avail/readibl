@@ -420,9 +420,11 @@ proc applyDefinitionFileToText(input_tekst, languagest: string,
             # reddish - #f1a0a0 - #facccc
             of 4:
               phasetekst = customReplace(phasetekst, line, "<span style=background-color:#f1a0a0>" & line & "</span>", true, "", @[])
-            # lila - #e476f1 - #f5a9fe
+
+            # lila - #e476f1 - #f5a9fe - #771af9 - #e476f1
             of 5:
-              phasetekst = customReplace(phasetekst, line, "<span style=background-color:#e476f1>" & line & "</span>", true, "", @[])
+              phasetekst = customReplace(phasetekst, line, "<span style=background-color:#af78fd>" & line & "</span>", true, "", @[])
+
             # grey
             else:
               phasetekst = customReplace(phasetekst, line, "<span style=background-color:#a1a0a1>" & line & "</span>", true, "", @[])

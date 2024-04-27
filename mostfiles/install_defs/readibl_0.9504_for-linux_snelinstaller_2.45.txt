@@ -3,7 +3,7 @@ si-version===2.45
 
 
 This file contains installation-information for:
-project-name===readibl 0.95 for-linux
+project-name===readibl 0.9504 for-linux
 destination===readibl_packages
 def-version===1.3
 
@@ -22,16 +22,16 @@ installer-exec: /media/OnsSpul/1klein/1joris/k1-onderwerpen/computer/Programmere
 VARIABLES TO SET
 comment: if needed update the below versions from x.y to your own version
 arguments---separator=#
-target=/home/bruik/toepassingen/readibl/readibl_packages/readibl_0.95
-archive=/home/bruik/toepassingen/readibl/readibl_packages/readibl_0.95.tar.gz
-dirbasename=readibl_0.95
+version=0.9504
+target=/home/bruik/toepassingen/readibl/readibl_packages/readibl_#version#
+archive=/home/bruik/toepassingen/readibl/readibl_packages/readibl_#version#.tar.gz
+dirbasename=readibl_#version#
 >----------------------------------<
 DIRECTORIES TO CREATE
 comment: from 2.3 onward all super-dirs are co-created
 arguments---none
 #target#/sourcecode
 #target#/public
-#target#/help_info
 #target#/data_files
 >----------------------------------<
 TARGET-LOCATION AND SOURCE-FILES TO COPY
@@ -40,7 +40,7 @@ arguments---linux_set_exe=1
 #target#
 .
 flashread
-flasread_older
+flashread_older
 flashread_sh
 >----------------------------------<
 TARGET-LOCATION AND SOURCE-FILES TO COPY
@@ -55,11 +55,14 @@ parse_english.dat
 parse_german.dat
 language_template.dat
 summary_all_empty.dat
+summary_all_years.dat
 summary_dutch_bronnen.dat
 summary_dutch_gen1_tiny.dat
 summary_dutch_gen2_small.dat
 summary_dutch_gen3_default.dat
 summary_dutch_gen4_large.dat
+summary_dutch_plaatsen.dat
+summary_dutch_tijden.dat
 summary_english_archeology.dat
 summary_english_causation.dat
 summary_english_computer.dat
@@ -73,7 +76,6 @@ summary_english_historical.dat
 summary_english_places.dat
 summary_english_sources.dat
 summary_english_times.dat
-summary_english_years.dat
 flashread.html
 outer_html.html
 cacert.pem
@@ -104,11 +106,9 @@ flashread.css
 >----------------------------------<
 TARGET-LOCATION AND SOURCE-FILES TO COPY
 your-comment-here
-arguments---none
-#target#/help_info
-.
-help.txt
-what-is-new.txt
+arguments---copy_branch=1,,sample_permissions=0
+#target#
+./help_info
 >----------------------------------<
 TARGET-LOCATION AND SOURCE-FILES TO COPY
 your-comment-here
