@@ -205,7 +205,6 @@ restrict
 provide 
  provides 
 supply
-supplies 
 give 
  gives 
 gave 
@@ -788,7 +787,6 @@ underscor
 embrace 
 embraces 
 unite
-estimate
 possess 
 possesse
 accesses
@@ -937,6 +935,8 @@ misses
  wake
 endanger 
 endangers 
+vest 
+vests 
 backs 
 develop 
 develops 
@@ -1383,10 +1383,12 @@ vows
 frame
 hibit 
 hibits 
+estimate
  quote
  film
  hope
 resolve
+supplies
 appeal
 reply 
 replies 

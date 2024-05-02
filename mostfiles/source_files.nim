@@ -135,7 +135,7 @@ proc getSeqFromFileSection*(filepathst, startlinest, endlinest: string): seq[str
 
 
 
-proc createCombinedSummaryFile*(combinationtypest: string): bool = 
+proc createCombinedSummaryFile*(combinationtypest, languagest: string): bool = 
 
   #[
    combine (concatenate or aggregate) the summaries from a list-file (if present) into 
@@ -159,9 +159,13 @@ proc createCombinedSummaryFile*(combinationtypest: string): bool =
     first_filenamest: string = "data_files/summary_first.dat"
     summarylisq, wordlisq: seq[string]
     sum_filest, concat_filest, aggreg_filest, first_filest : string
+    headerst, footerst: string
+
+  headerst = ">>>SUMMARIES_" & toUpperAscii(languagest) & "<<<"
+  footerst = ">----------------------------------<"
 
   # read the sum-list-file
-  summarylisq = getSeqFromFileSection(listfilenamest, ">>>SUMMARIES<<<", ">----------------------------------<")
+  summarylisq = getSeqFromFileSection(listfilenamest, headerst, footerst)
   if summarylisq.len > 0:
     if allFilesExist(summarylisq):
       # concatenate the summaries to one new file

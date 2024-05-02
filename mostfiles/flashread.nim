@@ -80,7 +80,7 @@ template log(messagest: string) =
 
 
 const 
-  versionfl: float = 0.9504
+  versionfl: float = 0.9506
   minimal_word_lengthit = 7
   appnamebriefst:string = "RD"
   appnamenormalst = "Readibl"
@@ -349,13 +349,13 @@ routes:
             outervarob["pagetitle"] = getWebTitle()
 
           if @"multisum" == "multisum":
-            if createCombinedSummaryFile("testing") == true:
+            if createCombinedSummaryFile("testing", @"text-language"):
               use_multi_summarybo = true
           output_tekst = jump_to_end_step(@"text-language", @"summarize", @"taglist", "", @"summarylist", @"generate_contents", use_multi_summarybo)
 
           statustekst = "Output number of words:"
           if @"multisum" == "multisum":
-            if createCombinedSummaryFile("testing"):
+            if createCombinedSummaryFile("testing", @"text-language"):
               statusdatast = $countWords(output_tekst) & " --- " & "Using a combined summary.."
             else:
               statusdatast = $countWords(output_tekst)  & " --- " & "Could not use multi-summary-list (invalid)"
@@ -391,14 +391,14 @@ routes:
 
 
           if @"multisum" == "multisum":
-            if createCombinedSummaryFile("testing") == true:
+            if createCombinedSummaryFile("testing", @"text-language"):
               use_multi_summarybo = true
           newinnerhtmlst = jump_to_end_step(@"text-language", @"summarize", @"taglist", 
                                         @"insite_reformating", @"summarylist", @"generate_contents", use_multi_summarybo)
 
           statustekst = "Output number of words:"
           if @"multisum" == "multisum":
-            if createCombinedSummaryFile("testing"):
+            if createCombinedSummaryFile("testing", @"text-language"):
               statusdatast = $countWords(newinnerhtmlst) & " --- " & "Using a combined summary.."
             else:
               statusdatast = $countWords(newinnerhtmlst)  & " --- " & "Could not use multi-summary-list (invalid)"
@@ -529,7 +529,7 @@ routes:
         outervarob["pagetitle"] = getWebTitle()
 
       if @"multisum" == "multisum":
-        if createCombinedSummaryFile("testing") == true:
+        if createCombinedSummaryFile("testing", @"text-language"):
           use_multi_summarybo = true
 
       output_tekst = formatText(@"pasted_text", @"text-language", @"summarize", 
@@ -537,7 +537,7 @@ routes:
 
       statustekst = "Output number of words:"
       if @"multisum" == "multisum":
-        if createCombinedSummaryFile("testing"):
+        if createCombinedSummaryFile("testing", @"text-language"):
           statusdatast = $countWords(output_tekst) & " --- " & "Using a combined summary.."
         else:
           statusdatast = $countWords(output_tekst)  & " --- " & "Could not use multi-summary-list (invalid)"

@@ -3,10 +3,22 @@ It will be used as a batch-operation
 so that multiple summaries are used, in which 
 a different color is used for every summary.
 
+version 2.0 
+-for each language a separate list must be added
+-use upper-case letters for the header based on the selected language
 
 
 
->>>SUMMARIES<<<
+>>>SUMMARIES_DUTCH<<<
+summary_dutch_gen4_large.dat
+summary_dutch_bronnen.dat
+summary_dutch_plaatsen.dat
+summary_dutch_tijden.dat
+>----------------------------------<
+
+
+
+>>>SUMMARIES_ENGLISH<<<
 summary_english_gen3_default.dat
 summary_english_sources.dat
 summary_english_places.dat
