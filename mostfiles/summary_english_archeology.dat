@@ -28,9 +28,6 @@ trace
 artifact
 migrat
 excavat
- found 
-find
-first
 dating
  dated
  date 
@@ -42,8 +39,14 @@ centur
 >----------------------------------<
 
 
+potentially high freq words:
+ found 
+find
+first
 
-Move to *_times.dat:
+
+
+Moved to *_times.dat:
 BCE
  BC 
  AD 

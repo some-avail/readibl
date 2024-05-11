@@ -7,107 +7,138 @@ version: 1.2
 
 
 SIGNAL-WORDS TO HANDLE
-activiteit
-verwacht
-opvatting
-interpret
-waarschijnlijk
-vergelijk
-statisti
-voorkeur
- wens
-werking
-steun
-prototype
-princip
-zend
-stuur
-sturen
-ontvang
-voorwaarde
-determinant
-altijd
-nooit
-overal
-nergens
-beginsel
- regel 
- regels 
-defini
-mechanisme
-proces
-methode
-systeem
-stelsel
-belang
-oorzaak
-gevolg
- reden 
- redenen
-argument
-consequentie
-input
-output
-element
-onderdeel
-onderdelen
  deel 
  delen 
-groep
-cluster
-ten slotte
-conclu
-relatie
-gerelateerd
-hindernis
-barri
-effecten
-effect 
-functie
+ reden 
+ redenen
+ regel 
+ regels 
  taak 
  taken 
-invloed
-categorie
-klasse
-theor
-veronderstelling
-verband 
-analoog
-hypothese
+aanduiding
 aanname
- stelling
-totaal 
-geheel 
-volledig
-samenvatting
+aanwijzing
+agenda
+akkoord
+ antwoord
+barri
 bewijs
 bewijzen
-aanwijzing
+conclu
+conflict
+consequentie
+defini
+ doel 
+ doelen 
+doelstelling
+eerste
+effect 
+effecten
+element
+functie
+gerelateerd
+gevolg
+groep
+hindernis
+hypothe
+implement
+input
+interact
+invloed
+invoer 
+mechanisme
+methode
+onderdeel
+onderdelen
+ontwikkel
+oorza
+oplossing
+output
+overeenkomst
+plan 
+plannen
+proble
+relat
+result
+samenhang
+samenvat
+scenario
+strijd
+theor
+tweede
+uitkomst
+uitvoer 
+uitwerking
+uitwissel
+variab
+verander
+verband
+verfijning
+verloop
+veronderstel
+verschil 
+voorwaarde
+vraag
+vragen
+wijzig
+wisselwerk
+ derde
+ stelling
+ wens
+activiteit
+analo
+argument
+beginsel
+belang
+bijeenkomst
+categorie
+cluster
+determinant
+essenti
+factor
 gedachte
 idee
-scenario
-verloop
-essenti
-proble
-oplossing
-overeenkomst
-verschil
-verander
-variab
-wijzig
-uitkomst
+interpret
+klasse
+maatregel
+ontvang
+opvatting
+princip
+proces
+prototype
+statisti
+stelsel
+steun
 structuur
-interact
-uitwissel
-wisselwerk
-eerste
-tweede
- derde
-ontwikkel
- doel
-factor
-bijeenkomst
+sturen
+stuur
+systeem
+ten slotte
+vergelijk
+verlangen
+verwacht
+voorkeur
+waarschijnlijk
+werking
+zend
+gebruik
+behoefte
+communic
+ontdek
+blijk
+partner
+deeln
+initi
 >----------------------------------<
 
 
 
+absoluta:
+
+altijd
+geheel
+nergens
+nooit
+overal
+totaal
+volledig

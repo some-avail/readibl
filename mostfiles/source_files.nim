@@ -412,6 +412,9 @@ proc compareDataFiles*(firstfilest, secfilest, formatst: string): string =
     lineseptst, outputst: string
     outputseqar: array[0..2, seq[string]]
     passit: int = 0
+    empty_linebo: bool = false
+    lengthit: int
+    colorspacest: string = "<span style=background-color:#ffd280>" & "&nbsp" & "</span>"
 
 
   # create sorted seqs from the files
@@ -425,14 +428,17 @@ proc compareDataFiles*(firstfilest, secfilest, formatst: string): string =
         else:
           if blockphasebo:
             wordseqar[it].add(linest)
-    sort(wordseqar[it])
+    #sort(wordseqar[it])
     # echo wordseqar[it]
 
 
-  # compare the seqs; create comparison-lists
-  firstsq = wordseqar[0]
-  secsq = wordseqar[1]
+  firstsq = deduplicate(wordseqar[0])
+  secsq = deduplicate(wordseqar[1])
 
+  sort(firstsq)
+  sort(secsq)
+
+  # compare the seqs; create comparison-lists
   for wordst in firstsq:
     if wordst in secsq:
       bothsq.add(wordst)
@@ -449,11 +455,13 @@ proc compareDataFiles*(firstfilest, secfilest, formatst: string): string =
   elif formatst == "html":
     lineseptst = "<br>"
 
-  outputseqar = [bothsq, onlyfirstsq, onlysecsq]
 
   outputst = lineseptst & "---------------------------------------" & lineseptst
+  outputst &= "Comparison-result (sorted and uniquized):" & lineseptst & lineseptst
   outputst &= "First file: " & firstfilest & lineseptst
   outputst &= "Second file: " & secfilest & lineseptst
+
+  outputseqar = [bothsq, onlyfirstsq, onlysecsq]
   
   for sq in outputseqar:
     if passit == 0:
@@ -463,9 +471,30 @@ proc compareDataFiles*(firstfilest, secfilest, formatst: string): string =
     elif passit == 2:
       outputst &= lineseptst & "Words only in SECOND file:" & lineseptst
 
-    for wordst in outputseqar[passit]:
-      outputst &= wordst & lineseptst
+    #for wordst in outputseqar[passit]:
+    for wordst in sq:
+      if formatst == "text":
+        outputst &= wordst & lineseptst
+      elif formatst == "html":
+        lengthit = wordst.len
+        if lengthit > 0:
+          if wordst == wordst.strip():
+            outputst &= wordst & lineseptst
+          elif wordst[0..0] == " " and wordst[lengthit - 1 .. lengthit - 1] == " ":
+            outputst &= colorspacest & wordst.strip() & colorspacest & lineseptst
+          elif wordst[0..0] == " ":
+            outputst &= colorspacest & wordst.strip() & lineseptst
+          elif wordst[lengthit - 1 .. lengthit - 1] == " ":
+            outputst &= wordst.strip() & colorspacest & lineseptst
+        else:
+          empty_linebo = true
+          #echo "Empty line in summary-comparison detected."
+      else:
+          outputst &= wordst & lineseptst
     passit += 1
+
+  if empty_linebo:
+    outputst &= lineseptst & lineseptst & "Empty lines have been detected in one or more files.."
 
   result = outputst
 

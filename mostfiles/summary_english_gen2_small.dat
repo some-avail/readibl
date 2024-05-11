@@ -9,10 +9,10 @@ SIGNAL-WORDS TO HANDLE
 agenda
 answer
 assum
-caus
 conclu
 consequence
-effect
+effect 
+effects
 evidence
 goal
 hypothe
@@ -24,8 +24,6 @@ plans
 proof
 prove
 question
-relat
-result
 scenario
 summar
 theor

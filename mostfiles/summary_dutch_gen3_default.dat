@@ -5,92 +5,85 @@ version: 1.2
 
 
 
-
 SIGNAL-WORDS TO HANDLE
-princip
-voorwaarde
-determinant
-altijd
-nooit
-overal
-nergens
-beginsel
- regel 
- regels 
-defini
-mechanisme
-proces
-methode
-systeem
-stelsel
-belangrijk
-oorzaak
-gevolg
- reden 
- redenen
-argument
-consequentie
-input
-output
-element
-onderdeel
-onderdelen
- deel 
- delen 
-groep
-cluster
-ten slotte
-conclu
-relatie
-gerelateerd
-hindernis
-barri
-effecten
-effect 
-functie
- taak 
- taken 
-invloed
-categorie
-klasse
-theor
-veronderstelling
-verband 
-analoog
-hypothese
+aanduiding
 aanname
- stelling
-totaal 
-geheel 
-volledig
-samenvatting
+aanwijzing
+agenda
+ antwoord
 bewijs
 bewijzen
-aanwijzing
-gedachte
-idee
-scenario
-verloop
-essenti
-proble
+conclu
+ doel 
+ doelen 
+doelstelling
+effect 
+effecten
+functie
+gerelateerd
+gevolg
+hypothe
+mechanisme
+oorza
 oplossing
-overeenkomst
-verschil
-verander
-variab
-wijzig
+plan 
+plannen
+proble
+reden 
+redenen
+result
+samenvat
+scenario
+theor
 uitkomst
-structuur
-interact
-uitwissel
-wisselwerk
+verloop
+veronderstel
+vraag
+vragen
+ deel 
+ delen 
+ reden 
+ redenen
+ regel 
+ regels 
+ taak 
+ taken 
+barri
+consequentie
+defini
 eerste
-tweede
- derde
+element
+groep
+hindernis
+input
+interact
+invloed
+invoer 
+methode
+onderdeel
+onderdelen
 ontwikkel
- doel
-factor
+output
+overeenkomst
+akkoord
+relat
+samenhang
+tweede
+uitvoer 
+uitwissel
+variab
+verander
+verband
+verschil 
+verschillen 
+conflict
+strijd
+voorwaarde
+wijzig
+wisselwerk
+uitwerking
+verfijning
+implement
 >----------------------------------<
-
 
 
