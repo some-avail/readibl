@@ -80,7 +80,7 @@ template log(messagest: string) =
 
 
 const 
-  versionfl: float = 0.9507
+  versionfl: float = 0.9508
   minimal_word_lengthit = 7
   appnamebriefst:string = "RD"
   appnamenormalst = "Readibl"
@@ -116,21 +116,6 @@ proc getWebTitle():string =
     echo inter_tekst
 
 
-    # Maybe future: advanced parsing to better strip
-    # whitespace and/or line-endings
-
-      # if past.len > parselenghtit:
-      #   parsestringit = past[0 .. parselenghtit]
-      # else:
-      #   parsestringit = past
-
-      # log(parsestringit)
-
-      # inter_tekst = getStrippedText(parsestringit)
-    
-      # if inter_tekst.len > titlelenghit:
-      #   inter_tekst = inter_tekst[0 .. titlelenghit]
-
   except:
     let errob = getCurrentException()
     echo "\p******* Unanticipated error ******* \p" 
@@ -154,7 +139,8 @@ proc jump_to_end_step(languagest, preprocesst, taglist, typest, summaryfilest,
   past = $clipob.clipboard_text()
   abbreviationsq =  sequenceFromValueList(readOptionFromFile("abbreviations", "value-list"))
 
-  if past[0 .. 3] == "http":   # pasted text is a link
+  #if past[0 .. 3] == "http":   # pasted text is a weblink
+  if past[0 .. 6] in ["http://", "https:/"]:   # pasted text is a weblink
     if typest == "":
       inter_tekst = handleTextPartsFromHtml(past, "extract", languagest, taglist, summaryfilest, gencontentst, abbreviationsq, use_multi_summarybo)
       result = formatText(inter_tekst, languagest, preprocesst, summaryfilest, gencontentst, use_multi_summarybo)

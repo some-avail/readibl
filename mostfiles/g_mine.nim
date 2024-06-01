@@ -677,6 +677,7 @@ proc createSeqOfUniqueWords*(input_tekst:string, wordlengthit:int): seq[string] 
 
 proc calcWordFrequencies*(input_tekst:string, wordlengthit:int, skiplistsq: seq[string], 
                     useHtmlBreaksbo:bool, topcountit: int = 10000, altfreqit: int = 11): string = 
+
   #[ 
   Create a list of word-frequencies in html (useHtmlBreaksbo = true) or normal text.
   Only add words with a length > wordlenghit.

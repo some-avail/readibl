@@ -889,6 +889,8 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest: string,
 
 
   try:
+
+
     # put website into string
     websitest = client.getContent(webaddresst)
 
@@ -1433,6 +1435,7 @@ proc replaceInPastedText*(pastedtekst, generatecontentst: string, abbreviationsq
     lengthit: int = 75
 
     intertekst, newtekst, contentst: string
+    previousparagraphbo: bool = false      # to avoid double paragraphs
 
 
   # dedot abbreviations
@@ -1450,20 +1453,22 @@ proc replaceInPastedText*(pastedtekst, generatecontentst: string, abbreviationsq
         else:
           # line is considered end of paragraph
           newtekst.add(linest & "<br><br>\n")
+          previousparagraphbo = true
       else:
-        # do or dont show empty lines (dont)
-        #newtekst.add(linest & "<br><br>\n")
-        discard
+        # show emtpy lines because of the scarce formatting they provide
+        if not previousparagraphbo:
+          newtekst.add("<br><br>\n")
 
     # long lines are treated normally
     else:
       # line with end-dot are considered paragraphs
       if linest.endsWith("."):
         newtekst.add(linest & "<br><br>\n")
+        previousparagraphbo = true
       else:
         # standard lines only get a space (needed for pdf-clippings)
-        #newtekst.add(linest & "<br>\n")
         newtekst.add(linest & " ")
+        previousparagraphbo = false
 
 
   contentst.add("<br>---------------------------------------------------<br><br>")
