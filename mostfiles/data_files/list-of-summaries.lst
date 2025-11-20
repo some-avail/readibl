@@ -7,6 +7,10 @@ version 2.0
 -for each language a separate list must be added
 -use upper-case letters for the header based on the selected language
 
+Used colors:
+oker   green   blueish  reddish   lila   grey  yellow  greenblue
+
+
 
 
 >>>SUMMARIES_DUTCH<<<
@@ -14,24 +18,25 @@ summary_dutch_gen4_large.dat
 summary_dutch_bronnen.dat
 summary_dutch_plaatsen.dat
 summary_dutch_tijden.dat
+summary_dutch_pol-actoren.dat
+summary_dutch_veroorzaking.dat
+summary_dutch_sporen.dat
+summary_dutch_custom01.dat
 >----------------------------------<
 
 
 
 >>>SUMMARIES_ENGLISH<<<
-summary_english_gen3_default.dat
+summary_english_gen4_large.dat
 summary_english_sources.dat
 summary_english_places.dat
 summary_english_times.dat
+summary_english_pol-actors.dat
 summary_english_causation.dat
+summary_english_traces.dat
+summary_english_custom01.dat
 >----------------------------------<
 
-
-
-summary_english_gen2_small.dat
-summary_english_sources.dat
-summary_english_places.dat
-summary_english_times.dat
 
 
 OTHER POSSIBLE BATCHES
@@ -43,6 +48,4 @@ summary_english_sources.dat
 summary_english_places.dat
 summary_english_times.dat
 summary_english_causation.dat
-
-
 summary_english_computer.dat

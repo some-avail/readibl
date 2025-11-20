@@ -275,7 +275,7 @@ proc evaluateDataFiles*(verbosebo: bool = false): string =
   #[
     Validate the file-sets parse_*.dat and summary_*.dat
     Deviations / complaints are reported.
-    The results are show at startup.
+    The results are shown at startup.
     ]#
 
   var

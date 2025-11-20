@@ -7,8 +7,6 @@ version: 1.2
 
 
 SIGNAL-WORDS TO HANDLE
- deel 
- delen 
  reden 
  redenen
  regel 
@@ -31,7 +29,7 @@ defini
  doel 
  doelen 
 doelstelling
-eerste
+ eerste
 effect 
 effecten
 element
@@ -120,8 +118,7 @@ verwacht
 voorkeur
 waarschijnlijk
 werking
-zend
-gebruik
+ gebruik
 behoefte
 communic
 ontdek
@@ -129,6 +126,10 @@ blijk
 partner
 deeln
 initi
+ opdracht
+data 
+gegevens
+voorstel
 >----------------------------------<
 
 

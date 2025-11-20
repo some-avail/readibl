@@ -1,5 +1,5 @@
 #[ 
-BEWARE: compile https-stuff with switch -d:ssl
+BEWARE: compile https-stuff with switch -d:ssl and --threads:off
 
 UNIT INFO
 
@@ -37,12 +37,8 @@ ADAP FUT
  ]#
 
 
-import strutils
-import httpClient
-import tables, algorithm
-import stringstuff
-import source_files
-import fr_tools
+import std / [strutils, httpclient, tables, algorithm, files, paths]
+import stringstuff, source_files, fr_tools, g_templates
 
 
 # no longer used:
@@ -426,9 +422,16 @@ proc applyDefinitionFileToText(input_tekst, languagest: string,
               phasetekst = customReplace(phasetekst, line, "<span style=background-color:#af78fd>" & line & "</span>", true, "", @[])
 
             # grey
-            else:
+            of 6:
               phasetekst = customReplace(phasetekst, line, "<span style=background-color:#a1a0a1>" & line & "</span>", true, "", @[])
 
+            # yellow
+            of 7:
+              phasetekst = customReplace(phasetekst, line, "<span style=background-color:#fdf034>" & line & "</span>", true, "", @[])
+
+            # violet #f783fd - lichtgroen #d5ffe3 - groenblauw #a1fdd4 -
+            else:
+              phasetekst = customReplace(phasetekst, line, "<span style=background-color:#a1fdd4>" & line & "</span>", true, "", @[])
     
 
           elif blockphasest == "LINK-WORDS TO HANDLE":
@@ -737,8 +740,8 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest: string,
   ADAP NOW:
 
   ADAP FUT:
-  -add tags section and table
-  -is there a simpler way to do this?
+  - fix un-nice behavior at non-existing web-addresses
+  - is there a simpler way to do this? probably...if you feel like it..
 
    ]#
 
@@ -772,8 +775,9 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest: string,
     basewebaddresst: string
     headinglist: string
     headingdepthit: int
-    indentst: string
-
+    indentst, filepathst, messt: string
+    fileob: File
+    wispbo = true
 
 
   if taglist == "paragraph-only":
@@ -890,14 +894,27 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest: string,
 
   try:
 
+    case webaddresst[0..6]
+    of "file://":
+      # load the html-file into a string
+      filepathst = webaddresst[7..webaddresst.len - 1]
+      if fileExists(Path(filepathst)):
+        fileob = open(filepathst, fmRead)
+        websitest = readAll(fileob)
+      else:
+        messt = "Could not find local file: " & filepathst
+        echo(messt)
+        #websitest = messt
 
-    # put website into string
-    websitest = client.getContent(webaddresst)
+    of "http://", "https:/":
+      
+      # put website into string
+      websitest = client.getContent(webaddresst)
 
-    basewebaddresst = getBaseFromWebAddress(webaddresst)
+      basewebaddresst = getBaseFromWebAddress(webaddresst)
 
-    # adjust paths so that resource-files can be loaded (like css and pics)
-    websitest = convertRelPathsToAbsolute(websitest, webaddresst)
+      # adjust paths so that resource-files can be loaded (like css and pics)
+      websitest = convertRelPathsToAbsolute(websitest, webaddresst)
 
     log("charcount = " & $len(websitest))
 
@@ -1002,7 +1019,9 @@ proc handleTextPartsFromHtml*(webaddresst, typest, languagest: string,
   except:
     let errob = getCurrentException()
     echo "\p******* Unanticipated error ******* \p" 
-    echo repr(errob) & "\p****End exception****\p"
+    echo errob.name
+    echo errob.msg
+    #echo repr(errob) & "\p****End exception****\p"
 
 
 
@@ -1483,12 +1502,30 @@ proc getTitleFromWebsite*(webaddresst:string): string =
 
   var 
     client = newHttpClient()
-    websitest, titlest:string
-
+    websitest, titlest, filepathst:string
+    fileob: File
+    wispbo = false
 
   try:
-    websitest = client.getContent(webaddresst)
-    titlest = getDataBetweenTags(websitest, "<title>", "</title>", 0)
+    case webaddresst[0..6]
+    of "file://":
+      # load the html-file into a string
+      filepathst = webaddresst[7..webaddresst.len - 1]
+      if fileExists(Path(filepathst)):
+        fileob = open(filepathst, fmRead)
+        websitest = readAll(fileob)
+      else:
+        #echo "Could not find local file: ", filepathst
+        websitest = ""
+
+    of "http://", "https:/":
+      
+      # put website into string
+      websitest = client.getContent(webaddresst)
+
+    if websitest.len > 0:
+      titlest = getDataBetweenTags(websitest, "<title>", "</title>", 0)
+    wisp("titlest = ", titlest)
 
   except:
     let errob = getCurrentException()

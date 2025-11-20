@@ -18,121 +18,110 @@ version: 1.3
 
 Specific scenario-categories:
 - failures - like accidents (where some coop / system fails).
-  * fail-factors:
+* fail-factors:
 	x some (or more) changing variable reaches a certain threshold, usually by bad maintenance
 	x a spontaneous, undesigned and untested change makes the system collapse
 - coops
-  * cabinet / administration formation and working
+* cabinet / administration formation and working
 
 
 
 
 
 SIGNAL-WORDS TO HANDLE
-character
- behav
 agenda
-desire
-motiv
-interest
- want
- used 
- uses 
- use 
-ambition
-striv
-goal
- need
-intend
-intent
-attach
-resist
-meaning
-function
-requir
-purpose
-caus
-Caus
-consequence
-effect 
-effects
-result
-influence
-plan 
-plans 
-problem
- reason
-Reasons 
-associated
- link
-connect
+verlangen 
+motief 
+interesse 
+wil
+gebruik
+ambitie
+streven
+doel
+behoefte
+bedoeling
+intentie
+hecht
+weerstand
+tegenwerking
+tegenstand
+betekenis
+functie
+vereisen
+doel
+oorza
+gevolg
+effect
+resultaat
+invloed
+plan
+proble
+reden 
+redenen
+associ
+allian
+coalitie
+verbind
 bind
-bound
- chang
- move
-return
-turn
-modif
-alter
-relate
-relation
-interact
-communicat
-co-operat
-cooperat
-deal
+bond
+band
+verander
+beweg
+beweeg
+terugker
+terugkeer
+draai
+wijzig
+relat
+intera
+communic
+wisselwerk
+uitwissel
+samenwerk
+omgaan
+omgang
 contract
 consensus
-agrees
-agree 
-agreement
- merge
-split
-divid
+overeenkom
+ strok
+ strookt
+samenvoeg
+splits
+verdeel
+verdel
 conflict
-break
-differ 
-differs
-match
-barrier
-symbol
-Why 
-Why?
- why 
- why?
-expla
-Expla
-ooooooooooooooooooooooooooooooooo
-How 
-How?
- how 
- way 
- method 
- approach 
- order 
- step
- phase
- make 
- made
- generate
- produce 
- manufacture
- structur
- form 
- forms
- formed
- shape
- create
- grow
-reform
-reshap
+breuk
+brok
+barrière
+barriere
+symbo
+waarom
+Waarom
+verklar
+verklaar
+hoe 
+Hoe 
+manier
+methode
+benadering
+volgorde
+stap
+fase
+maken
+gemaakt
+genere
+produce
+fabric
+structu
+vorm
+creër
+creatie
+groei
 begin
-began
-begun
- end 
- ends 
- ended
- strateg
+begon
+einde
+eindigt
+geëindigd
 >----------------------------------<
 
 

@@ -18,6 +18,10 @@ SIGNAL-WORDS TO HANDLE
  naar 
  vanaf 
  bij 
+ nabij 
+ Nabij 
+rondom
+Rondom
  locat
  plaats 
 Waar 
@@ -39,19 +43,10 @@ land
  terrein
  stad 
  steden 
+ voorstad
+ hoofdstad
  centrum 
- bezoek
+bezoek
 >----------------------------------<
 
 
-
-Other optional words:
-
-
-possible false positives:
- between the 
- there 
-to the 
-
-probable FPs:
- in 

@@ -1,0 +1,67 @@
+Extraction-strings for summarizing with Flashread.
+Language: english
+Summary-type: generic
+version: 1.3
+
+
+-new set for political actors
+
+
+
+SIGNAL-WORDS TO HANDLE
+by 
+By 
+organisation
+institution
+boss
+chief
+leader
+Leader
+director
+ head 
+party
+parties
+group
+president
+President
+presidency 
+ king 
+ kingdom
+executive
+sovereign
+prince 
+Staff
+staff
+politician
+agent
+agency
+agencies
+commander
+military
+militia
+governor
+state 
+ nation 
+ nations
+government
+administration
+Authorit
+authorit
+regime
+hancellor
+minister
+Minister
+court 
+Court 
+lawmaker
+ forces
+ force 
+troops
+army
+office
+Police
+police
+manager
+>----------------------------------<
+
+

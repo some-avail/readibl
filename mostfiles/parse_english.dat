@@ -138,7 +138,7 @@ Doesn't
  did 
  didn't
  done
-make 
+ make 
  makes 
  made
  get 
@@ -168,6 +168,7 @@ discourage
 realize 
 appear 
 appears 
+foster
 running
  ran 
 shut
@@ -180,8 +181,6 @@ address
 stand 
 stands 
 stood 
- act 
- acts 
  reacts
  react 
  enact
@@ -208,7 +207,6 @@ give
  gives 
 gave 
 given
-lead 
  leads 
  led 
 look 
@@ -268,10 +266,10 @@ lacks
 carry 
  carries 
 begin 
- begins 
- began 
- begun 
- ends 
+begins
+began
+begun
+ends
 stop 
  stops 
 continue
@@ -280,7 +278,6 @@ allowed
  allows 
 save 
  saves
- loads
 tains 
 tained
 seem 
@@ -317,6 +314,7 @@ fering
 fill 
 fills 
 filled
+fulfil
 helps
 helped
 repair
@@ -390,6 +388,9 @@ risen
  enforce 
  enforces
  enforced
+reinforce 
+reinforces
+forced
  evolv
  exist 
  exists
@@ -413,6 +414,7 @@ agrees
 agreed
 mit 
 mits 
+mits,
 mitted
 restore
  won't
@@ -449,8 +451,6 @@ regard
 volve 
 volves 
 volved 
-load 
-watch
  aims
 replace
  talk 
@@ -507,7 +507,6 @@ promote
 press 
 presses 
 pressed
-controls
 controlled
 speak 
 speaks
@@ -535,9 +534,9 @@ posed
  varies
  varied
  thrive
-announce 
-announces 
-announced
+nounce 
+nounces 
+nounced
 conducts
 called
  win 
@@ -556,8 +555,7 @@ wait
 waits 
 waited
 retrieve
-respond 
-responds 
+respond
 responded
 notices
 jected
@@ -568,7 +566,8 @@ combine
 raise
  rely 
  relies
-plore
+plore 
+plores 
 assess 
 assesse
 completes
@@ -584,6 +583,7 @@ tect
 tects 
 tected
 analyze
+analyse
 unlock
 directs
  marks
@@ -674,7 +674,6 @@ dwell
 align 
 aligns 
 aligned
-gains 
 gained
 caught
 gather
@@ -682,7 +681,8 @@ injure
 remember
 generate
 signed
- afford
+ afford 
+ affords
 settle 
 settles
 settled
@@ -760,7 +760,6 @@ pursue
 tested
 linger
 fell 
-pay 
 pays 
 paid
  die
@@ -811,7 +810,6 @@ arrange
 arranges
 commence
 integrate
-incarnate
 decide
 refute
 refine 
@@ -850,7 +848,10 @@ presses
 impress 
 express 
 depress 
-capture
+ span 
+ spans 
+mimic 
+mimics
 arise
 vive
 voke
@@ -874,11 +875,17 @@ sembles
 repeat
 amuse 
 amuses
+entangle 
+entangles
+entangled
 exert 
 exerts 
  behave
 confront 
 confronts
+discard
+require 
+requires
 cede 
 cedes 
 ceded
@@ -886,6 +893,8 @@ reside
 resides 
 finish
 salvage
+depict 
+depicts
 worry
 weigh 
 weighs
@@ -893,19 +902,26 @@ focuses
 weaken
 heal 
 heals
+ cease 
+ ceases 
 pick
 assure
 intercept 
 intercepts 
-manufacture
+manufacture 
+manufactures
+interpret 
+interprets 
 yield
 inhabit 
 inhabits
- fund
 progresses
 underline
 encourage 
 encourages
+loom 
+looms 
+deepen
 knock
 convey
 bother
@@ -922,7 +938,7 @@ diagnose
  shook 
  shaken 
 boast
-engage
+engage 
 engages
 engaged
 hire
@@ -970,6 +986,7 @@ ivate
 avate
 trate 
 trates
+itate
 brate
 ated 
 bate
@@ -999,6 +1016,7 @@ And
  or 
 Or 
  and/or 
+Neither
 neither
  nor 
  either
@@ -1014,6 +1032,9 @@ instead
  not only
 >----------------------------------<
 
+
+removed for certain reasons from prepositions:
+by 
 
 
 PREPOSITIONS TO HANDLE
@@ -1031,7 +1052,6 @@ beside
  with 
  about 
  at 
-by 
 between
 within
 without
@@ -1069,6 +1089,7 @@ throughout
  amidst 
 In 
  via 
+aboard
 >----------------------------------<
 
 
@@ -1178,6 +1199,7 @@ claim
 port 
 ports 
  control 
+ controls
  grade 
  live 
 lives
@@ -1185,6 +1207,10 @@ means
 point 
 points 
 pointed 
+monitor
+favour
+favor 
+favors
  hit
  sound
  shape
@@ -1236,7 +1262,7 @@ limits
 limited
 comment 
 comments 
-drew 
+ drew 
  rest 
  rests 
 fect 
@@ -1293,11 +1319,12 @@ dicts
 dicted
 approach
 step
-change 
- changes 
+chang
  guide
 verse 
 verses 
+ wear 
+ wears
 probe
 probing
 travel
@@ -1308,7 +1335,6 @@ sects
 strike
  shot 
 break 
-remain
 feature
 seed
 launch
@@ -1334,7 +1360,8 @@ flip
 left 
 measure 
 measures
-attack
+attack 
+attacks
 lift
 doubt
 award
@@ -1346,6 +1373,8 @@ flow
 encounter
  own
 worries
+risk
+guarantee
 kick
 cern
 drift
@@ -1379,23 +1408,53 @@ shield
 highlight
  plot 
  plots 
+pay 
 vow 
 vows 
+load
 frame
 pause
+remain
 hibit 
 hibits 
+ raid
+ report 
+ reports
  mask
 estimate
+incarnate
+ study 
+ studies 
+ target 
+ targets 
+neglect
+captur
+gains 
+watch
+ fit 
+ fits 
+ twist
  quote
  film
  hope
+ fund 
+ funds 
+warrant
+ acts 
+ act 
  tear
+ thought
+dispute
 resolve
 supplies
+change 
+changes
+lead 
+ urge
 appeal
 reply 
 replies 
+ dive
 address
 impact
 practice

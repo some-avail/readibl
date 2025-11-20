@@ -9,7 +9,8 @@ optionally followed by items to be investigated
 
 
 SIGNAL-WORDS TO HANDLE
-first 
+first
+second
  last 
  early 
  late 
@@ -23,14 +24,32 @@ year
  day
 day 
 day,
+day.
+ night
+noon 
 centur
  age 
 BCE
  BC
  AD 
  after 
+After
+after,
+before
+Before
  during 
  since 
+Since
+ AM 
+pm 
+PM 
+pm,
+ am,
+ a.m.
+ A.M.
+p.m.
+P.M.
+following
 anuary
 ebruary
 March
@@ -40,11 +59,41 @@ June
 june
 July
 july
-ugustus
+August
+august
 eptember
 ctober
 ovember
 ecember
+ jan.
+ Jan.
+ feb.
+ feb 
+ Feb
+ mar.
+ mar 
+ Mar.
+ apr.
+ apr 
+ Apr
+ may.
+ May
+ jun.
+ Jun.
+ jul.
+ Jul.
+ aug.
+ aug 
+ Aug
+ oct.
+ oct 
+ Oct
+ nov.
+ nov 
+ Nov
+ dec.
+ dec 
+ Dec
 170
 171
 172
@@ -145,6 +194,7 @@ ecember
 2022
 2023
 2024
+2025
 >----------------------------------<
 
 

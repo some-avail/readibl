@@ -1,0 +1,57 @@
+Extraction-strings for summarizing with Flashread.
+Language: english
+Summary-type: generic
+version: 1.3
+
+
+-new set for political actors
+
+
+
+SIGNAL-WORDS TO HANDLE
+organisatie
+institutie
+instelling
+baas
+chef
+leider
+Leider
+partij
+groep
+president 
+President 
+Staf
+staf
+politicus
+agent
+agentschap
+commandant
+krijgsmacht
+militie
+governeur
+anselier
+minister
+Minister
+ hof 
+Hof
+justitie
+kamerlid
+kamerleden
+burgemeester
+raadslid
+raadsleden
+leden van
+eigenaar
+eigenaren
+miljardair
+directeur
+voorzitter
+hoofd
+utoriteit
+aanhang
+expert
+Expert
+ door 
+>----------------------------------<
+
+

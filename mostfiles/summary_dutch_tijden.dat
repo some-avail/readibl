@@ -9,8 +9,8 @@ optionally followed by items to be investigated
 
 
 SIGNAL-WORDS TO HANDLE
-eerst
- laatst 
+ eerst
+ laatst
  vroeg
 datering
 dateer
@@ -25,6 +25,7 @@ jaren
  dag
 dag
 dag,
+nacht
 eeuw
  tijd 
 BCE
@@ -35,6 +36,8 @@ BCE
  gedurende 
  sinds 
  vanaf 
+nadat 
+voordat 
 anuarie
 ebruarie
 Maart
@@ -152,6 +155,7 @@ ecember
 2022
 2023
 2024
+2025
 >----------------------------------<
 
 

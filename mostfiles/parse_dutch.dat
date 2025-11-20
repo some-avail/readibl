@@ -92,7 +92,7 @@ blijven
 bleven
 gaat
 gaan
-ging
+ ging
 gegaan
 laat 
 laten
@@ -130,7 +130,7 @@ doen
 doe 
 deden 
 deed 
-gedaan
+gedaan 
 maak
 maken 
 gemaakt
@@ -170,6 +170,7 @@ sloten
 openen
 opent
 geopend
+opende
 openbaren
 openbaart
 openbaard
@@ -184,7 +185,7 @@ riepen
  richt 
 richtte
 gericht
-richten
+ richten
 tracht
 poogt 
 probeer
@@ -264,13 +265,14 @@ zocht
 kiest
 kiezen
 koos
-gekozen
+kozen 
 verliezen
 verliest
 verloor
 verloren
 bouwen
 bouwt
+gebouwd
 denk 
 denkt
 denken
@@ -350,7 +352,10 @@ speelt
 speeld
 trekken 
 trekt
-trok
+trok 
+trokken 
+rekken
+rekt
 geplaatst
 gelegd
  toege
@@ -380,7 +385,8 @@ wijst
 wijzen 
 wees 
 wezen 
-toon
+toont
+toond
 tonen 
 draaien 
 draait
@@ -426,9 +432,9 @@ voeren
 voert 
 voerd
 spreken
-spreek
+spreekt 
 sprak 
-gesproken
+sproken
 praten
 praat
 merkt
@@ -540,7 +546,6 @@ gezorgd
 schouwen
 schouwt
 schouwd
-prijzen
 prijst
 prees
 prezen
@@ -575,7 +580,8 @@ schermd
 splitsen 
 splitst 
 koester
-tref
+treffen 
+treft
 trof
 prijk
 bereikt
@@ -605,8 +611,9 @@ leund
 gooit
 gooien
 gooid
-vangen
+vangen 
 vangt
+ontving 
 lenen 
 leent 
 leend
@@ -643,6 +650,7 @@ kent
 beken
 misken
 verken
+ontken
  kende
  gekend
 glijd
@@ -665,6 +673,9 @@ vaart
 drijft
 wijten
 wijkt 
+jaagd
+jaagt
+jagen 
 beveelt
 bevelen
 beval
@@ -690,10 +701,22 @@ vechten
 stribbel
 rennen 
 rent 
-rend
+rende
+rend 
 help
 hielp
 holpen
+sterft
+sterven
+stierf
+gestorven
+zendt 
+zenden 
+zond 
+gezonden 
+ oogste
+oogstte
+geoogst
 vergroot
 beslist 
 beslissen 
@@ -774,6 +797,8 @@ zoals
 alsmede
 >----------------------------------<
 
+Tijdelijk uitgeschakeld ivm summary_dutch_veroorzaking.dat met paarse kleur
+ door 
 
 PREPOSITIONS TO HANDLE
  in 
@@ -785,7 +810,6 @@ PREPOSITIONS TO HANDLE
  tussen 
  bij 
  van 
- door 
  voor 
  achter 
  na 
@@ -807,6 +831,10 @@ PREPOSITIONS TO HANDLE
  toe 
  langs 
  af 
+ behalve 
+ zonder 
+ rond 
+ omtrent
 >----------------------------------<
 
 
@@ -883,6 +911,7 @@ delen
 antwoorden
 vluchten
 vlucht
+prijzen
 hopen 
 slagen 
 schets

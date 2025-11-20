@@ -80,7 +80,7 @@ template log(messagest: string) =
 
 
 const 
-  versionfl: float = 0.9508
+  versionfl: float = 0.96
   minimal_word_lengthit = 7
   appnamebriefst:string = "RD"
   appnamenormalst = "Readibl"
@@ -98,15 +98,16 @@ proc getWebTitle():string =
   var 
     clipob = clipboard_new(nil)
     past, inter_tekst, test, parsestringit:string
-    
+
   const 
     titlelenghit = 60
     parselenghtit = 500
 
   past = $clipob.clipboard_text()
 
+
   try:
-    if past[0 .. 3] == "http":   # pasted text is a link
+    if past[0 .. 6] in ["http://", "https:/", "file://"]:   # pasted text is a weblink or file
       inter_tekst = getTitleFromWebsite(past)
     else:
       if past.len > titlelenghit:
@@ -140,7 +141,7 @@ proc jump_to_end_step(languagest, preprocesst, taglist, typest, summaryfilest,
   abbreviationsq =  sequenceFromValueList(readOptionFromFile("abbreviations", "value-list"))
 
   #if past[0 .. 3] == "http":   # pasted text is a weblink
-  if past[0 .. 6] in ["http://", "https:/"]:   # pasted text is a weblink
+  if past[0 .. 6] in ["http://", "https:/", "file://"]:   # pasted text is a weblink or file
     if typest == "":
       inter_tekst = handleTextPartsFromHtml(past, "extract", languagest, taglist, summaryfilest, gencontentst, abbreviationsq, use_multi_summarybo)
       result = formatText(inter_tekst, languagest, preprocesst, summaryfilest, gencontentst, use_multi_summarybo)
@@ -422,7 +423,7 @@ routes:
       abbreviationsq =  sequenceFromValueList(readOptionFromFile("abbreviations", "value-list"))
 
       # determine type of pasted_text (text or link)
-      if @"pasted_text"[0..3] == "http":   # pasted text is a link
+      if @"pasted_text"[0..6] in ["http://", "https:/", "file://"]:   # pasted text is a link
 
         output_tekst = handleTextPartsFromHtml(@"pasted_text", "extract", @"text-language", 
                                           @"taglist", @"summarylist", @"generate_contents", abbreviationsq, use_multi_summarybo)
