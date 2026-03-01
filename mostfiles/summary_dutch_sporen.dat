@@ -97,7 +97,7 @@ puin
 migr
 verhui
 verplaats
-laag
+laag 
 verander
 terughalen
 losmaken
@@ -113,7 +113,7 @@ signalement
 handtekening
 bandenspoor
 geluid
-identi
+ identi
 configur
 schik
 verifiëren
@@ -146,6 +146,21 @@ verdween
 verdwenen
 vlucht
 detail
+ naam
+ namen 
+ inval
+ invas
+ binnengevallen
+verbonden
+ relat
+betrokken
+samen
+ apart
+ moti
+gemotiv
+nummer
+ code
+adres
 >----------------------------------<
 
 

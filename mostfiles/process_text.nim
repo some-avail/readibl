@@ -38,7 +38,7 @@ ADAP FUT
 
 
 import std / [strutils, httpclient, tables, algorithm, files, paths]
-import stringstuff, source_files, fr_tools, g_templates
+import stringstuff, source_files, fr_tools, g_templates, g_handle_text
 
 
 # no longer used:
@@ -1215,203 +1215,67 @@ proc extractSentencesFromText(input_tekst, languagest:string,
 
 
 
+proc createFrequencyTable(input_tekst, languagest: string, 
+          summaryfilest: string = "", generatecontentst: string, 
+          use_multi_summarybo: bool, chunksizeit: int):string =
 
-#proc extractSentencesFromText_Old(input_tekst, languagest:string, 
-#              summaryfilest: string = "", generatecontentst: string, 
-#              use_multi_summarybo: bool) :string =
+  #[chop up the text in chunks, and per chunk extract titles and 
+  frequent words. Add a row with freqs and titles, formatted text 
+  for eacht text-chunk.
 
-#  #[ 
-#  Process the input-text by extracting sentences that have a certain 
-#  search-string in them, so that a summary arises.
-
-#  The summary-definition-files (like summary_english.dat) are used.
-
-#  The search-strings originate no more from the language-files (like english.dat),
-#  as in older versions of Readibl / flashread.
-#  (specifically the category SIGNAL-WORDS TO HANDLE).
-
-#  Arguments:
-#  - input_tekst; expected format??
+  ADAP HIS
+  - make nw file g_handle_text.nim
+    -add chopString
 
 
-#  ADAP HIS
-#  -prune and correct the code
-#  - to possiblize multiple summary-files:
-#    - read the desired sum-files from lists/multi-summary-list.txt
-#    - combine the sum-files into one temporary file with only
-#      one section.
-#    - use the temp-file to do the extraction
+  ADAP NOW
+  - 
 
-#  ADAP NOW
-  
-#  ADAP FUT
-#  ]#
+  ADAP FUT
+  - add g_handle_text.nim to joshares
+  - refactor tof.nim
+  ]#
 
 
-#  var 
-#    deffile: File
+  # chop the text in chunks of chunksizeit
+  var chunksq: seq[string] = chopString(input_tekst, chunksizeit)
+  echo "chunk-num ", chunksq.len
+  # create a html-table and add walk thru the chunks
+  var tablest: string = ""
+  var resultst: string = "<table id=\"frequency_table\" border=\"1\">\p"
 
-#    blockseparatorst = ">----------------------------------<"
-#    lastline: string
-#    phasetekst: string = input_tekst
-#    def_filenamest: string
+  # for each chunk
+  for chunkst in chunksq:
 
-#    part1sq, part2sq, part3sq, sentencesq: seq[string] = @[]
-#    sentencecountit: int = 0
-
-#    summarysq: seq[string] = @[]
-#    summaryst: string
-#    processingbo: bool
-#    # the number of lines always added from the introduction
-#    introductionit: int = 4
-#    signal_strings_starting_pointit:int64 = 0
-#    tbo = false
-#    countit: int
-#    leftpartst, rightpartst: string
-#    stringsizeit:int
-#    linesq: seq[string] 
-#    linecountit: int =0
+    # calculate the freqs
+    # extract the titles
+    # apply formatting the text
 
 
-#  if use_multi_summarybo:
-#    if createCombinedSummaryFile("aggregate"):
-#      def_filenamest = "data_files/summary_aggregated.dat"
-#    else:
-#      def_filenamest = summaryfilest  
-#  else:
-#    def_filenamest = summaryfilest
+    # create a row and cells
+    # paste freqs, titles and text
+    resultst &= "<tr><td>" & chunkst & "</td></tr>\p"
 
+  resultst &= "</table>\p"
+  echo resultst
 
-
-#  # Old approach - created to big chunks:
-#  # sentencesq = phasetekst.split(". ")
-
-#  # new approach - chopping in smaller chunks
-#  part1sq = phasetekst.split(". ")
-#  for text1st in part1sq:
-#    part2sq = text1st.split(".</p>")
-#    for text2st in part2sq:
-#        part3sq = text2st.split("<br>")
-#        for text3st in part3sq:
-#          sentencesq.add(text3st)
-
-
-#  if generatecontentst == "":
-#    stringsizeit = 1500
-#  else:
-#    # make sure the contents-area is not seen as garbage
-#    stringsizeit = 15000
-
-#  #if tbo: echo sentencesq
-
-#  if open(deffile, def_filenamest):    # try to open the def-file
-#    try:
-
-#      if tbo: echo "\n=====Begin extraction===="
-
-#      # walk thru the sentences of the input-text
-#      for sentencest in sentencesq:
-#        if tbo: echo sentencest
-#        # add the first sentences always to the summary
-#        if sentencecountit <= introductionit:
-#          if sentencest.len < stringsizeit:
-#            summarysq.add(sentencest & ". ")
-#        else:
-#          # beyond the introduction only extracted sentences are added
-#          processingbo = false  # header not yet reached
-
-#          if signal_strings_starting_pointit > 0:
-#            deffile.setFilePos(signal_strings_starting_pointit)
-#            processingbo = true
-
-#          # -----------walk thru the lines of the def-file------------
-#          for line in deffile.lines:
-#            lastline = line
-
-#            # check for block-header
-#            if line == "SIGNAL-WORDS TO HANDLE":
-#              processingbo = true
-#              signal_strings_starting_pointit = deffile.getFilePos()
-#            elif processingbo:
-
-#              if line != blockseparatorst:   # block-separating string; end of job
-
-#                if sentencest.contains(line):
-#                  linecountit += 1
-#                  #echo "sentence =" & sentencest
-#                  #echo "line = " &  line
-#                  # if sentencest.len < stringsizeit:   # to skip long irrelevant lists
-#                  if true:
-#                    countit = count(sentencest, '.')
-#                    if countit == 0 or  countit > 1:
-#                      summarysq.add("<br>" & $sentencecountit & " ===============================" & "<br><br>")
-#                      summarysq.add(sentencest & ". ")
-
-#                    elif countit == 1:
-#                      summarysq.add("<br>" &  $sentencecountit & " ===============================" & "<br><br>")
-#                      linesq = sentencest.split('.')
-#                      leftpartst = linesq[0]
-#                      rightpartst = linesq[1]
-#                      if leftpartst.contains(line): summarysq.add(leftpartst & ". ")
-#                      if rightpartst.contains(line): summarysq.add(rightpartst & ". ")
-
-
-#                  # to prevent more adds for more extraction-words
-#                  break
-#              else:
-#                # stop because end-of-signalwords
-#                break
-
-#        sentencecountit += 1
-        
-
-#      if tbo: echo "===End of extraction ===="
-
-#      if tbo: echo phasetekst
-
-#      # concatenate extracted sentences to text
-#      summaryst = "Number of extractions: " & $linecountit & "<br><br>"
-#      for senst in summarysq:
-#        # summaryst &= strip(senst, true, true)
-#        summaryst &= senst
-
-
-#    except IOError:
-#      echo "IO error!"
-    
-#    except RangeDefect:
-#      echo "\p\p+++++++ search-config not found +++++++++++\p"
-#      echo "You have probably entered a search-config that could not be found. \p" &
-#          "Re-examine you search-config. \p" &
-#          "The problem originated probably in the above EDIT FILE-block"
-#      let errob = getCurrentException()
-#      echo "\p******* Technical error-information ******* \p" 
-#      echo "Last def-file-line read: " & lastline & "\p"
-#      echo repr(errob) & "\p****End exception****\p"
-
-    
-#    except:
-#      let errob = getCurrentException()
-#      echo "\p******* Unanticipated error ******* \p" 
-#      echo "Last def-file-line read: " & lastline & "\p"
-#      echo repr(errob) & "\p****End exception****\p"
-        
-#    finally:
-#      close(deffile)
-#  else:
-#    echo "Could not open file!"
-
-#  return summaryst
-
-
+  result = resultst
 
 
 proc formatText*(input_tekst, languagest, preprocesst: string, 
           summaryfilest: string = "", generatecontentst: string, 
           use_multi_summarybo: bool):string =
   
-  # To apply html-formatting (coloring and highlighting), 
-  # possibly after summarization
+  #[ To apply html-formatting (coloring and highlighting), 
+   possibly after summarization
+
+  ADAP NOW
+  - partfreq implementation
+    - preprocesst = "tabularize"
+      - createFrequencyTable()
+
+  ]#
+
 
   var
     r1,r2, r3: string
@@ -1424,6 +1288,12 @@ proc formatText*(input_tekst, languagest, preprocesst: string,
                                     generatecontentst, use_multi_summarybo)
     r3 = applyDefinitionFileToText(r2, languagest, true, summaryfilest, use_multi_summarybo)
     result = applyDefinitionFileToText(r3, languagest, false)
+
+  elif preprocesst == "tabularize":
+    #discard()
+    result = createFrequencyTable(input_tekst, languagest, 
+          summaryfilest, generatecontentst, 
+          use_multi_summarybo, 100)
 
   else:   # no summary requested
     r2 = applyDefinitionFileToText(r1, languagest, true, summaryfilest, use_multi_summarybo)

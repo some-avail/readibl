@@ -53,7 +53,8 @@ ADAP FUT
  ]#
 
 
-import jester
+#import jester
+import jesterfork
 import strutils
 import httpcore
 import process_text
@@ -80,7 +81,7 @@ template log(messagest: string) =
 
 
 const 
-  versionfl: float = 0.96
+  versionfl: float = 0.97
   minimal_word_lengthit = 7
   appnamebriefst:string = "RD"
   appnamenormalst = "Readibl"
@@ -131,6 +132,7 @@ proc jump_to_end_step(languagest, preprocesst, taglist, typest, summaryfilest,
                           gencontentst: string, use_multi_summarybo: bool): string =
   # Skip the gradual steps from the radio-buttons and go to processing immediately
   # typest determines if text-extraction or insite text-replacement is done
+  # partfreq_text partfreq_link
 
   var 
     clipob = clipboard_new(nil)
@@ -314,7 +316,7 @@ routes:
         innervarob["radiobuttons_1"] = setRadioButtons("orders", "transfer")
         innervarob["urltext"] = ""
         innervarob["checkboxes_1"] = setCheckBoxSet("fr_checkset1", @[@"jump_to_end", @"summarize", 
-                                       @"generate_contents", @"insite_reformating", @"newtab"])
+                                       @"generate_contents", @"insite_reformating", @"newtab", @"tabularize"])
         innervarob["submit"] = newlang("Choose and run")
         innervarob["textbox-remark"] = newlang("Your item will be pasted here (text or web-link):")
         if @"newtab" == "":
@@ -329,6 +331,8 @@ routes:
       elif @"jump_to_end" == "jump_to_end":
         if @"insite_reformating" == "":
 
+          # partfreq_text
+
           if @"newtab" == "":
             innervarob["newtab"] = "_self"
           elif @"newtab" == "newtab":
@@ -338,7 +342,11 @@ routes:
           if @"multisum" == "multisum":
             if createCombinedSummaryFile("testing", @"text-language"):
               use_multi_summarybo = true
-          output_tekst = jump_to_end_step(@"text-language", @"summarize", @"taglist", "", @"summarylist", @"generate_contents", use_multi_summarybo)
+
+          if @"tabularize" == "tabularize":
+            output_tekst = jump_to_end_step(@"text-language", @"tabularize", @"taglist", "", @"summarylist", @"generate_contents", use_multi_summarybo)
+          else:
+            output_tekst = jump_to_end_step(@"text-language", @"summarize", @"taglist", "", @"summarylist", @"generate_contents", use_multi_summarybo)
 
           statustekst = "Output number of words:"
           if @"multisum" == "multisum":
@@ -360,7 +368,7 @@ routes:
           innervarob["radiobuttons_1"] = setRadioButtons("orders", "pasteclip")
           innervarob["urltext"] = ""
           innervarob["checkboxes_1"] = setCheckBoxSet("fr_checkset1", @[@"jump_to_end", @"summarize", 
-                                            @"generate_contents", @"insite_reformating", @"newtab"])
+                                            @"generate_contents", @"insite_reformating", @"newtab", @"tabularize"])
           innervarob["submit"] = newlang("Choose and run")
           innervarob["textbox-remark"] = newlang("Your item will be pasted here (text or web-link):")
 
@@ -368,7 +376,6 @@ routes:
           resp showPage(innervarob, outervarob)
 
         elif @"insite_reformating" == "insite_reformating":
-          # output_tekst = jump_to_end_step(@"text-language", @"summarize")
 
           if @"newtab" == "":
             innervarob["newtab"] = "_self"
@@ -380,8 +387,20 @@ routes:
           if @"multisum" == "multisum":
             if createCombinedSummaryFile("testing", @"text-language"):
               use_multi_summarybo = true
-          newinnerhtmlst = jump_to_end_step(@"text-language", @"summarize", @"taglist", 
-                                        @"insite_reformating", @"summarylist", @"generate_contents", use_multi_summarybo)
+
+
+          # ===========================================
+
+
+          if @"tabularize" == "tabularize":
+            newinnerhtmlst = jump_to_end_step(@"text-language", @"tabularize", @"taglist", @"insite_reformating", @"summarylist", @"generate_contents", use_multi_summarybo)
+
+          else:
+            newinnerhtmlst = jump_to_end_step(@"text-language", @"summarize", @"taglist", @"insite_reformating", @"summarylist", @"generate_contents", use_multi_summarybo)
+
+          # ===========================================
+
+
 
           statustekst = "Output number of words:"
           if @"multisum" == "multisum":
@@ -392,11 +411,6 @@ routes:
           else:
             statusdatast = $countWords(newinnerhtmlst)
 
-          #newinnerhtmlst = jump_to_end_step(@"text-language", @"summarize", 
-          #                      @"taglist", @"insite_reformating", 
-          #                      @"summarylist", @"generate_contents")
-          #statustekst = "Output number of words:"
-          #statusdatast = $countWords(newinnerhtmlst)
 
           innervarob["statustext"] = newlang(statustekst)
           innervarob["statusdata"] = statusdatast
@@ -409,7 +423,7 @@ routes:
           innervarob["radiobuttons_1"] = setRadioButtons("orders", "pasteclip")
           innervarob["urltext"] = ""
           innervarob["checkboxes_1"] = setCheckBoxSet("fr_checkset1", @[@"jump_to_end", @"summarize", 
-                                      @"generate_contents", @"insite_reformating", @"newtab"])
+                                      @"generate_contents", @"insite_reformating", @"newtab", @"tabularize"])
           innervarob["submit"] = newlang("Choose and run")
           innervarob["textbox-remark"] = newlang("Your item will be pasted here (text or web-link):")
 
@@ -442,7 +456,7 @@ routes:
         innervarob["radiobuttons_1"] = setRadioButtons("orders", "frequencies")
         innervarob["urltext"] = @"pasted_text"
         innervarob["checkboxes_1"] = setCheckBoxSet("fr_checkset1", @[@"jump_to_end", @"summarize", 
-                                      @"generate_contents", @"insite_reformating", @"newtab"])
+                                      @"generate_contents", @"insite_reformating", @"newtab", @"tabularize"])
         innervarob["submit"] = newlang("Choose and run")
         innervarob["textbox-remark"] = newlang("Your item will be pasted here (text or web-link):")
         if @"newtab" == "":
@@ -467,7 +481,7 @@ routes:
         innervarob["radiobuttons_1"] = setRadioButtons("orders", "frequencies")
         innervarob["urltext"] = ""
         innervarob["checkboxes_1"] = setCheckBoxSet("fr_checkset1", @[@"jump_to_end", @"summarize", 
-                                        @"generate_contents", @"insite_reformating", @"newtab"])
+                                        @"generate_contents", @"insite_reformating", @"newtab", @"tabularize"])
         innervarob["submit"] = newlang("Choose and run")
         innervarob["textbox-remark"] = newlang("Your item will be pasted here (text or web-link):")
         if @"newtab" == "":
@@ -496,7 +510,7 @@ routes:
       innervarob["radiobuttons_1"] = setRadioButtons("orders", "process_text")
       innervarob["urltext"] = @"url_text"
       innervarob["checkboxes_1"] = setCheckBoxSet("fr_checkset1", @[@"jump_to_end", @"summarize", 
-                                      @"generate_contents", @"insite_reformating", @"newtab"])
+                                      @"generate_contents", @"insite_reformating", @"newtab", @"tabularize"])
       innervarob["submit"] = newlang("Choose and run")
       innervarob["textbox-remark"] = newlang("Your item will be pasted here (text or web-link):")
       if @"newtab" == "":
@@ -509,6 +523,7 @@ routes:
 
     if request.params["orders"] == "process_text":
 
+      # partfreq_text3
       if @"newtab" == "":
         innervarob["newtab"] = "_self"
       elif @"newtab" == "newtab":
@@ -545,7 +560,7 @@ routes:
       innervarob["radiobuttons_1"] = setRadioButtons("orders", "pasteclip")
       innervarob["urltext"] = @"url_text"
       innervarob["checkboxes_1"] = setCheckBoxSet("fr_checkset1", @[@"jump_to_end", @"summarize", 
-                                        @"generate_contents", @"insite_reformating", @"newtab"])
+                                        @"generate_contents", @"insite_reformating", @"newtab", @"tabularize"])
       innervarob["submit"] = newlang("Choose and run")
       innervarob["textbox-remark"] = newlang("Your item will be pasted here (text or web-link):")
 

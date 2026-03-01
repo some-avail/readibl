@@ -339,9 +339,9 @@ fer
 cur 
 curs 
 curred
- confirm 
- confirms 
- confirmed
+confirm 
+confirms 
+confirmed
  define
 thinks
 think
@@ -396,7 +396,8 @@ forced
  exists
  existed
  ignore
-examine
+examine 
+examines
 exceed
  lose 
 lost
@@ -625,7 +626,8 @@ divide
 vert 
 verts 
 verted
-cend
+cend 
+cends
 deny
 denies
 denied
@@ -835,8 +837,6 @@ strove
  dare
 enrich 
 enriches
-advance 
-advances 
 advanced 
 originate
 prosecute
@@ -852,6 +852,8 @@ depress
  spans 
 mimic 
 mimics
+ reckon
+stumble
 arise
 vive
 voke
@@ -924,6 +926,7 @@ looms
 deepen
 knock
 convey
+ steer
 bother
 plunge
  lean
@@ -937,10 +940,14 @@ diagnose
  shake
  shook 
  shaken 
+lude 
+ludes 
+ sway
 boast
 engage 
 engages
 engaged
+lament
 hire
 distort 
 distorts
@@ -952,11 +959,13 @@ misses
  wake
 endanger 
 endangers 
+esce
 vest 
 vests 
 backs 
 develop 
 develops 
+translate
 debunk
 suade
 prosper 
@@ -975,11 +984,13 @@ ized
 ise 
 ises 
 ised 
+ensate
 ulate
 igate
 inate
 erate
 orate
+alate
 olate
 ulate
 ivate
@@ -1068,6 +1079,7 @@ toward
 inward
 outward
 around
+Around
 beyond
  nearby 
  near 
@@ -1412,9 +1424,12 @@ pay
 vow 
 vows 
 load
+brace
 frame
 pause
 remain
+ shed 
+ sheds 
 hibit 
 hibits 
  raid
@@ -1428,6 +1443,7 @@ incarnate
  target 
  targets 
 neglect
+protest
 captur
 gains 
 watch
@@ -1447,8 +1463,15 @@ warrant
 dispute
 resolve
 supplies
+ hate
+trust
 change 
 changes
+advance 
+advances 
+ spell
+ spur 
+ spurs 
 lead 
  urge
 appeal
@@ -1466,7 +1489,6 @@ eate
 gate
 lates
 pate
-hate
 fate
 >----------------------------------<
 
