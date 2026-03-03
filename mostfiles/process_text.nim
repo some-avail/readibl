@@ -39,6 +39,7 @@ ADAP FUT
 
 import std / [strutils, httpclient, tables, algorithm, files, paths]
 import stringstuff, source_files, fr_tools, g_templates, g_handle_text
+import jolibs/generic/[g_disk2nim, g_mine]
 
 
 # no longer used:
@@ -1214,10 +1215,34 @@ proc extractSentencesFromText(input_tekst, languagest:string,
   return summaryst
 
 
+proc markupSubstring(mainst, subst, prefikst, suffikst: string): string = 
+
+  var newmainst: string = mainst
+  var straddressit: int = mainst.find(subst)
+
+  if straddressit == -1:
+    result = mainst
+  else:
+    newmainst.insert(prefikst, straddressit)
+    newmainst.insert(suffikst, straddressit + prefikst.len + subst.len)
+
+    result = newmainst
+
+
+proc endsWithAnyOf(mainst: string, endingsq: seq[string]): bool =
+
+  # return true if any of the endings apply.
+  result = false
+  for endst in endingsq:
+    if mainst.endsWith(endst):
+      result = true
+      break
+
+
 
 proc createFrequencyTable(input_tekst, languagest: string, 
           summaryfilest: string = "", generatecontentst: string, 
-          use_multi_summarybo: bool, chunksizeit: int):string =
+          use_multi_summarybo: bool, chunksizeit: int, contentst: string):string =
 
   #[chop up the text in chunks, and per chunk extract titles and 
   frequent words. Add a row with freqs and titles, formatted text 
@@ -1229,7 +1254,9 @@ proc createFrequencyTable(input_tekst, languagest: string,
 
 
   ADAP NOW
-  - 
+  - implement the skiplist    
+    v- create a jolibs-dir as a copy of joshare/jolibs
+      v-check sync joshare with freekwensie
 
   ADAP FUT
   - add g_handle_text.nim to joshares
@@ -1237,34 +1264,94 @@ proc createFrequencyTable(input_tekst, languagest: string,
   ]#
 
 
-  # chop the text in chunks of chunksizeit
-  var chunksq: seq[string] = chopString(input_tekst, chunksizeit)
-  echo "chunk-num ", chunksq.len
-  # create a html-table and add walk thru the chunks
-  var tablest: string = ""
-  var resultst: string = "<table id=\"frequency_table\" border=\"1\">\p"
+  # create skip-list from file:
+  var noisefilenamest = "noise_words_" & languagest & "_generic.dat"
+  var skiplisq: seq[string] = convertFileToSequence(noisefilenamest, ">>>")
 
-  # for each chunk
+
+  # create top-table with full-text freqs and contents
+  var toptabst, fullfreqlist: string
+
+  toptabst = "<table id=\"fulltext_derivatives_table\" border=\"1\">\p"
+  toptabst &= "<tr>"
+  fullfreqlist = calcWordFrequencies(input_tekst, 3, skiplisq, true, 30, 0)
+
+  toptabst &= "<td>" & fullfreqlist & "</td>\p"
+
+  toptabst &= "<td>" & contentst & "</td>\p"
+  toptabst &= "</tr>\p"
+  # close table
+  toptabst &= "</table>\p"
+
+
+  # chop the text in chunks of chunksizeit
+  var chunksq: seq[string] = chopString2(input_tekst, chunksizeit)
+  #echo "chunk-num ", chunksq.len
+  # create the chunk-table and add walk thru the chunks
+
+  var resultst: string = toptabst
+
+  resultst &= "<table id=\"chunks_table\" border=\"1\">\p"
+  var freqlist, highlightingst, grammaringst: string
+  var max_title_lengthit: int = 75
+  var chunk_titlest: string = ""
+  var endst, newchunkst, cleanlinest: string
+
+  # for each chunk add stuf to the table
   for chunkst in chunksq:
+    newchunkst = chunkst
+    # open table-row
+    resultst &= "<tr>"
 
     # calculate the freqs
+    freqlist = calcWordFrequencies(chunkst, 3, skiplisq, true, 17, 0)
+
+
+    # create cells (table-data), starting with the freqs
+    resultst &= "<td>" & freqlist & "</td>\p"
+
     # extract the titles
-    # apply formatting the text
+    chunk_titlest = ""    # reset for every chunk
+    for linest in chunkst.splitlines:
+      if len(linest) < max_title_lengthit:
+        #echo "linest=", linest
+        cleanlinest = linest.split("<")[0]
+        #echo "cleanlinest=", cleanlinest
+
+        if cleanlinest.len > 0:
+
+          # if no non-allowed chars
+          if not cleanlinest.endsWithAnyOf(@[".",":",",",")"]):   # if none of those
+
+            chunk_titlest.add("<i>" & linest & "</i><br>\n")
+            newchunkst = markupSubstring(newchunkst, linest, "<h3>", "</h3>")
+
+    resultst &= "<td>" & chunk_titlest & "</td>\p"
 
 
-    # create a row and cells
+    # apply highlighting and grammatical formatting the chunk-text
+    highlightingst = applyDefinitionFileToText(newchunkst, languagest, true, summaryfilest, use_multi_summarybo)
+    grammaringst = applyDefinitionFileToText(highlightingst, languagest, false)
+
     # paste freqs, titles and text
-    resultst &= "<tr><td>" & chunkst & "</td></tr>\p"
 
+
+    resultst &= "<td>" & grammaringst & "</td>\p"
+
+    # close table-row
+    resultst &= "</tr>\p"
+  # close table
   resultst &= "</table>\p"
-  echo resultst
+  #echo resultst
 
   result = resultst
 
 
+
+
 proc formatText*(input_tekst, languagest, preprocesst: string, 
           summaryfilest: string = "", generatecontentst: string, 
-          use_multi_summarybo: bool):string =
+          use_multi_summarybo: bool, contentst: string = ""):string =
   
   #[ To apply html-formatting (coloring and highlighting), 
    possibly after summarization
@@ -1273,8 +1360,8 @@ proc formatText*(input_tekst, languagest, preprocesst: string,
   - partfreq implementation
     - preprocesst = "tabularize"
       - createFrequencyTable()
-
   ]#
+
 
 
   var
@@ -1290,10 +1377,10 @@ proc formatText*(input_tekst, languagest, preprocesst: string,
     result = applyDefinitionFileToText(r3, languagest, false)
 
   elif preprocesst == "tabularize":
-    #discard()
+  
     result = createFrequencyTable(input_tekst, languagest, 
           summaryfilest, generatecontentst, 
-          use_multi_summarybo, 100)
+          use_multi_summarybo, 1100, contentst)
 
   else:   # no summary requested
     r2 = applyDefinitionFileToText(r1, languagest, true, summaryfilest, use_multi_summarybo)
@@ -1301,7 +1388,7 @@ proc formatText*(input_tekst, languagest, preprocesst: string,
 
 
 
-proc replaceInPastedText*(pastedtekst, generatecontentst: string, abbreviationsq: seq[string]): string =
+proc replaceInPastedText*(pastedtekst, generatecontentst: string, abbreviationsq: seq[string], preprocesst: string = ""): (string, string) =
   #[ 
   To ensure correct conversion of pasted text from text-format to html-format
   Also:
@@ -1322,10 +1409,9 @@ proc replaceInPastedText*(pastedtekst, generatecontentst: string, abbreviationsq
 
   var 
     lengthit: int = 75
-
     intertekst, newtekst, contentst: string
     previousparagraphbo: bool = false      # to avoid double paragraphs
-
+    endst: string
 
   # dedot abbreviations
   intertekst = stripSymbolsFromList(pastedtekst, abbreviationsq, ".")
@@ -1335,18 +1421,28 @@ proc replaceInPastedText*(pastedtekst, generatecontentst: string, abbreviationsq
     # as basis for header-extraction; small lines are treated as headers
     if len(linest) < lengthit:
       if linest.len > 0:
-        if not linest.endsWith("."):
-          if generatecontentst != "":
-            contentst.add("<i>" & linest & "</i><br>\n")
-          newtekst.add("<b>" & linest & "</b><br>\n")
-        else:
+
+        if not linest.endsWithAnyOf(@[".",":",",",")"]):   # if none of those
+
+          contentst.add("<i>- " & linest & "</i><br>\n")
+          if preprocesst != "tabularize":
+            # bolden titles
+            newtekst.add("<b>" & linest & "</b><br>\n")
+          else:
+            newtekst.add(linest & "<br>\n")
+        elif linest.endsWith("."):
           # line is considered end of paragraph
           newtekst.add(linest & "<br><br>\n")
           previousparagraphbo = true
+        else:
+          newtekst.add(linest & "<br>\n")
+          previousparagraphbo = false
+
       else:
         # show emtpy lines because of the scarce formatting they provide
         if not previousparagraphbo:
           newtekst.add("<br><br>\n")
+          previousparagraphbo = true
 
     # long lines are treated normally
     else:
@@ -1360,11 +1456,11 @@ proc replaceInPastedText*(pastedtekst, generatecontentst: string, abbreviationsq
         previousparagraphbo = false
 
 
-  contentst.add("<br>---------------------------------------------------<br><br>")
-  if generatecontentst != "":
+  if generatecontentst != "" and preprocesst != "tabularize":
+    contentst.add("<br>---------------------------------------------------<br><br>")    
     newtekst.insert(contentst, 0)
 
-  result = newtekst
+  result = (newtekst,contentst)
 
 
 
@@ -1468,5 +1564,8 @@ when isMainModule:
   # echo getDataBetweenTags("<>a<>b<><>d<>", ">", "<", 5)
   # myTest()  
 
+  #echo "***********************"
+  #echo extractMatchesFromText(testtekst_eng, "", "summary_english_default.dat", "", 5)
   echo "***********************"
-  echo extractMatchesFromText(testtekst_eng, "", "summary_english_default.dat", "", 5)
+  let somest = "de grote aap eet alle bananen op"
+  echo markupSubstring(somest, "aap", "xx-", "-yy")

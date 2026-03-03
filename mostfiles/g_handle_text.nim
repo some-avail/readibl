@@ -45,3 +45,22 @@ proc chopString*(inputtekst: string; words_per_chunkit: int): seq[string] =
   result = partsq
 
 
+
+
+proc chopString2*(inputtekst: string; chars_per_chunkit: int): seq[string] = 
+
+  # chop the input-text in chunks of about chars_per_chunkit words.
+
+  var 
+    newtekst = inputtekst
+    partsq: seq[string]
+
+
+  while newtekst.len > chars_per_chunkit:
+    partsq.add(newtekst[0..chars_per_chunkit - 1])
+    newtekst = newtekst[chars_per_chunkit..^1]
+
+  if newtekst.len > 0:
+    partsq.add(newtekst)
+
+  result = partsq

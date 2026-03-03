@@ -65,7 +65,8 @@ import moustachu
 import source_files
 import fr_tools
 import times
-import g_mine
+#import g_mine
+import jolibs/generic/[g_disk2nim, g_mine]
 
 # not called but does needed work once
 import loadgui
@@ -81,7 +82,7 @@ template log(messagest: string) =
 
 
 const 
-  versionfl: float = 0.97
+  versionfl: float = 0.971
   minimal_word_lengthit = 7
   appnamebriefst:string = "RD"
   appnamenormalst = "Readibl"
@@ -91,8 +92,6 @@ const
 settings:
   # port = Port(5003)   # personal
   port = Port(parseInt(readOptionFromFile("port-number", "value")))  # development
-
-
 
 
 proc getWebTitle():string = 
@@ -152,8 +151,9 @@ proc jump_to_end_step(languagest, preprocesst, taglist, typest, summaryfilest,
 
   else:   # a text-block is pasted in this case
     inter_tekst = past
-    resulttekst = replaceInPastedText(inter_tekst, gencontentst, abbreviationsq)
-    result = formatText(resulttekst, languagest, preprocesst, summaryfilest, gencontentst, use_multi_summarybo)
+    var madecontentst: string
+    (resulttekst, madecontentst) = replaceInPastedText(inter_tekst, gencontentst, abbreviationsq, preprocesst)
+    result = formatText(resulttekst, languagest, preprocesst, summaryfilest, gencontentst, use_multi_summarybo, madecontentst)
 
 
 
@@ -468,7 +468,7 @@ routes:
         resp showPage(innervarob, outervarob)
 
       else:
-        converted_tekst = replaceInPastedText(@"pasted_text", @"generate_contents", abbreviationsq)
+        converted_tekst = replaceInPastedText(@"pasted_text", @"generate_contents", abbreviationsq)[0]
         statustekst = "Text transferred to right column"
         innervarob["statustext"] = newlang(statustekst)
         innervarob["statusdata"] = ""
@@ -567,4 +567,8 @@ routes:
 
       # resp showPage()
       resp showPage(innervarob, outervarob)      
+
+
+proc endOfFileDummyProc() =
+  discard()
 
