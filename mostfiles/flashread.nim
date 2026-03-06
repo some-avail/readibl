@@ -82,7 +82,7 @@ template log(messagest: string) =
 
 
 const 
-  versionfl: float = 0.971
+  versionfl: float = 0.9743
   minimal_word_lengthit = 7
   appnamebriefst:string = "RD"
   appnamenormalst = "Readibl"

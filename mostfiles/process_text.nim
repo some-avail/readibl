@@ -1269,10 +1269,20 @@ proc createFrequencyTable(input_tekst, languagest: string,
   var skiplisq: seq[string] = convertFileToSequence(noisefilenamest, ">>>")
 
 
+  # chop the text in chunks of chunksizeit
+  var chunksq: seq[string] = chopString3(input_tekst, chunksizeit)
+  #echo "chunk-num ", chunksq.len
+
+
   # create top-table with full-text freqs and contents
   var toptabst, fullfreqlist: string
 
-  toptabst = "<table id=\"fulltext_derivatives_table\" border=\"1\">\p"
+  toptabst = "<br><table id=\"fulltext_derivatives_table\" border=\"1\">\p"
+  var metric1st: string = "This article contains " & $countWords(input_tekst) & " words.<br>"
+  metric1st &= "It is chopped in " & $chunksq.len & " chunks of about " & $chunksizeit & " characters."
+  toptabst &= "<tr><td colspan=\"2\">" & metric1st & "</td></tr>\p"
+
+
   toptabst &= "<tr>"
   fullfreqlist = calcWordFrequencies(input_tekst, 3, skiplisq, true, 30, 0)
 
@@ -1284,16 +1294,13 @@ proc createFrequencyTable(input_tekst, languagest: string,
   toptabst &= "</table>\p"
 
 
-  # chop the text in chunks of chunksizeit
-  var chunksq: seq[string] = chopString2(input_tekst, chunksizeit)
-  #echo "chunk-num ", chunksq.len
   # create the chunk-table and add walk thru the chunks
 
   var resultst: string = toptabst
 
   resultst &= "<table id=\"chunks_table\" border=\"1\">\p"
   var freqlist, highlightingst, grammaringst: string
-  var max_title_lengthit: int = 75
+  var max_title_lengthit: int = 80
   var chunk_titlest: string = ""
   var endst, newchunkst, cleanlinest: string
 
@@ -1313,6 +1320,8 @@ proc createFrequencyTable(input_tekst, languagest: string,
     # extract the titles
     chunk_titlest = ""    # reset for every chunk
     for linest in chunkst.splitlines:
+      #if "Reverend John" in linest:
+      #  echo "special_linest=", linest
       if len(linest) < max_title_lengthit:
         #echo "linest=", linest
         cleanlinest = linest.split("<")[0]
@@ -1323,8 +1332,8 @@ proc createFrequencyTable(input_tekst, languagest: string,
           # if no non-allowed chars
           if not cleanlinest.endsWithAnyOf(@[".",":",",",")"]):   # if none of those
 
-            chunk_titlest.add("<i>" & linest & "</i><br>\n")
-            newchunkst = markupSubstring(newchunkst, linest, "<h3>", "</h3>")
+            chunk_titlest.add("<i>- " & linest & "</i><br>\n")
+            newchunkst = markupSubstring(newchunkst, cleanlinest, "<h3>", "</h3>")
 
     resultst &= "<td>" & chunk_titlest & "</td>\p"
 
@@ -1394,10 +1403,11 @@ proc replaceInPastedText*(pastedtekst, generatecontentst: string, abbreviationsq
   Also:
   -add experimental contents
   -dedot abbreviations
+  return the adapted text and the contents
 
-  issues:
-  -standard " " or "<br>" for most lines
-  -only short lines can become headers / content
+  approaches:
+  -standard " " or "<br>" append to most lines
+  -short lines can become headers / content
 
   ADAP HIS
   -re-added line-feeds
@@ -1408,13 +1418,20 @@ proc replaceInPastedText*(pastedtekst, generatecontentst: string, abbreviationsq
 
 
   var 
-    lengthit: int = 75
+    lengthit: int = 80
     intertekst, newtekst, contentst: string
     previousparagraphbo: bool = false      # to avoid double paragraphs
     endst: string
+    filelogbo: bool = false
+
+    # implement below later as parameter from combined textbox
+    pdf_lines_brokenbo: bool = false
+
+  # remove unneeded white-space
+  intertekst = removeMostWhiteSpace(pastedtekst, 1)
 
   # dedot abbreviations
-  intertekst = stripSymbolsFromList(pastedtekst, abbreviationsq, ".")
+  intertekst = stripSymbolsFromList(intertekst, abbreviationsq, ".")
 
   # splitlines splits the text on the line-feeds
   for linest in intertekst.splitlines:
@@ -1423,13 +1440,13 @@ proc replaceInPastedText*(pastedtekst, generatecontentst: string, abbreviationsq
       if linest.len > 0:
 
         if not linest.endsWithAnyOf(@[".",":",",",")"]):   # if none of those
-
+          # line is considered a title
           contentst.add("<i>- " & linest & "</i><br>\n")
           if preprocesst != "tabularize":
-            # bolden titles
-            newtekst.add("<b>" & linest & "</b><br>\n")
+            # give titles a heading
+            newtekst.add("<h3>" & linest & "</h3><br>\n")
           else:
-            newtekst.add(linest & "<br>\n")
+            newtekst.add(linest & "\n")
         elif linest.endsWith("."):
           # line is considered end of paragraph
           newtekst.add(linest & "<br><br>\n")
@@ -1450,17 +1467,35 @@ proc replaceInPastedText*(pastedtekst, generatecontentst: string, abbreviationsq
       if linest.endsWith("."):
         newtekst.add(linest & "<br><br>\n")
         previousparagraphbo = true
-      else:
-        # standard lines only get a space (needed for pdf-clippings)
+      elif linest.endsWithAnyOf(@[":",")","]"]):
+        newtekst.add(linest & "<br>\n")
+        previousparagraphbo = true
+
+      elif linest.endsWith("-"):
+        # standard lines only get a space (needed for some pdf-clippings)
         newtekst.add(linest & " ")
         previousparagraphbo = false
 
+      else:
+        if pdf_lines_brokenbo:
+          # standard lines only get a space (needed for some pdf-clippings)
+          newtekst.add(linest & " ")
+          previousparagraphbo = false
+        else:
+          newtekst.add(linest & "<br>\n")
+          previousparagraphbo = true
 
   if generatecontentst != "" and preprocesst != "tabularize":
     contentst.add("<br>---------------------------------------------------<br><br>")    
     newtekst.insert(contentst, 0)
 
+  if filelogbo:
+    writeFile("testlog_replaceInPastedText_01.log", pastedtekst)
+    # write newtekst to file
+    writeFile("testlog_replaceInPastedText_02.log", newtekst)
+
   result = (newtekst,contentst)
+
 
 
 

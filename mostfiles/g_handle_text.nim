@@ -49,7 +49,7 @@ proc chopString*(inputtekst: string; words_per_chunkit: int): seq[string] =
 
 proc chopString2*(inputtekst: string; chars_per_chunkit: int): seq[string] = 
 
-  # chop the input-text in chunks of about chars_per_chunkit words.
+  # chop the input-text in chunks of chars_per_chunkit words.
 
   var 
     newtekst = inputtekst
@@ -64,3 +64,50 @@ proc chopString2*(inputtekst: string; chars_per_chunkit: int): seq[string] =
     partsq.add(newtekst)
 
   result = partsq
+
+
+
+proc chopString3*(inputtekst: string; chars_per_chunkit: int): seq[string] = 
+
+  #[ new algorithm that only separates on line-break, not mid-sentence.
+  chop the input-text in chunks of about chars_per_chunkit words,
+      but from the calculated border start searching for the first eol-char, 
+      after which the separation is to be done.
+  ]#
+
+
+  var 
+    chunktekst: string
+    partsq: seq[string]
+
+  var curposit: int = 0
+  var newposit, prevposit: int
+  let eofit = inputtekst.len  # end-of-file
+  let chunksizeit = chars_per_chunkit
+  var eof_reachedbo: bool = false
+
+  # while eof - current-pos > chunk-size:
+  while eofit - curposit > chunksizeit:
+    prevposit = curposit
+    # cur.pos = cur.pos + chunksize
+    curposit += chunksizeit
+    # search from cur.pos (the pre-calculated border-point) the first line-break
+    newposit = inputtekst.find("\n", curposit)
+    # if found it becomes the new cur.pos and becomes clip-point
+    if newposit != -1:
+      curposit = newposit
+      # create chunktekst
+      chunktekst = inputtekst[prevposit .. curposit]
+    else:
+      # else make a last chunk from the cur.pos to the eof
+      chunktekst = inputtekst[prevposit .. eofit - 1]
+      eof_reachedbo = true
+    partsq.add(chunktekst)
+
+  if not eof_reachedbo:
+    # the last part that was smaller than a chunk
+    if curposit < eofit - 1:
+      partsq.add(inputtekst[curposit .. eofit - 1])
+
+  result = partsq
+
