@@ -1,0 +1,108 @@
+Extraction-strings for summarizing with Flashread.
+Language: dutch
+Summary-type: generic
+version: 1.2
+
+let op, er zijn:
+- positieve (willen) en negatieve (niet-willen) motieven
+
+
+
+
+SIGNAL-WORDS TO HANDLE
+ reden 
+ redenen
+agenda
+ doel 
+ doelen 
+doelstelling
+bedoeling
+proble
+plan 
+plannen
+interesse 
+ambitie
+streven
+ wens
+ wil
+verlangen
+begeerte
+hebzucht
+hebberig
+beginsel
+belang
+stakeholder
+factor
+princip
+verlangen
+voorkeur
+behoefte
+voorstaan
+steun
+campagne
+propaganda
+promot
+ eis
+vereis
+vereist
+ eist
+geeist
+nood
+nodig
+ goede 
+ goed 
+beter
+beste
+uitstekend
+fantastisch
+geweldig
+tevreden
+blij 
+blije
+overschot
+vrolijk
+vreugde
+weerstand
+tegenstand
+tegen
+verbied
+verbod
+haat
+afkeur
+afwijz
+afwijs
+treur
+slecht 
+slechte
+zwak
+beschuldig
+kriti
+critis
+ondermaats
+deernis
+onvoldoende
+ontevreden
+tekort
+>----------------------------------<
+
+NOG INTEGREREN:
+
+agenda
+verlangen 
+motief 
+doel
+behoefte
+bedoeling
+intentie
+hecht
+weerstand
+tegenwerking
+tegenstand
+vereisen
+doel
+plan
+proble
+reden 
+redenen
+
+

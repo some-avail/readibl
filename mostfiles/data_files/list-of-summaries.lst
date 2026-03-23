@@ -2,6 +2,8 @@ You can enter a list of summaries below.
 It will be used as a batch-operation 
 so that multiple summaries are used, in which 
 a different color is used for every summary.
+(in this context the summaries are used for hightlighting)
+
 
 version 2.0 
 -for each language a separate list must be added
@@ -14,7 +16,7 @@ oker   green   blueish  reddish   lila   grey  yellow  greenblue
 
 
 >>>SUMMARIES_DUTCH<<<
-summary_dutch_gen4_large.dat
+summary_dutch_motieven.dat
 summary_dutch_bronnen.dat
 summary_dutch_plaatsen.dat
 summary_dutch_tijden.dat
@@ -27,7 +29,7 @@ summary_dutch_custom01.dat
 
 
 >>>SUMMARIES_ENGLISH<<<
-summary_english_gen4_large.dat
+summary_english_motives.dat
 summary_english_sources.dat
 summary_english_places.dat
 summary_english_times.dat

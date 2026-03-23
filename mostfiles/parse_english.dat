@@ -149,6 +149,7 @@ forget
 forgets 
 forgot 
 forgotten 
+ readies
 beget
 begot
  enter 
@@ -202,7 +203,6 @@ restrict
  restricts 
 provide 
  provides 
-supply
 give 
  gives 
 gave 
@@ -1397,6 +1397,8 @@ mark
 marks 
  grant
 transfer
+supply
+supplies
 challenge
 request
 drive 
@@ -1447,6 +1449,7 @@ neglect
 protest
 captur
 gains 
+damage
 watch
  fit 
  fits 
@@ -1463,7 +1466,6 @@ warrant
  thought
 dispute
 resolve
-supplies
  hate
 trust
 change 

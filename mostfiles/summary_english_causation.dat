@@ -23,46 +23,27 @@ Specific scenario-categories:
 	x a spontaneous, undesigned and untested change makes the system collapse
 - coops
   * cabinet / administration formation and working
+----------------------------------------
+
+
+
+
+
 
 
 
 
 
 SIGNAL-WORDS TO HANDLE
-character
- behav
-agenda
-desire
-motiv
-interest
- want
- used 
- uses 
- use 
-ambition
-striv
-goal
- need
-intend
-intent
 attach
-resist
-meaning
 function
-requir
-purpose
 caus
 Caus
 consequence
-effect 
-effects
+effect
 result
+outcome
 influence
-plan 
-plans 
-problem
- reason
-Reasons 
 associated
  link
 connect
@@ -86,23 +67,47 @@ consensus
 agrees
 agree 
 agreement
+alliance
+ ally 
+ allies 
+coallition
+associat
  merge
 split
 divid
 conflict
+ war 
 break
 differ 
 differs
 match
 barrier
-symbol
 Why 
 Why?
  why 
  why?
 expla
 Expla
-ooooooooooooooooooooooooooooooooo
+ strateg
+>----------------------------------<
+
+
+
+optional words:
+
+
+possible false positives:
+
+
+
+
+
+
+
+FORMATION
+ used 
+ uses 
+ use 
 How 
 How?
  how 
@@ -132,16 +137,7 @@ begun
  end 
  ends 
  ended
- strateg
->----------------------------------<
 
-
-
-optional words:
-
-
-possible false positives:
-
-
-
+ behav
+meaning
 

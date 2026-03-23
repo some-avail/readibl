@@ -28,36 +28,22 @@ Specific scenario-categories:
 
 
 
+
+
+
+
+
+
+
+
 SIGNAL-WORDS TO HANDLE
-agenda
-verlangen 
-motief 
-interesse 
-wil
-gebruik
-ambitie
-streven
-doel
-behoefte
-bedoeling
-intentie
-hecht
-weerstand
-tegenwerking
-tegenstand
-betekenis
 functie
-vereisen
-doel
 oorza
-gevolg
+gevolg 
+gevolgen
 effect
 resultaat
 invloed
-plan
-proble
-reden 
-redenen
 associ
 allian
 coalitie
@@ -94,11 +80,16 @@ breuk
 brok
 barrière
 barriere
-symbo
 waarom
 Waarom
 verklar
 verklaar
+>----------------------------------<
+
+
+
+VORMING
+
 hoe 
 Hoe 
 manier
@@ -122,15 +113,6 @@ begon
 einde
 eindigt
 geëindigd
->----------------------------------<
-
-
-
-optional words:
-
-
-possible false positives:
-
-
+gebruik
 
 

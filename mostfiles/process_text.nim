@@ -1455,16 +1455,19 @@ proc replaceInPastedText*(pastedtekst, generatecontentst: string, abbreviationsq
           newtekst.add(linest & "<br>\n")
           previousparagraphbo = false
 
-      else:
-        # show emtpy lines because of the scarce formatting they provide
+      else:   # show emtpy lines because of the scarce formatting they provide
+        
         if not previousparagraphbo:
           newtekst.add("<br><br>\n")
           previousparagraphbo = true
+        else:
+          newtekst.add("<br>\n")
+          previousparagraphbo = true
 
-    # long lines are treated normally
-    else:
-      # line with end-dot are considered paragraphs
-      if linest.endsWith("."):
+
+    else:   # long lines are treated normally
+
+      if linest.endsWith("."):    # line with end-dot are considered paragraphs
         newtekst.add(linest & "<br><br>\n")
         previousparagraphbo = true
       elif linest.endsWithAnyOf(@[":",")","]"]):
@@ -1476,7 +1479,7 @@ proc replaceInPastedText*(pastedtekst, generatecontentst: string, abbreviationsq
         newtekst.add(linest & " ")
         previousparagraphbo = false
 
-      else:
+      else:   # no frequent end-token
         if pdf_lines_brokenbo:
           # standard lines only get a space (needed for some pdf-clippings)
           newtekst.add(linest & " ")
